@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Para Karina 💗</title>
   <style>
     :root {
@@ -15,17 +15,15 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body { height: 100%; }
+    html { height: 100%; }
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
       background: linear-gradient(135deg, #ffe1ec 0%, #ffd1dc 40%, #ffc4d6 100%);
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
       overflow-x: hidden;
-      padding: 24px 16px;
+      padding: 20px 14px;
       color: var(--vino);
     }
 
@@ -40,8 +38,6 @@
     .fondo-corazones span {
       position: absolute;
       bottom: -60px;
-      font-size: 22px;
-      opacity: 0.7;
       animation: subir linear infinite;
     }
     @keyframes subir {
@@ -51,15 +47,17 @@
       100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
     }
 
+    /* La escena se centra pero NUNCA recorta el contenido en pantallas pequenas */
     .escena {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 640px;
+      max-width: 600px;
+      margin: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 26px;
+      gap: 22px;
     }
 
     /* Sobre: solo se muestra si el JavaScript funciona.
@@ -83,13 +81,13 @@
     }
     .sobre {
       position: relative;
-      width: 260px;
-      height: 178px;
+      width: 240px;
+      height: 164px;
+      max-width: 80vw;
       margin: 0 auto;
       filter: drop-shadow(0 18px 30px rgba(176,58,91,0.35));
       transition: transform 0.5s ease;
     }
-    .sobre:hover { transform: translateY(-6px); }
     .sobre .cuerpo {
       position: absolute;
       inset: 0;
@@ -100,23 +98,21 @@
       position: absolute;
       top: 0; left: 0;
       width: 0; height: 0;
-      border-left: 130px solid transparent;
-      border-right: 130px solid transparent;
-      border-top: 92px solid #ff7aa7;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-top: 84px solid #ff7aa7;
       transform-origin: top;
       transition: transform 0.6s ease;
       z-index: 3;
     }
     .sobre .sello {
       position: absolute;
-      top: 64px; left: 50%;
+      top: 58px; left: 50%;
       transform: translateX(-50%);
       width: 46px; height: 46px;
       background: var(--vino);
-      color: #fff;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
       z-index: 4;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: opacity 0.3s ease;
@@ -124,32 +120,31 @@
     .abierto .solapa { transform: rotateX(180deg); z-index: 1; }
     .abierto .sello { opacity: 0; }
 
-    /* Carta: VISIBLE por defecto (a prueba de fallos).
-       Si el JavaScript funciona, se oculta hasta abrir el sobre. */
-    .carta {
+    /* ===== Sistema de pantallas ===== */
+    .pantalla { display: none; }
+    /* Fallback sin JS: la carta SIEMPRE se ve */
+    .carta { display: block; }
+    .js .carta { display: none; }
+    .js .pantalla.activa {
+      display: block;
+      animation: aparecer 0.7s ease;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta {
       background: var(--crema);
       border-radius: 22px;
-      padding: 40px 30px 44px;
-      box-shadow: 0 24px 60px rgba(176,58,91,0.28);
-      max-width: 620px;
+      padding: 34px 26px 40px;
+      box-shadow: 0 22px 55px rgba(176,58,91,0.28);
       width: 100%;
       position: relative;
       border: 1px solid #ffe0e8;
-      display: block;
+      scroll-margin-top: 14px;
     }
-    .js .carta {
-      display: none;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    .js .carta.mostrar {
-      display: block;
-      animation: aparecer 0.9s ease forwards;
-    }
-    @keyframes aparecer {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .carta::before {
+    .tarjeta::before {
       content: "";
       position: absolute;
       inset: 12px;
@@ -160,59 +155,124 @@
 
     .titulo {
       text-align: center;
-      font-size: 30px;
+      font-size: 27px;
       color: var(--rosa);
       margin-bottom: 6px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
     .subtitulo {
       text-align: center;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--dorado);
-      margin-bottom: 26px;
+      margin-bottom: 22px;
     }
-    .carta p {
-      font-size: 17px;
-      line-height: 1.8;
-      margin-bottom: 18px;
+    .carta p.parrafo {
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 16px;
       color: #7a3247;
     }
-    .carta p .destacar {
+    .parrafo .destacar {
       color: var(--rosa);
       font-weight: 700;
     }
     .firma {
       text-align: right;
-      margin-top: 28px;
-      font-size: 19px;
+      margin-top: 24px;
+      font-size: 18px;
       color: var(--vino);
     }
-    .firma .osito { font-size: 26px; }
+    .firma .osito { font-size: 24px; }
 
     .corazon-grande {
-      text-align: center;
-      font-size: 40px;
+      display: flex;
+      justify-content: center;
       margin-top: 10px;
       animation: latido 1.4s ease-in-out infinite;
     }
 
-    /* Botón corazones */
+    /* Botones */
     .boton-amor {
-      margin-top: 4px;
+      display: inline-block;
       background: var(--rosa);
       color: #fff;
       border: none;
-      padding: 12px 26px;
+      padding: 13px 24px;
       border-radius: 30px;
       font-size: 15px;
+      font-family: inherit;
       cursor: pointer;
       box-shadow: 0 8px 18px rgba(255,107,157,0.45);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .boton-amor:hover { transform: translateY(-2px) scale(1.03); }
     .boton-amor:active { transform: scale(0.97); }
+    .boton-amor.suave {
+      background: #fff;
+      color: var(--rosa);
+      border: 2px solid var(--rosa);
+      box-shadow: 0 6px 14px rgba(255,107,157,0.25);
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    .volver {
+      background: none;
+      border: none;
+      color: var(--vino);
+      font-size: 15px;
+      font-family: inherit;
+      cursor: pointer;
+      margin-bottom: 14px;
+      padding: 4px 2px;
+      opacity: 0.8;
+    }
+    .volver:hover { opacity: 1; }
+
+    /* ===== Razones ===== */
+    .razones-txt {
+      text-align: center;
+      color: #7a3247;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .razon-card {
+      min-height: 150px;
+      background: linear-gradient(160deg, #fff, #fff0f5);
+      border: 1.5px solid #ffd1dc;
+      border-radius: 18px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .razon-num {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .razon-texto {
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--vino);
+      font-weight: 600;
+    }
+    .razon-card.animar { animation: aparecer 0.5s ease; }
+    .centro { text-align: center; }
 
     /* Corazon dibujado con CSS (se ve en cualquier pantalla) */
     .heart {
@@ -232,39 +292,43 @@
 
     .oculto { display: none !important; }
 
-    @media (max-width: 480px) {
-      .titulo { font-size: 25px; }
-      .carta { padding: 34px 22px 38px; }
-      .carta p { font-size: 16px; }
+    @media (max-width: 420px) {
+      .titulo { font-size: 23px; }
+      .tarjeta { padding: 28px 18px 32px; }
+      .carta p.parrafo { font-size: 15px; line-height: 1.7; }
+      .razon-texto { font-size: 17px; }
+      .boton-amor { padding: 12px 18px; font-size: 14px; }
     }
   </style>
 </head>
 <body>
   <div class="fondo-corazones" id="fondo"></div>
 
-  <div class="escena">
+  <div class="escena" id="escena">
+    <!-- Sobre (solo con JS) -->
     <div class="sobre-wrap" id="sobreWrap" role="button" tabindex="0">
       <div class="sobre" id="sobre">
         <div class="cuerpo"></div>
         <div class="solapa"></div>
         <div class="sello"><span class="heart" style="width:16px;height:16px;background:#fff;"></span></div>
       </div>
-      <p class="pista" id="pista">Toca el sobre para abrir tu carta 💌</p>
+      <p class="pista" id="pista">Toca el sobre para abrir tu sorpresa 💌</p>
     </div>
 
-    <div class="carta" id="carta">
+    <!-- PANTALLA: CARTA -->
+    <div class="carta pantalla tarjeta" id="carta">
       <h1 class="titulo">Para mi Karina 💕</h1>
       <p class="subtitulo">De tu osito</p>
 
-      <p>Mi amor, <span class="destacar">Karina</span>, quería robarte un momento para decirte, sin bromas ni chistes de por medio, algo que llevo muy dentro del corazón.</p>
+      <p class="parrafo">Mi amor, <span class="destacar">Karina</span>, quería robarte un momento para decirte, sin bromas ni chistes de por medio, algo que llevo muy dentro del corazón.</p>
 
-      <p>Sé que hace un rato metí la pata con un chiste de mal gusto, y de verdad lo siento. Tú no te mereces eso; tú mereces que te cuide, que te haga reír de la manera bonita y que te recuerde lo mucho que vales para mí. Perdóname, ¿sí?</p>
+      <p class="parrafo">Sé que hace un rato metí la pata con un chiste de mal gusto, y de verdad lo siento. Tú no te mereces eso; tú mereces que te cuide, que te haga reír de la manera bonita y que te recuerde lo mucho que vales para mí. Perdóname, ¿sí?</p>
 
-      <p>Porque la verdad es sencilla y enorme al mismo tiempo: <span class="destacar">te quiero</span> con locura y <span class="destacar">te amo</span> con todo lo que soy. Me haces mejor persona, iluminas hasta mis días más grises y eres el pensamiento más lindo con el que despierto y con el que me duermo.</p>
+      <p class="parrafo">Porque la verdad es sencilla y enorme al mismo tiempo: <span class="destacar">te quiero</span> con locura y <span class="destacar">te amo</span> con todo lo que soy. Me haces mejor persona, iluminas hasta mis días más grises y eres el pensamiento más lindo con el que despierto y con el que me duermo.</p>
 
-      <p>Gracias por tu paciencia, por tu ternura y por dejarme ser tu osito. Prometo cuidar tu sonrisa como el tesoro que es y llenarte de detalles y de amor del bueno.</p>
+      <p class="parrafo">Gracias por tu paciencia, por tu ternura y por dejarme ser tu osito. Prometo cuidar tu sonrisa como el tesoro que es y llenarte de detalles y de amor del bueno.</p>
 
-      <p>Te amo, Karina. Hoy, mañana y siempre. 🐻💗</p>
+      <p class="parrafo">Te amo, Karina. Hoy, mañana y siempre. 🐻💗</p>
 
       <div class="corazon-grande"><span class="heart" style="width:40px;height:40px;"></span></div>
 
@@ -273,8 +337,26 @@
         <strong>José</strong> — <span class="osito">tu osito 🐻</span>
       </div>
 
-      <div style="text-align:center; margin-top:26px;">
-        <button class="boton-amor" id="btnAmor" type="button">Enviarte mil corazones 💞</button>
+      <div class="menu">
+        <button class="boton-amor" id="btnAmor" type="button">Mil corazones 💞</button>
+        <button class="boton-amor suave" type="button" data-ir="razones">Razones por las que te amo 💘</button>
+      </div>
+    </div>
+
+    <!-- PANTALLA: RAZONES -->
+    <div class="pantalla tarjeta" id="razones">
+      <button class="volver" type="button" data-ir="carta">‹ Volver</button>
+      <h1 class="titulo">Razones por las que te amo</h1>
+      <p class="subtitulo">Una por una</p>
+      <p class="razones-txt" id="razContador">Toca el botón y ve descubriéndolas 💗</p>
+
+      <div class="razon-card" id="razonCard">
+        <span class="razon-num" id="razonNum">¿Lista?</span>
+        <p class="razon-texto" id="razonTexto">Toca "Descubre una razón"</p>
+      </div>
+
+      <div class="centro">
+        <button class="boton-amor" id="btnRazon" type="button">Descubre una razón 💗</button>
       </div>
     </div>
   </div>
@@ -282,6 +364,26 @@
   <script>
   (function () {
     "use strict";
+
+    /* ====== CONTENIDO QUE PUEDES EDITAR ====== */
+
+    // Razones por las que la amas (edita, agrega o quita las que quieras)
+    var razones = [
+      "Por tu sonrisa, que me alegra hasta el peor de mis días.",
+      "Por la forma en que me miras, como si yo fuera tu lugar favorito.",
+      "Porque me haces querer ser mejor persona cada día.",
+      "Por tu paciencia, incluso cuando meto la pata.",
+      "Porque contigo hasta lo más simple se vuelve especial.",
+      "Por tu abrazo, que se siente como estar en casa.",
+      "Por cómo cuidas de mí sin siquiera darte cuenta.",
+      "Porque eres mi primer pensamiento al despertar y el último antes de dormir.",
+      "Por tu manera de amar, tan sincera y tan tuya.",
+      "Porque me elegiste a mí para ser tu osito.",
+      "Por cada risa que compartimos y las que nos faltan.",
+      "Y porque cada día encuentro una razón nueva para amarte."
+    ];
+
+    /* ========================================= */
 
     var tonos = ['#ff6b9d', '#ff8fb3', '#ffa5c3', '#f6c453', '#ff4f86'];
 
@@ -296,9 +398,8 @@
       return s;
     }
 
-    // Lluvia de corazones especial
     function lluviaDeAmor() {
-      for (var i = 0; i < 30; i++) {
+      for (var i = 0; i < 28; i++) {
         (function (n) {
           setTimeout(function () {
             var s = nuevoCorazon(16 + Math.random() * 22);
@@ -319,53 +420,101 @@
       }
     }
 
-    // Abrir carta
+    // ===== Navegacion entre pantallas =====
+    function mostrar(id) {
+      var ids = ['carta', 'razones'];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el) el.classList.toggle('activa', ids[i] === id);
+      }
+      var destino = document.getElementById(id);
+      if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== Abrir sobre =====
     var cartaAbierta = false;
     function abrirCarta() {
       if (cartaAbierta) return;
       cartaAbierta = true;
       var sobre = document.getElementById('sobre');
-      var carta = document.getElementById('carta');
       var pista = document.getElementById('pista');
       var wrap = document.getElementById('sobreWrap');
       sobre.classList.add('abierto');
       pista.textContent = '\u2764';
       setTimeout(function () {
-        carta.classList.add('mostrar');
         wrap.classList.add('oculto');
-        carta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        mostrar('carta');
         lluviaDeAmor();
       }, 650);
     }
 
+    // ===== Razones =====
+    var razIdx = 0;
+    function siguienteRazon() {
+      var card = document.getElementById('razonCard');
+      var num = document.getElementById('razonNum');
+      var txt = document.getElementById('razonTexto');
+      var cont = document.getElementById('razContador');
+      var btn = document.getElementById('btnRazon');
+
+      if (razIdx >= razones.length) {
+        // Ya se mostraron todas: mensaje final y reinicio
+        num.textContent = '\u2764';
+        txt.textContent = 'Y me faltan mil más... Te amo, Karina.';
+        cont.textContent = 'Esas son ' + razones.length + ' de infinitas razones 💗';
+        btn.textContent = 'Verlas otra vez';
+        razIdx = 0;
+        card.classList.remove('animar'); void card.offsetWidth; card.classList.add('animar');
+        lluviaDeAmor();
+        return;
+      }
+
+      num.textContent = 'Razón ' + (razIdx + 1) + ' de ' + razones.length;
+      txt.textContent = razones[razIdx];
+      cont.textContent = 'Sigue tocando para descubrir más 💗';
+      btn.textContent = (razIdx + 1 === razones.length) ? 'Ver el final 💗' : 'Descubre otra razón 💗';
+      card.classList.remove('animar'); void card.offsetWidth; card.classList.add('animar');
+      razIdx++;
+    }
+
+    // ===== Inicio =====
     function iniciar() {
       var wrapEl = document.getElementById('sobreWrap');
-      var btn = document.getElementById('btnAmor');
       var fondo = document.getElementById('fondo');
-      if (!wrapEl || !btn || !fondo) return; // si falta algo, dejamos la carta visible
+      if (!wrapEl || !fondo || !document.getElementById('carta')) return;
 
-      // Solo AHORA activamos el modo "sobre" (oculta la carta, muestra el sobre).
-      // Si el codigo se hubiera cortado antes, la carta seguiria visible.
+      // Activamos el modo interactivo (oculta la carta hasta abrir el sobre).
       document.documentElement.className += ' js';
 
-      // Corazones de fondo continuos
+      // Corazones de fondo
       function crearCorazonFondo() {
-        var s = nuevoCorazon(12 + Math.random() * 20);
+        var s = nuevoCorazon(12 + Math.random() * 18);
         s.style.left = Math.random() * 100 + 'vw';
         s.style.animationDuration = (7 + Math.random() * 7) + 's';
         fondo.appendChild(s);
         setTimeout(function () { s.remove(); }, 14000);
       }
-      setInterval(crearCorazonFondo, 500);
-      for (var i = 0; i < 12; i++) setTimeout(crearCorazonFondo, i * 200);
+      setInterval(crearCorazonFondo, 550);
+      for (var i = 0; i < 10; i++) setTimeout(crearCorazonFondo, i * 220);
 
-      // Abrir con clic, toque o teclado
+      // Abrir sobre
       wrapEl.addEventListener('click', abrirCarta);
       wrapEl.addEventListener('touchend', function (e) { e.preventDefault(); abrirCarta(); }, { passive: false });
       wrapEl.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirCarta(); }
       });
-      btn.addEventListener('click', lluviaDeAmor);
+
+      // Navegacion (botones con data-ir)
+      var navs = document.querySelectorAll('[data-ir]');
+      for (var k = 0; k < navs.length; k++) {
+        (function (b) {
+          b.addEventListener('click', function () { mostrar(b.getAttribute('data-ir')); });
+        })(navs[k]);
+      }
+
+      // Botones
+      document.getElementById('btnAmor').addEventListener('click', lluviaDeAmor);
+      document.getElementById('btnRazon').addEventListener('click', siguienteRazon);
     }
 
     try {
