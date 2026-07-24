@@ -567,37 +567,6 @@
       if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // ===== Musica =====
-    var sonando = false;
-    function reproducirMusica() {
-      var m = document.getElementById('musica');
-      var btn = document.getElementById('btnMusica');
-      if (!m) return;
-      if (btn) btn.classList.remove('oculto'); // el control siempre visible al abrir
-      m.play().then(function () {
-        sonando = true;
-        if (btn) btn.textContent = '🔊';
-      }).catch(function () {
-        // Si el navegador bloquea el audio, ella puede activarlo con el boton
-        sonando = false;
-        if (btn) btn.textContent = '🔇';
-      });
-    }
-    function toggleMusica() {
-      var m = document.getElementById('musica');
-      var btn = document.getElementById('btnMusica');
-      if (!m) return;
-      if (sonando) {
-        m.pause();
-        sonando = false;
-        if (btn) btn.textContent = '🔇';
-      } else {
-        m.play().then(function () {
-          sonando = true;
-          if (btn) btn.textContent = '🔊';
-        }).catch(function () {});
-      }
-    }
 
     // ===== Abrir sobre =====
     var cartaAbierta = false;
