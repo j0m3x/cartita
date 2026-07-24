@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Karina 💗</title>
+  <style>
+    :root {
+      --rosa: #ff6b9d;
+      --rosa-suave: #ffd1dc;
+      --vino: #b03a5b;
+      --crema: #fff5f7;
+      --dorado: #f6c453;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffe1ec 0%, #ffd1dc 40%, #ffc4d6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 24px 16px;
+      color: var(--vino);
+    }
+
+    /* Corazones flotando de fondo */
+    .fondo-corazones {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .fondo-corazones span {
+      position: absolute;
+      bottom: -60px;
+      font-size: 22px;
+      opacity: 0.7;
+      animation: subir linear infinite;
+    }
+    @keyframes subir {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+    }
+
+    .escena {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+    }
+
+    /* Sobre */
+    .sobre-wrap {
+      perspective: 1200px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .pista {
+      font-size: 15px;
+      color: var(--vino);
+      margin-top: 14px;
+      animation: latido 1.6s ease-in-out infinite;
+    }
+    @keyframes latido {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50%      { transform: scale(1.08); opacity: 1; }
+    }
+    .sobre {
+      position: relative;
+      width: 260px;
+      height: 178px;
+      margin: 0 auto;
+      filter: drop-shadow(0 18px 30px rgba(176,58,91,0.35));
+      transition: transform 0.5s ease;
+    }
+    .sobre:hover { transform: translateY(-6px); }
+    .sobre .cuerpo {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #ff8fb3, #ff6b9d);
+      border-radius: 12px;
+    }
+    .sobre .solapa {
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      border-left: 130px solid transparent;
+      border-right: 130px solid transparent;
+      border-top: 92px solid #ff7aa7;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 3;
+    }
+    .sobre .sello {
+      position: absolute;
+      top: 64px; left: 50%;
+      transform: translateX(-50%);
+      width: 46px; height: 46px;
+      background: var(--vino);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      z-index: 4;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: opacity 0.3s ease;
+    }
+    .abierto .solapa { transform: rotateX(180deg); z-index: 1; }
+    .abierto .sello { opacity: 0; }
+
+    /* Carta */
+    .carta {
+      background: var(--crema);
+      border-radius: 22px;
+      padding: 40px 30px 44px;
+      box-shadow: 0 24px 60px rgba(176,58,91,0.28);
+      max-width: 620px;
+      width: 100%;
+      position: relative;
+      border: 1px solid #ffe0e8;
+      display: none;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .carta.mostrar {
+      display: block;
+      animation: aparecer 0.9s ease forwards;
+    }
+    @keyframes aparecer {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .carta::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1.5px dashed #ffc0d0;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .titulo {
+      text-align: center;
+      font-size: 30px;
+      color: var(--rosa);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .subtitulo {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 26px;
+    }
+    .carta p {
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 18px;
+      color: #7a3247;
+    }
+    .carta p .destacar {
+      color: var(--rosa);
+      font-weight: 700;
+    }
+    .firma {
+      text-align: right;
+      margin-top: 28px;
+      font-size: 19px;
+      color: var(--vino);
+    }
+    .firma .osito { font-size: 26px; }
+
+    .corazon-grande {
+      text-align: center;
+      font-size: 40px;
+      margin-top: 10px;
+      animation: latido 1.4s ease-in-out infinite;
+    }
+
+    /* Botón corazones */
+    .boton-amor {
+      margin-top: 4px;
+      background: var(--rosa);
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 30px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(255,107,157,0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .boton-amor:hover { transform: translateY(-2px) scale(1.03); }
+    .boton-amor:active { transform: scale(0.97); }
+
+    /* Corazon dibujado con CSS (se ve en cualquier pantalla) */
+    .heart {
+      display: inline-block;
+      position: relative;
+      transform: rotate(-45deg);
+      background: var(--rosa);
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      background: var(--c, var(--rosa));
+      border-radius: 50%;
+    }
+    .heart::before { top: -50%; left: 0; width: 100%; height: 100%; }
+    .heart::after  { top: 0; left: 50%; width: 100%; height: 100%; }
+
+    .oculto { display: none !important; }
+
+    @media (max-width: 480px) {
+      .titulo { font-size: 25px; }
+      .carta { padding: 34px 22px 38px; }
+      .carta p { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="fondo-corazones" id="fondo"></div>
+
+  <div class="escena">
+    <div class="sobre-wrap" id="sobreWrap" onclick="abrirCarta()">
+      <div class="sobre" id="sobre">
+        <div class="cuerpo"></div>
+        <div class="solapa"></div>
+        <div class="sello"><span class="heart" style="width:16px;height:16px;background:#fff;"></span></div>
+      </div>
+      <p class="pista" id="pista">Toca el sobre para abrir tu carta 💌</p>
+    </div>
+
+    <div class="carta" id="carta">
+      <h1 class="titulo">Para mi Karina 💕</h1>
+      <p class="subtitulo">De tu osito</p>
+
+      <p>Mi amor, <span class="destacar">Karina</span>, quería robarte un momento para decirte, sin bromas ni chistes de por medio, algo que llevo muy dentro del corazón.</p>
+
+      <p>Sé que hace un rato metí la pata con un chiste de mal gusto, y de verdad lo siento. Tú no te mereces eso; tú mereces que te cuide, que te haga reír de la manera bonita y que te recuerde lo mucho que vales para mí. Perdóname, ¿sí?</p>
+
+      <p>Porque la verdad es sencilla y enorme al mismo tiempo: <span class="destacar">te quiero</span> con locura y <span class="destacar">te amo</span> con todo lo que soy. Me haces mejor persona, iluminas hasta mis días más grises y eres el pensamiento más lindo con el que despierto y con el que me duermo.</p>
+
+      <p>Gracias por tu paciencia, por tu ternura y por dejarme ser tu osito. Prometo cuidar tu sonrisa como el tesoro que es y llenarte de detalles y de amor del bueno.</p>
+
+      <p>Te amo, Karina. Hoy, mañana y siempre. 🐻💗</p>
+
+      <div class="corazon-grande"><span class="heart" style="width:40px;height:40px;"></span></div>
