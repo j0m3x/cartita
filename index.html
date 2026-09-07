@@ -615,18 +615,18 @@
       to { transform: scale(1.18); }
     }
 
-    /* TRAMPAS NUEVAS */
+    /* TRAMPAS */
     .trampa-juego {
       font-size: clamp(13px, 3vw, 25px);
       z-index: 4;
       filter: drop-shadow(0 2px 3px rgba(0,0,0,0.45));
     }
 
-    .trampa-bomba {
-      animation: bombaJuego 0.7s ease-in-out infinite alternate;
+    .trampa-rayo {
+      animation: rayoJuego 0.7s ease-in-out infinite alternate;
     }
 
-    @keyframes bombaJuego {
+    @keyframes rayoJuego {
       from {
         transform: scale(0.88) rotate(-4deg);
       }
@@ -635,30 +635,30 @@
       }
     }
 
-    .trampa-dinamita {
-      animation: dinamitaJuego 0.55s ease-in-out infinite alternate;
+    .trampa-cactus {
+      animation: cactusJuego 0.65s ease-in-out infinite alternate;
     }
 
-    @keyframes dinamitaJuego {
+    @keyframes cactusJuego {
       from {
-        transform: translateY(1px) rotate(-5deg);
+        transform: translateY(1px) rotate(-4deg);
       }
       to {
-        transform: translateY(-2px) rotate(5deg);
+        transform: translateY(-2px) rotate(4deg);
       }
     }
 
-    .trampa-calavera {
-      animation: calaveraJuego 0.9s ease-in-out infinite alternate;
+    .trampa-remolino {
+      animation: remolinoJuego 0.9s ease-in-out infinite alternate;
     }
 
-    @keyframes calaveraJuego {
+    @keyframes remolinoJuego {
       from {
-        transform: scale(0.92);
+        transform: scale(0.92) rotate(-8deg);
         opacity: 0.82;
       }
       to {
-        transform: scale(1.12);
+        transform: scale(1.12) rotate(8deg);
         opacity: 1;
       }
     }
@@ -1141,7 +1141,7 @@
       <p class="juego-ayuda">
         Usa las flechas del teclado, WASD o los botones.
         <br>
-        Cuidado con 💣 🧨 ☠️
+        Cuidado con ⚡ 🌵 🌀
       </p>
 
       <div class="centro" style="margin-top:18px;">
@@ -1166,7 +1166,7 @@
     <div class="final-juego-card">
 
       <div class="pareja-final">
-        🧑🏾‍🦱 ❤️ 👩🏻‍🦰
+        👨🏽 ❤️ 👩🏻‍🦰
       </div>
 
       <h2>
@@ -2163,11 +2163,6 @@
       trampasJuego = [];
 
 
-      /*
-       * Buscamos las zonas más lejanas
-       * del inicio para colocar a Karina.
-       */
-
       var alcanzablesInicio =
         obtenerCeldasAlcanzables(
           inicioJugador
@@ -2221,11 +2216,6 @@
       }
 
 
-      /*
-       * Preferimos una posición
-       * relativamente cercana al centro.
-       */
-
       var centro =
         Math.floor(
           TAMANO_LABERINTO / 2
@@ -2271,22 +2261,12 @@
         ];
 
 
-      /*
-       * Camino real hasta Karina.
-       */
-
       var caminoInicioKarina =
         encontrarCamino(
           inicioJugador,
           karina
         );
 
-
-      /*
-       * ❤️ El corazón se coloca
-       * directamente en el camino
-       * hacia Karina.
-       */
 
       var minimoIndice =
         Math.max(
@@ -2319,11 +2299,6 @@
           indiceCorazon
         ];
 
-
-      /*
-       * La salida se busca desde Karina,
-       * preferiblemente lejos de ella.
-       */
 
       var alcanzablesKarina =
         obtenerCeldasAlcanzables(
@@ -2390,11 +2365,6 @@
       }
 
 
-      /*
-       * Preferimos una salida
-       * cercana a los bordes.
-       */
-
       candidatosSalida.sort(function (a, b) {
 
         var bordeA =
@@ -2429,13 +2399,6 @@
           )
         ];
 
-
-      /*
-       * Rutas protegidas.
-       *
-       * Todo lo que esté en estas rutas
-       * queda libre de trampas.
-       */
 
       var caminoCorazon =
         encontrarCamino(
@@ -2488,11 +2451,6 @@
       protegerCamino(caminoSalida);
 
 
-      /*
-       * Generamos posiciones posibles
-       * para trampas.
-       */
-
       var candidatosTrampas = [];
 
 
@@ -2521,11 +2479,6 @@
             claveCelda(tx, ty);
 
 
-          /*
-           * Nunca ponemos una trampa
-           * sobre el camino obligatorio.
-           */
-
           if (
             rutaSegura[clave]
           ) {
@@ -2534,10 +2487,6 @@
 
           }
 
-
-          /*
-           * Tampoco encima de objetos.
-           */
 
           if (
             (tx === jugador.x &&
@@ -2568,25 +2517,24 @@
       barajar(candidatosTrampas);
 
 
+      /*
+       * Solo 5 trampas como máximo.
+       */
+
       var tiposTrampa = [
 
-        'bomba',
+        'rayo',
 
-        'dinamita',
+        'cactus',
 
-        'calavera'
+        'remolino'
 
       ];
 
 
-      /*
-       * Menos trampas porque el laberinto
-       * ahora es 15x15.
-       */
-
       var cantidadTrampas =
         Math.min(
-          10,
+          5,
           candidatosTrampas.length
         );
 
@@ -2651,11 +2599,6 @@
               claveCelda(cx, cy)
             ]
           ) {
-
-            /*
-             * Dejamos libre la ruta principal
-             * salvo el corazón objetivo.
-             */
 
             if (
               !(cx === llave.x &&
@@ -2852,42 +2795,42 @@
             trampaEl.className =
               'objeto-juego trampa-juego ' +
               (
-                trampaEncontrada.tipo === 'bomba'
-                ? 'trampa-bomba'
+                trampaEncontrada.tipo === 'rayo'
+                ? 'trampa-rayo'
                 : (
-                  trampaEncontrada.tipo === 'dinamita'
-                  ? 'trampa-dinamita'
-                  : 'trampa-calavera'
+                  trampaEncontrada.tipo === 'cactus'
+                  ? 'trampa-cactus'
+                  : 'trampa-remolino'
                 )
               );
 
 
             if (
               trampaEncontrada.tipo ===
-              'bomba'
+              'rayo'
             ) {
 
-              trampaEl.textContent = '💣';
+              trampaEl.textContent = '⚡';
 
             }
 
 
             if (
               trampaEncontrada.tipo ===
-              'dinamita'
+              'cactus'
             ) {
 
-              trampaEl.textContent = '🧨';
+              trampaEl.textContent = '🌵';
 
             }
 
 
             if (
               trampaEncontrada.tipo ===
-              'calavera'
+              'remolino'
             ) {
 
-              trampaEl.textContent = '☠️';
+              trampaEl.textContent = '🌀';
 
             }
 
@@ -3024,8 +2967,8 @@
 
             jugadorEl.textContent =
               encontroKarina
-              ? '🧑🏾‍🦱❤️'
-              : '🧑🏾‍🦱';
+              ? '👨🏽❤️'
+              : '👨🏽';
 
             celda.appendChild(
               jugadorEl
@@ -3284,11 +3227,11 @@
 
       if (
         trampa.tipo ===
-        'bomba'
+        'rayo'
       ) {
 
         mensajeJuego(
-          '💣 ¡BOOM! Pisaste una bomba. Regresas al inicio.'
+          '⚡ ¡ZAS! Pisaste un rayo. Regresas al inicio.'
         );
 
         jugador.x =
@@ -3302,43 +3245,36 @@
 
       if (
         trampa.tipo ===
-        'dinamita'
+        'cactus'
       ) {
 
         mensajeJuego(
-          '🧨 ¡Cuidado! La dinamita explotó. Regresas al inicio.'
+          '🌵 ¡Ay! Pisaste un cactus. Retrocedes un paso.'
         );
-
-        jugador.x =
-          inicioJugador.x;
-
-        jugador.y =
-          inicioJugador.y;
-
-      }
-
-
-      if (
-        trampa.tipo ===
-        'calavera'
-      ) {
-
-        mensajeJuego(
-          '☠️ ¡Caíste en la trampa! Retrocedes un paso.'
-        );
-
-
-        /*
-         * Ahora sí retrocede a la posición
-         * anterior real, en lugar de escoger
-         * una dirección al azar.
-         */
 
         jugador.x =
           jugadorAnterior.x;
 
         jugador.y =
           jugadorAnterior.y;
+
+      }
+
+
+      if (
+        trampa.tipo ===
+        'remolino'
+      ) {
+
+        mensajeJuego(
+          '🌀 ¡Ups! Entraste en un remolino. Regresas al inicio.'
+        );
+
+        jugador.x =
+          inicioJugador.x;
+
+        jugador.y =
+          inicioJugador.y;
 
       }
 
