@@ -3,3102 +3,1939 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Para Karina 💗</title>
 
 <style>
-
-:root{
-  --rosa:#ff6b9d;
-  --rosa2:#ff9fbd;
-  --vino:#9e3154;
-  --crema:#fff7fa;
-  --dorado:#ffd45c;
-  --verde:#628b69;
-  --verde2:#86a873;
-  --piedra:#713c50;
-  --piedra2:#542d3d;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  min-height:100vh;
-  font-family:Segoe UI,system-ui,sans-serif;
-  background:
-    radial-gradient(circle at 20% 20%,#fff1f6 0%,transparent 25%),
-    linear-gradient(135deg,#ffdce8,#ffc5d7,#ffb7cf);
-  color:var(--vino);
-  padding:20px 14px;
-  overflow-x:hidden;
-}
-
-button{
-  font-family:inherit;
-}
-
-.escena{
-  width:100%;
-  max-width:650px;
-  margin:auto;
-  position:relative;
-  z-index:5;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.4), transparent 25%),
+        linear-gradient(135deg,#ffd1e3,#f7a8c4,#e98fb1);
+    color:#5c1733;
 }
 
 /* =========================
-   CORAZONES FONDO
+   CORAZONES FLOTANDO
 ========================= */
 
-.fondo-corazones{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
-}
-
-.fondo-corazones span{
-  position:absolute;
-  bottom:-50px;
-  animation:subir linear forwards;
+.corazon-flotante{
+    position:fixed;
+    bottom:-50px;
+    font-size:25px;
+    animation:subir 8s linear infinite;
+    opacity:.7;
+    pointer-events:none;
+    z-index:0;
 }
 
 @keyframes subir{
-  from{
-    transform:translateY(0) rotate(0);
-    opacity:0;
-  }
-  15%{opacity:.8}
-  to{
-    transform:translateY(-115vh) rotate(360deg);
-    opacity:0;
-  }
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+    }
+    15%{opacity:.8;}
+    100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* =========================
+   PANTALLAS
+========================= */
+
+.pantalla{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    position:relative;
+    z-index:2;
+}
+
+.js .pantalla{
+    display:none;
+}
+
+.js .pantalla.activa{
+    display:flex;
 }
 
 /* =========================
    SOBRE
 ========================= */
 
-.sobre-wrap{
-  text-align:center;
-  cursor:pointer;
-  margin:30px auto;
+.sobre-container{
+    text-align:center;
 }
 
 .sobre{
-  width:240px;
-  height:165px;
-  margin:auto;
-  position:relative;
-  filter:drop-shadow(0 18px 25px rgba(130,40,70,.3));
+    width:300px;
+    height:210px;
+    position:relative;
+    margin:auto;
+    cursor:pointer;
+    filter:drop-shadow(0 15px 20px rgba(100,0,40,.2));
+    transition:.3s;
 }
 
-.sobre .cuerpo{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(145deg,#ff9fbd,#ff5f96);
-  border-radius:12px;
+.sobre:hover{
+    transform:scale(1.05);
 }
 
-.sobre .solapa{
-  position:absolute;
-  top:0;
-  left:0;
-  width:0;
-  height:0;
-  border-left:120px solid transparent;
-  border-right:120px solid transparent;
-  border-top:85px solid #ff80a9;
-  transform-origin:top;
-  transition:.6s;
-  z-index:3;
+.sobre-cuerpo{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f58eb1;
+    border-radius:8px;
+    overflow:hidden;
 }
 
-.sobre .sello{
-  position:absolute;
-  top:58px;
-  left:50%;
-  transform:translateX(-50%);
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:#a42f53;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:5;
+.sobre-cuerpo:before,
+.sobre-cuerpo:after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    width:0;
+    height:0;
+    border-style:solid;
 }
 
-.abierto .solapa{
-  transform:rotateX(180deg);
+.sobre-cuerpo:before{
+    left:0;
+    border-width:105px 150px 0 0;
+    border-color:#e77b9f transparent transparent transparent;
 }
 
-.abierto .sello{
-  opacity:0;
+.sobre-cuerpo:after{
+    right:0;
+    border-width:0 150px 105px 0;
+    border-color:transparent #e77b9f transparent transparent;
+}
+
+.tapa{
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:150px solid transparent;
+    border-right:150px solid transparent;
+    border-top:110px solid #ffb1cb;
+    z-index:3;
+}
+
+.corazon-sobre{
+    position:absolute;
+    z-index:5;
+    left:50%;
+    top:48%;
+    transform:translate(-50%,-50%);
+    font-size:45px;
 }
 
 .pista{
-  margin-top:18px;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  50%{transform:scale(1.06)}
+    margin-top:25px;
+    font-size:18px;
+    font-weight:bold;
 }
 
 /* =========================
-   TARJETAS
+   CARTA
 ========================= */
 
-.pantalla{
-  display:none;
-}
-
-.js .pantalla.activa{
-  display:block;
-  animation:aparecer .6s ease;
-}
-
 .carta{
-  display:block;
+    width:min(850px,95%);
+    background:rgba(255,255,255,.94);
+    padding:45px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(100,0,40,.2);
+    position:relative;
+    text-align:center;
 }
 
-.js .carta{
-  display:none;
+.carta h1{
+    color:#d6336c;
+    font-size:38px;
+    margin-bottom:20px;
 }
 
-.tarjeta{
-  background:var(--crema);
-  border-radius:25px;
-  padding:34px 25px 40px;
-  box-shadow:0 25px 60px rgba(130,40,70,.25);
-  border:1px solid #ffe0ea;
-}
-
-.titulo{
-  text-align:center;
-  color:var(--rosa);
-  font-size:28px;
-  margin-bottom:6px;
-}
-
-.subtitulo{
-  text-align:center;
-  text-transform:uppercase;
-  letter-spacing:3px;
-  font-size:12px;
-  color:#d7a82f;
-  margin-bottom:25px;
-}
-
-.parrafo{
-  color:#713246;
-  font-size:16px;
-  line-height:1.75;
-  margin-bottom:16px;
-}
-
-.destacar{
-  color:var(--rosa);
-  font-weight:bold;
+.carta p{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:15px;
 }
 
 .firma{
-  text-align:right;
-  margin-top:25px;
-  line-height:1.7;
+    margin-top:25px;
+    font-size:22px;
+    color:#d6336c;
+    font-weight:bold;
 }
 
-.menu{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  margin-top:28px;
+.boton{
+    border:none;
+    background:linear-gradient(135deg,#ff5f9e,#d6336c);
+    color:white;
+    padding:14px 25px;
+    border-radius:30px;
+    font-size:17px;
+    cursor:pointer;
+    margin-top:20px;
+    box-shadow:0 8px 20px rgba(214,51,108,.25);
+    transition:.25s;
 }
 
-.boton-amor{
-  border:none;
-  background:var(--rosa);
-  color:white;
-  padding:13px 22px;
-  border-radius:30px;
-  cursor:pointer;
-  font-size:15px;
-  box-shadow:0 8px 20px rgba(255,107,157,.35);
-  transition:.2s;
-}
-
-.boton-amor:hover{
-  transform:translateY(-2px) scale(1.02);
-}
-
-.boton-amor.suave{
-  background:white;
-  color:var(--rosa);
-  border:2px solid var(--rosa);
-}
-
-.volver{
-  border:none;
-  background:none;
-  color:var(--vino);
-  cursor:pointer;
-  margin-bottom:15px;
-  font-size:15px;
-}
-
-.corazon-grande{
-  text-align:center;
-  font-size:45px;
-  animation:pulse 1.3s infinite;
+.boton:hover{
+    transform:translateY(-3px) scale(1.03);
 }
 
 /* =========================
    RAZONES
 ========================= */
 
-.razones-txt{
-  text-align:center;
-  margin-bottom:20px;
+.razones{
+    width:min(850px,95%);
+    text-align:center;
 }
 
-.razon-card{
-  min-height:160px;
-  border:1px solid #ffd1df;
-  background:linear-gradient(145deg,#fff,#fff0f5);
-  border-radius:20px;
-  padding:25px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  margin-bottom:20px;
+.razones h2{
+    font-size:34px;
+    margin-bottom:25px;
+    color:#b51f58;
 }
 
-.razon-num{
-  color:#d8a72f;
-  font-size:13px;
-  margin-bottom:12px;
-  text-transform:uppercase;
-  letter-spacing:2px;
+.lista-razones{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
 }
 
-.razon-texto{
-  font-size:19px;
-  font-weight:bold;
-  line-height:1.5;
+.razon{
+    background:rgba(255,255,255,.9);
+    padding:25px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(100,0,40,.12);
 }
 
-.centro{
-  text-align:center;
+.razon:hover{
+    transform:translateY(-7px);
+}
+
+.razon .emoji{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.razon p{
+    display:none;
+    margin-top:10px;
+    line-height:1.5;
+}
+
+.razon.abierta p{
+    display:block;
 }
 
 /* =========================
    FOTOS
 ========================= */
 
+.fotos{
+    width:min(850px,95%);
+    text-align:center;
+}
+
+.fotos h2{
+    color:#b51f58;
+    font-size:34px;
+    margin-bottom:25px;
+}
+
 .carrusel{
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  background:#ffdce7;
+    position:relative;
+    background:rgba(255,255,255,.8);
+    border-radius:25px;
+    padding:20px;
+    box-shadow:0 10px 30px rgba(100,0,40,.15);
 }
 
-.slides{
-  display:flex;
-  transition:.4s;
+.carrusel img{
+    width:100%;
+    max-height:500px;
+    object-fit:contain;
+    border-radius:18px;
+    display:none;
 }
 
-.slide{
-  min-width:100%;
-  height:min(72vw,380px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#ffdce7;
+.carrusel img.activa{
+    display:block;
 }
 
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.slide .sin-foto{
-  text-align:center;
-}
-
-.flecha-c{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:42px;
-  height:42px;
-  border:0;
-  border-radius:50%;
-  background:white;
-  color:var(--rosa);
-  font-size:25px;
-  cursor:pointer;
-}
-
-.flecha-c.prev{left:10px}
-.flecha-c.next{right:10px}
-
-.foto-caption{
-  text-align:center;
-  margin-top:15px;
-  min-height:22px;
-}
-
-.dots{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin-top:12px;
-}
-
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#ffc0d0;
-  cursor:pointer;
-}
-
-.dot.activo{
-  background:var(--rosa);
-  transform:scale(1.3);
-}
-
-/* ======================================================
-   ==================== VIDEOJUEGO ======================
-====================================================== */
-
-.juego-intro{
-  text-align:center;
-  color:#713246;
-  line-height:1.6;
-  margin-bottom:18px;
-}
-
-/* PANEL SUPERIOR */
-
-.hud{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:12px;
-}
-
-.hud-item{
-  flex:1;
-  background:linear-gradient(145deg,#fff,#ffe8f0);
-  border:1px solid #ffc8d8;
-  border-radius:12px;
-  padding:9px 5px;
-  text-align:center;
-  font-size:12px;
-  font-weight:bold;
-  box-shadow:0 3px 8px rgba(130,40,70,.1);
-}
-
-.hud-item span{
-  display:block;
-  font-size:17px;
-  color:var(--rosa);
-  margin-top:2px;
+.controles{
+    margin-top:15px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
 }
 
 /* =========================
-   LABERINTO
+   JUEGO
 ========================= */
 
-#juegoContenedor{
-  width:100%;
-  display:flex;
-  justify-content:center;
+.juego-pantalla{
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-top:25px;
+    padding-bottom:35px;
 }
 
-#laberinto{
-  --cols:21;
-
-  position:relative;
-
-  width:min(94vw,560px);
-  aspect-ratio:1/1;
-
-  overflow:hidden;
-
-  border:7px solid #512d3d;
-  border-radius:18px;
-
-  background:
-    radial-gradient(circle at 50% 30%,#8ba879,#52715b);
-
-  box-shadow:
-    0 18px 35px rgba(70,30,45,.35),
-    inset 0 0 25px rgba(0,0,0,.35);
-
-  user-select:none;
-  touch-action:none;
+.juego-titulo{
+    text-align:center;
+    margin-bottom:15px;
 }
 
-/* casillas */
+.juego-titulo h2{
+    color:#a91953;
+    font-size:35px;
+}
 
-.casilla{
-  position:absolute;
-  width:4.7619%;
-  height:4.7619%;
+.juego-titulo p{
+    margin-top:7px;
+    font-size:16px;
+}
+
+/* HUD */
+
+.hud{
+    width:min(850px,96%);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.hud-box{
+    background:rgba(255,255,255,.92);
+    padding:10px 15px;
+    border-radius:15px;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(100,0,40,.15);
+}
+
+/* LABERINTO */
+
+.lab-wrap{
+    width:min(850px,96vw);
+    background:#4c2630;
+    padding:12px;
+    border-radius:25px;
+    box-shadow:
+        0 20px 40px rgba(60,0,20,.3),
+        inset 0 0 0 3px rgba(255,255,255,.15);
+}
+
+.laberinto{
+    width:100%;
+    aspect-ratio:1/1;
+    display:grid;
+    grid-template-columns:repeat(21,1fr);
+    grid-template-rows:repeat(21,1fr);
+    background:#294e32;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+/* CELDAS */
+
+.celda{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    user-select:none;
+}
+
+/* PARED */
+
+.pared{
+    background:
+        linear-gradient(135deg,#674c4c,#493535);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:
+        inset 2px 2px 3px rgba(255,255,255,.1),
+        inset -2px -2px 3px rgba(0,0,0,.25);
 }
 
 /* CAMINO */
 
 .camino{
-  background:
-    linear-gradient(
-      135deg,
-      #91ad7d,
-      #6e916a
-    );
-
-  box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,.15),
-    inset -1px -1px 3px rgba(0,0,0,.18);
+    background:
+        radial-gradient(circle at 30% 30%,rgba(255,255,255,.1),transparent 30%),
+        linear-gradient(135deg,#75a85c,#527d45);
 }
 
-/* pequeños detalles del suelo */
+/* DECORACIÓN */
 
-.camino::after{
-  content:"";
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:rgba(255,255,255,.15);
-  border-radius:50%;
-  left:30%;
-  top:25%;
+.camino:after{
+    content:"";
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:rgba(30,60,20,.4);
+    border-radius:50%;
 }
 
-/* =========================
-   MUROS
-========================= */
+/* JUGADOR */
 
-.muro{
-  position:absolute;
-  width:4.7619%;
-  height:4.7619%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #8b5267,
-      #603344 60%,
-      #432534
-    );
-
-  border:1px solid #9c6478;
-
-  border-radius:4px;
-
-  box-shadow:
-    inset 2px 2px 3px rgba(255,255,255,.15),
-    inset -3px -3px 5px rgba(0,0,0,.35),
-    0 2px 3px rgba(40,10,20,.35);
-
-  z-index:4;
+.jugador{
+    font-size:clamp(17px,3vw,30px);
+    z-index:10;
+    animation:respirar 1s infinite alternate;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.5));
 }
 
-/* piedra decorativa */
-
-.muro::after{
-  content:"";
-  position:absolute;
-  left:20%;
-  top:25%;
-  width:35%;
-  height:12%;
-  border-radius:5px;
-  background:rgba(255,255,255,.08);
+@keyframes respirar{
+    from{transform:scale(1);}
+    to{transform:scale(1.08);}
 }
 
-/* =========================
-   PERSONAJE
-========================= */
+/* KARINA */
 
-.personaje{
-  position:absolute;
-
-  width:4.7619%;
-  height:4.7619%;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  font-size:clamp(17px,3.7vw,29px);
-
-  z-index:15;
-
-  transition:
-    left .12s ease,
-    top .12s ease;
-
-  filter:
-    drop-shadow(0 3px 3px rgba(0,0,0,.35));
+.karina{
+    font-size:clamp(17px,3vw,30px);
+    z-index:8;
+    animation:brilloKarina 1.3s infinite alternate;
+    filter:drop-shadow(0 0 8px #ff8bb6);
 }
 
-#jugador{
-  text-shadow:0 0 8px #fff;
+@keyframes brilloKarina{
+    from{
+        transform:scale(1);
+        filter:drop-shadow(0 0 4px #ff8bb6);
+    }
+    to{
+        transform:scale(1.12);
+        filter:drop-shadow(0 0 14px #ff4f94);
+    }
 }
 
-#karina{
-  animation:
-    karinaAura 1.3s infinite;
+/* LLAVE */
+
+.llave{
+    font-size:clamp(15px,2.5vw,27px);
+    z-index:7;
+    animation:llaveBrillo .8s infinite alternate;
 }
 
-@keyframes karinaAura{
-
-  0%,100%{
-    filter:
-      drop-shadow(0 0 3px white)
-      drop-shadow(0 0 5px #ff70a4);
-  }
-
-  50%{
-    filter:
-      drop-shadow(0 0 7px white)
-      drop-shadow(0 0 13px #ff70a4);
-  }
+@keyframes llaveBrillo{
+    from{
+        transform:scale(1) rotate(-10deg);
+        filter:drop-shadow(0 0 3px gold);
+    }
+    to{
+        transform:scale(1.2) rotate(10deg);
+        filter:drop-shadow(0 0 13px gold);
+    }
 }
 
-/* =========================
-   LLAVE
-========================= */
-
-.objeto{
-  position:absolute;
-  width:4.7619%;
-  height:4.7619%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:clamp(17px,3.8vw,28px);
-  z-index:12;
-}
-
-#llave{
-  animation:
-    llave .9s infinite;
-}
-
-@keyframes llave{
-
-  0%,100%{
-    transform:scale(1) rotate(-5deg);
-  }
-
-  50%{
-    transform:scale(1.35) rotate(8deg);
-  }
-
-}
-
-/* círculo de luz debajo */
-
-#llave::before{
-  content:"";
-  position:absolute;
-  width:75%;
-  height:75%;
-  border-radius:50%;
-  background:rgba(255,215,80,.3);
-  filter:blur(7px);
-  z-index:-1;
-}
-
-/* =========================
-   TRAMPAS
-========================= */
-
-.trampa{
-  position:absolute;
-
-  width:4.7619%;
-  height:4.7619%;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  z-index:8;
-
-  font-size:clamp(14px,3.2vw,23px);
-
-  border-radius:5px;
-
-  animation:trampa .9s infinite;
-}
-
-.trampa.fuego{
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,230,100,.4),
-      rgba(255,90,50,.18),
-      transparent 70%
-    );
-}
-
-.trampa.agujero{
-  background:
-    radial-gradient(
-      circle,
-      #19151a 0%,
-      #31202a 48%,
-      transparent 70%
-    );
-}
-
-.trampa.cep{
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,.15),
-      transparent 65%
-    );
-}
-
-@keyframes trampa{
-
-  0%,100%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.08);
-  }
-
-}
-
-/* =========================
-   CORAZONES COLECCIONABLES
-========================= */
+/* CORAZONES */
 
 .corazon-item{
-  position:absolute;
-
-  width:4.7619%;
-  height:4.7619%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  z-index:10;
-
-  font-size:clamp(15px,3vw,22px);
-
-  animation:
-    corazonFlota 1.2s infinite;
+    font-size:clamp(12px,2vw,22px);
+    z-index:5;
+    animation:corazonPulso 1s infinite alternate;
 }
 
-@keyframes corazonFlota{
-
-  0%,100%{
-    transform:translateY(0) scale(1);
-  }
-
-  50%{
-    transform:translateY(-3px) scale(1.2);
-  }
-
+@keyframes corazonPulso{
+    to{transform:scale(1.2);}
 }
 
-/* =========================
-   SALIDA
-========================= */
+/* TRAMPAS */
 
-#salida{
-  position:absolute;
-
-  width:4.7619%;
-  height:4.7619%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:clamp(16px,3.4vw,25px);
-
-  z-index:11;
-
-  opacity:.35;
+.trampa{
+    font-size:clamp(13px,2.2vw,23px);
+    z-index:5;
 }
 
-#salida.abierta{
-  opacity:1;
-
-  animation:
-    puerta 1s infinite;
+.fuego{
+    animation:fuego 0.5s infinite alternate;
 }
 
-@keyframes puerta{
-
-  0%,100%{
-    transform:scale(1);
-    filter:drop-shadow(0 0 2px white);
-  }
-
-  50%{
-    transform:scale(1.2);
-    filter:drop-shadow(0 0 12px #ffd85e);
-  }
-
+@keyframes fuego{
+    from{transform:scale(.9);}
+    to{transform:scale(1.15);}
 }
 
-/* =========================
-   MENSAJE
-========================= */
-
-#mensajeJuego{
-  min-height:45px;
-  text-align:center;
-  margin:14px auto 8px;
-  color:#713246;
-  font-weight:bold;
-  line-height:1.5;
+.agujero{
+    filter:drop-shadow(0 0 4px black);
 }
 
-/* =========================
-   CONTROLES
-========================= */
+.cep{
+    animation:cep .8s infinite alternate;
+}
+
+@keyframes cep{
+    from{transform:rotate(-10deg);}
+    to{transform:rotate(10deg);}
+}
+
+/* SALIDA */
+
+.salida{
+    font-size:clamp(15px,2.5vw,26px);
+    z-index:6;
+}
+
+/* EFECTOS */
+
+.danio{
+    animation:golpe .3s;
+}
+
+@keyframes golpe{
+    25%{transform:translateX(-5px);}
+    50%{transform:translateX(5px);}
+    75%{transform:translateX(-5px);}
+}
+
+/* CONTROLES */
 
 .controles-juego{
-  text-align:center;
-  margin-top:8px;
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(3,60px);
+    grid-template-rows:repeat(2,60px);
+    gap:8px;
+    justify-content:center;
 }
 
-.controles-juego button{
-  width:52px;
-  height:44px;
-  margin:3px;
-
-  border:none;
-  border-radius:12px;
-
-  background:var(--rosa);
-  color:white;
-
-  font-size:19px;
-
-  cursor:pointer;
-
-  box-shadow:
-    0 5px 12px
-    rgba(255,107,157,.35);
+.control{
+    border:none;
+    border-radius:15px;
+    background:rgba(255,255,255,.9);
+    font-size:25px;
+    cursor:pointer;
+    box-shadow:0 5px 12px rgba(0,0,0,.15);
 }
 
-.controles-juego button:active{
-  transform:scale(.9);
+.control:active{
+    transform:scale(.92);
+}
+
+.arriba{
+    grid-column:2;
+}
+
+.izq{
+    grid-column:1;
+    grid-row:2;
+}
+
+.abajo{
+    grid-column:2;
+    grid-row:2;
+}
+
+.der{
+    grid-column:3;
+    grid-row:2;
+}
+
+.instrucciones{
+    margin-top:15px;
+    text-align:center;
+    font-size:14px;
+    max-width:700px;
 }
 
 /* =========================
-   FINAL
+   FINAL DEL JUEGO
 ========================= */
 
 .final-juego{
-  text-align:center;
-  margin-top:22px;
-  padding:22px 12px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #ffeaf2
-    );
-
-  border-radius:20px;
-
-  animation:
-    aparecer .8s ease;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(255,180,210,.94);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
 }
 
-.pareja-final{
-  font-size:48px;
-  margin-bottom:12px;
-  animation:pulse 1.2s infinite;
+.final-juego.mostrar{
+    display:flex;
 }
 
-.final-juego h2{
-  color:var(--rosa);
-  margin-bottom:10px;
+.final-contenido{
+    background:white;
+    padding:40px;
+    border-radius:30px;
+    max-width:600px;
+    box-shadow:0 20px 60px rgba(100,0,40,.3);
+    animation:entradaFinal .7s;
 }
 
-.final-juego p{
-  line-height:1.7;
-  color:#713246;
+@keyframes entradaFinal{
+    from{
+        opacity:0;
+        transform:scale(.6);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
 
-/* =========================
-   EFECTO DE TRAMPA
-========================= */
-
-.golpe{
-  animation:
-    shake .3s;
+.final-contenido .pareja{
+    font-size:80px;
+    margin-bottom:20px;
 }
 
-@keyframes shake{
+.final-contenido h2{
+    color:#d6336c;
+    font-size:38px;
+    margin-bottom:15px;
+}
 
-  0%,100%{
-    transform:translateX(0);
-  }
-
-  25%{
-    transform:translateX(-7px);
-  }
-
-  75%{
-    transform:translateX(7px);
-  }
-
+.final-contenido p{
+    font-size:19px;
+    line-height:1.7;
 }
 
 /* =========================
-   ANIMACIÓN GENERAL
+   RESPONSIVE
 ========================= */
 
-@keyframes aparecer{
+@media(max-width:600px){
 
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
+    .carta{
+        padding:28px 20px;
+    }
 
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+    .carta h1{
+        font-size:29px;
+    }
 
+    .carta p{
+        font-size:16px;
+    }
+
+    .juego-titulo h2{
+        font-size:27px;
+    }
+
+    .lab-wrap{
+        padding:7px;
+    }
+
+    .hud{
+        justify-content:center;
+    }
+
+    .hud-box{
+        font-size:13px;
+        padding:8px 10px;
+    }
+
+    .sobre{
+        width:260px;
+        height:180px;
+    }
+
+    .tapa{
+        border-left-width:130px;
+        border-right-width:130px;
+        border-top-width:95px;
+    }
+
+    .sobre-cuerpo:before{
+        border-width:90px 130px 0 0;
+    }
+
+    .sobre-cuerpo:after{
+        border-width:0 130px 90px 0;
+    }
+
+    .final-contenido{
+        padding:30px 20px;
+    }
+
+    .final-contenido .pareja{
+        font-size:65px;
+    }
+
+    .final-contenido h2{
+        font-size:29px;
+    }
 }
-
-@media(max-width:450px){
-
-  .tarjeta{
-    padding:28px 16px 32px;
-  }
-
-  .titulo{
-    font-size:23px;
-  }
-
-  .parrafo{
-    font-size:15px;
-  }
-
-  #laberinto{
-    border-width:4px;
-  }
-
-  .hud-item{
-    font-size:10px;
-  }
-
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="fondo-corazones" id="fondo"></div>
+<script>
+document.documentElement.classList.add("js");
+</script>
 
-<div class="escena">
+<!-- =========================
+     CORAZONES FLOTANTES
+========================= -->
 
-<!-- =================================================
+<div class="corazon-flotante" style="left:5%;animation-delay:0s;">💗</div>
+<div class="corazon-flotante" style="left:15%;animation-delay:3s;">💕</div>
+<div class="corazon-flotante" style="left:30%;animation-delay:1s;">💖</div>
+<div class="corazon-flotante" style="left:45%;animation-delay:5s;">💗</div>
+<div class="corazon-flotante" style="left:60%;animation-delay:2s;">💞</div>
+<div class="corazon-flotante" style="left:75%;animation-delay:4s;">💖</div>
+<div class="corazon-flotante" style="left:90%;animation-delay:1.5s;">💕</div>
+
+
+<!-- =========================
      SOBRE
-================================================= -->
+========================= -->
 
-<div class="sobre-wrap" id="sobreWrap">
+<section id="inicio" class="pantalla activa">
 
-  <div class="sobre" id="sobre">
+    <div class="sobre-container">
 
-    <div class="cuerpo"></div>
+        <div class="sobre" onclick="abrirSobre()">
 
-    <div class="solapa"></div>
+            <div class="sobre-cuerpo"></div>
 
-    <div class="sello">
-      ❤️
+            <div class="tapa"></div>
+
+            <div class="corazon-sobre">
+                💌
+            </div>
+
+        </div>
+
+        <!-- IMPORTANTE:
+             ESTE ID ES EL ARREGLO -->
+        <p class="pista" id="pista">
+            Toca el sobre para abrir tu sorpresa 💌
+        </p>
+
     </div>
 
-  </div>
-
-  <p class="pista">
-    Toca el sobre para abrir tu sorpresa 💌
-  </p>
-
-</div>
+</section>
 
 
-<!-- =================================================
+<!-- =========================
      CARTA
-================================================= -->
+========================= -->
 
-<div class="carta pantalla tarjeta" id="carta">
+<section id="carta" class="pantalla">
 
-  <h1 class="titulo">
-    Para mi Karina 💕
-  </h1>
+    <div class="carta">
 
-  <p class="subtitulo">
-    De tu osito
-  </p>
+        <h1>Para mi osita Karina 🐻💗</h1>
 
-  <p class="parrafo">
-    Hola amorcitooo, actualicé la página y quiero decirte
-    que te quiero mucho <span class="destacar">corazón</span>.
-  </p>
+        <p>
+            Mi amor, quería hacerte algo diferente,
+            algo que pudiera guardar un pedacito de todo
+            lo que siento por ti.
+        </p>
 
-  <p class="parrafo">
-    Osita amo los momentos compartidos contigo,
-    te quiero mucho amorcito y por eso hice esta página
-    que es tuya y mía...
-  </p>
+        <p>
+            A veces me da nostalgia pensar en todo lo que
+            hemos construido juntos. No porque quiera volver
+            al pasado, sino porque me hace darme cuenta de
+            lo bonito que ha sido caminar contigo.
+        </p>
 
-  <p class="parrafo">
-    Gracias por tu paciencia conmigo, por tu ternura
-    y por dejarme ser tu compañía.
-    Prometo cuidar tu sonrisa como el tesoro que es
-    y llenarte de detalles y de amor del bueno.
-  </p>
+        <p>
+            Hemos vivido momentos increíbles, momentos
+            difíciles, risas, conversaciones, locuras y
+            recuerdos que quiero seguir acumulando contigo.
+        </p>
 
-  <p class="parrafo">
-    Te amo, Karina.
-    Hoy, mañana y siempre. 💗
-  </p>
+        <p>
+            Y si tuviera que recorrer un laberinto entero
+            para encontrarte, lo haría una y otra vez.
+        </p>
 
-  <div class="corazon-grande">
-    ❤️
-  </div>
+        <p>
+            Porque al final siempre quiero llegar a ti. ❤️
+        </p>
 
-  <div class="firma">
-    Con todo mi amor,<br>
-    <strong>José Manuel</strong> —
-    tu osito 🐻
-  </div>
+        <div class="firma">
+            José Manuel — tu osito 🐻
+        </div>
 
-  <div class="menu">
+        <button class="boton" onclick="mostrar('razones')">
+            Hay algo más para ti 💗
+        </button>
 
-    <button class="boton-amor" id="btnAmor">
-      Mil corazones 💞
-    </button>
+    </div>
 
-    <button class="boton-amor suave" data-ir="razones">
-      Razones por las que te amo 💘
-    </button>
-
-    <button class="boton-amor suave" data-ir="album">
-      Nuestras fotos 📸
-    </button>
-
-    <button class="boton-amor suave" data-ir="juego">
-      🎮 Una misión para mi osita
-    </button>
-
-  </div>
-
-</div>
+</section>
 
 
-<!-- =================================================
+<!-- =========================
      RAZONES
-================================================= -->
+========================= -->
 
-<div class="pantalla tarjeta" id="razones">
+<section id="razones" class="pantalla">
 
-  <button class="volver" data-ir="carta">
-    ‹ Volver
-  </button>
+    <div class="razones">
 
-  <h1 class="titulo">
-    Razones por las que te amo
-  </h1>
+        <h2>Razones por las que te amo 💕</h2>
 
-  <p class="subtitulo">
-    Una por una
-  </p>
+        <div class="lista-razones">
 
-  <p class="razones-txt" id="razContador">
-    Toca el botón y ve descubriéndolas 💗
-  </p>
+            <div class="razon" onclick="this.classList.toggle('abierta')">
+                <div class="emoji">🥰</div>
+                <strong>Tu forma de ser</strong>
+                <p>
+                    Porque eres tú. No necesito que seas perfecta,
+                    me encanta la persona que eres.
+                </p>
+            </div>
 
-  <div class="razon-card" id="razonCard">
+            <div class="razon" onclick="this.classList.toggle('abierta')">
+                <div class="emoji">😂</div>
+                <strong>Nuestras locuras</strong>
+                <p>
+                    Porque contigo hasta las cosas más tontas
+                    terminan convirtiéndose en recuerdos.
+                </p>
+            </div>
 
-    <span class="razon-num" id="razonNum">
-      ¿Lista?
-    </span>
+            <div class="razon" onclick="this.classList.toggle('abierta')">
+                <div class="emoji">❤️</div>
+                <strong>Lo que construimos</strong>
+                <p>
+                    Porque cada día juntos es una pequeña parte
+                    de nuestra historia.
+                </p>
+            </div>
 
-    <p class="razon-texto" id="razonTexto">
-      Toca "Descubre una razón"
-    </p>
+            <div class="razon" onclick="this.classList.toggle('abierta')">
+                <div class="emoji">🫶</div>
+                <strong>Cómo me haces sentir</strong>
+                <p>
+                    Porque contigo puedo sentirme querido,
+                    acompañado y completamente yo.
+                </p>
+            </div>
 
-  </div>
+        </div>
 
-  <div class="centro">
+        <button class="boton" onclick="mostrar('fotos')">
+            Nuestras fotos 📸
+        </button>
 
-    <button class="boton-amor" id="btnRazon">
-      Descubre una razón 💗
-    </button>
+    </div>
 
-  </div>
-
-</div>
-
-
-<!-- =================================================
-     ALBUM
-================================================= -->
-
-<div class="pantalla tarjeta" id="album">
-
-  <button class="volver" data-ir="carta">
-    ‹ Volver
-  </button>
-
-  <h1 class="titulo">
-    Nuestras fotos
-  </h1>
-
-  <p class="subtitulo">
-    Nuestros recuerdos
-  </p>
-
-  <div class="carrusel">
-
-    <div class="slides" id="slides"></div>
-
-    <button class="flecha-c prev" id="cPrev">
-      ‹
-    </button>
-
-    <button class="flecha-c next" id="cNext">
-      ›
-    </button>
-
-  </div>
-
-  <p class="foto-caption" id="fotoCaption"></p>
-
-  <div class="dots" id="dots"></div>
-
-</div>
+</section>
 
 
-<!-- =================================================
+<!-- =========================
+     FOTOS
+========================= -->
+
+<section id="fotos" class="pantalla">
+
+    <div class="fotos">
+
+        <h2>Nuestros recuerdos 📸💕</h2>
+
+        <div class="carrusel">
+
+            <img src="foto1.jpg" class="activa" alt="Foto 1">
+
+            <img src="foto2.jpg" alt="Foto 2">
+
+            <img src="foto3.jpg" alt="Foto 3">
+
+        </div>
+
+        <div class="controles">
+
+            <button class="boton" onclick="fotoAnterior()">
+                ⬅️
+            </button>
+
+            <button class="boton" onclick="fotoSiguiente()">
+                ➡️
+            </button>
+
+        </div>
+
+        <button class="boton" onclick="mostrar('juego')">
+            Tengo una misión para ti 🎮❤️
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
      JUEGO
-================================================= -->
+========================= -->
 
-<div class="pantalla tarjeta" id="juego">
+<section id="juego" class="pantalla juego-pantalla">
 
-  <button class="volver" data-ir="carta">
-    ‹ Volver
-  </button>
+    <div class="juego-titulo">
 
-  <h1 class="titulo">
-    Nuestra misión ❤️
-  </h1>
+        <h2>Encuentra a tu osita 🐻❤️</h2>
 
-  <p class="subtitulo">
-    El laberinto del amor
-  </p>
-
-  <p class="juego-intro">
-
-    🧑🏾‍🦱 Tu misión es encontrar la llave 🔑
-    <br>
-
-    Pero cuidado...
-
-    <strong>
-      hay trampas por el camino. 🪤
-    </strong>
-
-    <br>
-
-    Cuando tengas la llave,
-    encuentra a tu osita 👩🏻‍🦰.
-
-  </p>
-
-
-  <!-- HUD -->
-
-  <div class="hud">
-
-    <div class="hud-item">
-      ❤️ Corazones
-      <span id="hudCorazones">0</span>
-    </div>
-
-    <div class="hud-item">
-      ⏱️ Tiempo
-      <span id="hudTiempo">0</span>
-    </div>
-
-    <div class="hud-item">
-      🔑 Llave
-      <span id="hudLlave">❌</span>
-    </div>
-
-  </div>
-
-
-  <!-- LABERINTO -->
-
-  <div id="juegoContenedor">
-
-    <div id="laberinto">
-
-      <div id="jugador" class="personaje">
-        🧑🏾‍🦱
-      </div>
-
-      <div id="llave" class="objeto">
-        🔑
-      </div>
-
-      <div id="karina" class="personaje">
-        👩🏻‍🦰
-      </div>
-
-      <div id="salida">
-        🚪
-      </div>
+        <p>
+            Busca la llave 🔑, llega hasta Karina 👩🏻‍🦰
+            y salgan juntos por la puerta 🚪
+        </p>
 
     </div>
 
-  </div>
 
+    <div class="hud">
 
-  <p id="mensajeJuego">
-    Encuentra la llave 🔑...
-    y cuidado con las trampas.
-  </p>
+        <div class="hud-box">
+            ❤️ Corazones:
+            <span id="contadorCorazones">0</span>
+        </div>
 
+        <div class="hud-box">
+            🔑 Llave:
+            <span id="estadoLlave">No</span>
+        </div>
 
-  <!-- CONTROLES -->
+        <div class="hud-box">
+            ⏱️ Tiempo:
+            <span id="tiempo">0</span>s
+        </div>
 
-  <div class="controles-juego">
+        <button class="boton" style="margin:0;" onclick="reiniciarJuego()">
+            🔄 Reiniciar
+        </button>
 
-    <button data-mover="arriba">
-      ⬆️
-    </button>
-
-    <br>
-
-    <button data-mover="izquierda">
-      ⬅️
-    </button>
-
-    <button data-mover="abajo">
-      ⬇️
-    </button>
-
-    <button data-mover="derecha">
-      ➡️
-    </button>
-
-  </div>
-
-
-  <!-- FINAL -->
-
-  <div
-    class="final-juego"
-    id="finalJuego"
-    style="display:none"
-  >
-
-    <div class="pareja-final">
-      🧑🏾‍🦱❤️👩🏻‍🦰
     </div>
 
-    <h2>
-      ¡Lo logramos! 💕
-    </h2>
 
-    <p>
+    <div class="lab-wrap">
 
-      Encontraste la llave.
+        <div id="laberinto" class="laberinto"></div>
 
-      <br>
+    </div>
 
-      Atravesaste todo el laberinto.
 
-      <br>
+    <div class="controles-juego">
 
-      Y finalmente encontraste a tu osita. 🥹❤️
+        <button class="control arriba" onclick="mover('arriba')">
+            ⬆️
+        </button>
 
-      <br><br>
+        <button class="control izq" onclick="mover('izquierda')">
+            ⬅️
+        </button>
 
-      Ahora vámonos juntos...
+        <button class="control abajo" onclick="mover('abajo')">
+            ⬇️
+        </button>
 
-      <br>
+        <button class="control der" onclick="mover('derecha')">
+            ➡️
+        </button>
 
-      porque al final de cualquier laberinto,
+    </div>
 
-      <strong>
-        siempre quiero encontrarte a ti. 🐻❤️
-      </strong>
 
-    </p>
+    <div class="instrucciones">
+        💡 Usa las flechas del teclado o los botones.
+        Cuidado con 🔥 agujeros 🕳️ y trampas 🪤.
+        Los corazones te darán puntos.
+    </div>
 
-    <br>
+</section>
 
-    <button
-      class="boton-amor"
-      id="reiniciarJuego"
-    >
-      🔄 Volver a jugar
-    </button>
 
-  </div>
+<!-- =========================
+     FINAL
+========================= -->
 
-</div>
+<div id="finalJuego" class="final-juego">
+
+    <div class="final-contenido">
+
+        <div class="pareja">
+            🧑🏾‍🦱 ❤️ 👩🏻‍🦰
+        </div>
+
+        <h2>¡Lo lograste, osito! 💗</h2>
+
+        <p>
+            Encontraste la llave, encontraste a Karina
+            y ahora los dos pueden salir juntos. 🥹❤️
+        </p>
+
+        <p style="margin-top:15px;">
+            Porque no importa cuántos caminos haya,
+            al final siempre quiero encontrarte a ti. 💕
+        </p>
+
+        <button class="boton" onclick="cerrarFinal()">
+            Volver a jugar 🔄
+        </button>
+
+    </div>
 
 </div>
 
 
 <script>
 
-"use strict";
-
-/* =================================================
-   DATOS
-================================================= */
-
-const razones = [
-
-"Por tu sonrisa, que me alegra hasta el peor de mis días.",
-
-"Por la forma en que me miras, como si yo fuera tu lugar favorito.",
-
-"Porque me haces querer ser mejor persona.",
-
-"Por tu paciencia, incluso cuando meto la pata.",
-
-"Porque contigo hasta lo más simple se vuelve especial.",
-
-"Por tus abrazos, que se sienten como estar en casa.",
-
-"Por cómo cuidas de mí sin siquiera darte cuenta.",
-
-"Porque eres mi primer pensamiento al despertar y el último antes de dormir.",
-
-"Por tu manera de amar, tan sincera y tan tuya.",
-
-"Porque me elegiste a mí para ser tu osito.",
-
-"Por cada risa que compartimos y las que nos faltan.",
-
-"Y porque cada día encuentro una razón nueva para amarte."
-
-];
-
-
-const fotos=[
-
-{
- src:"foto1.jpg",
- texto:"Una foto muy linda juntos 💕"
-},
-
-{
- src:"foto2.jpg",
- texto:"Ese día que no paramos de reír 😄"
-},
-
-{
- src:"foto3.jpg",
- texto:"Mi lugar favorito: a tu lado 🐻"
-}
-
-];
-
-
-/* =================================================
-   CORAZONES
-================================================= */
-
-function crearCorazon(){
-
-  const s=document.createElement("span");
-
-  s.textContent="❤️";
-
-  s.style.fontSize=
-    (12+Math.random()*20)+"px";
-
-  s.style.left=
-    Math.random()*100+"vw";
-
-  s.style.animationDuration=
-    (7+Math.random()*7)+"s";
-
-  document.getElementById("fondo")
-    .appendChild(s);
-
-  setTimeout(
-    ()=>s.remove(),
-    15000
-  );
-
-}
-
-
-setInterval(
-  crearCorazon,
-  600
-);
-
-
-for(let i=0;i<8;i++){
-
-  setTimeout(
-    crearCorazon,
-    i*300
-  );
-
-}
-
-
-function lluviaDeAmor(){
-
-  for(let i=0;i<30;i++){
-
-    setTimeout(()=>{
-
-      const s=document.createElement("div");
-
-      s.textContent=
-        Math.random()>.5
-        ?"❤️"
-        :"💗";
-
-      s.style.position="fixed";
-      s.style.left=
-        Math.random()*100+"vw";
-      s.style.top="-40px";
-      s.style.fontSize=
-        (18+Math.random()*25)+"px";
-      s.style.zIndex="999";
-      s.style.pointerEvents="none";
-      s.style.transition=
-        "transform 3s linear,opacity 3s linear";
-
-      document.body.appendChild(s);
-
-      requestAnimationFrame(()=>{
-
-        s.style.transform=
-          "translateY(110vh) rotate(360deg)";
-
-        s.style.opacity="0";
-
-      });
-
-      setTimeout(
-        ()=>s.remove(),
-        3200
-      );
-
-    },i*70);
-
-  }
-
-}
-
-
-/* =================================================
-   NAVEGACIÓN
-================================================= */
+/* =====================================================
+   CAMBIAR PANTALLAS
+===================================================== */
 
 function mostrar(id){
 
-  const ids=[
-    "carta",
-    "razones",
-    "album",
-    "juego"
-  ];
+    document.querySelectorAll(".pantalla").forEach(function(p){
+        p.classList.remove("activa");
+    });
 
-  ids.forEach(x=>{
+    const pantalla = document.getElementById(id);
 
-    document
-      .getElementById(x)
-      .classList.toggle(
-        "activa",
-        x===id
-      );
+    if(pantalla){
+        pantalla.classList.add("activa");
+    }
 
-  });
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
 
-  if(id==="juego"){
-    iniciarJuego();
-  }
 
-  document
-    .getElementById(id)
-    .scrollIntoView({
-      behavior:"smooth",
-      block:"start"
+/* =====================================================
+   SOBRE
+===================================================== */
+
+function abrirSobre(){
+
+    const pista = document.getElementById("pista");
+
+    if(pista){
+        pista.textContent = "💗";
+    }
+
+    setTimeout(function(){
+
+        mostrar("carta");
+
+    },500);
+}
+
+
+/* =====================================================
+   FOTOS
+===================================================== */
+
+let fotoActual = 0;
+
+const fotos = document.querySelectorAll(".carrusel img");
+
+function mostrarFoto(){
+
+    fotos.forEach(function(foto,index){
+
+        foto.classList.toggle(
+            "activa",
+            index === fotoActual
+        );
+
     });
 
 }
 
+function fotoSiguiente(){
 
-/* =================================================
-   SOBRE
-================================================= */
+    if(fotos.length === 0) return;
 
-let cartaAbierta=false;
+    fotoActual++;
 
-function abrirCarta(){
+    if(fotoActual >= fotos.length){
+        fotoActual = 0;
+    }
 
-  if(cartaAbierta)
-    return;
+    mostrarFoto();
+}
 
-  cartaAbierta=true;
+function fotoAnterior(){
 
-  document
-    .getElementById("sobre")
-    .classList.add("abierto");
+    if(fotos.length === 0) return;
 
-  document
-    .getElementById("pista")
-    .textContent="❤️";
+    fotoActual--;
 
-  setTimeout(()=>{
+    if(fotoActual < 0){
+        fotoActual = fotos.length - 1;
+    }
 
-    document
-      .getElementById("sobreWrap")
-      .style.display="none";
+    mostrarFoto();
+}
 
-    mostrar("carta");
 
-    lluviaDeAmor();
+/* =====================================================
+   LABERINTO
+===================================================== */
 
-  },650);
+const SIZE = 21;
+
+let mapa = [];
+
+let jugador = {
+    x:1,
+    y:1
+};
+
+let inicioJugador = {
+    x:1,
+    y:1
+};
+
+let posicionKarina = {
+    x:SIZE-2,
+    y:SIZE-2
+};
+
+let posicionLlave = {
+    x:SIZE-2,
+    y:1
+};
+
+let salida = {
+    x:SIZE-2,
+    y:SIZE-2
+};
+
+let llaveConseguida = false;
+
+let corazones = [];
+
+let trampas = [];
+
+let segundos = 0;
+
+let intervaloTiempo = null;
+
+let juegoTerminado = false;
+
+
+/* =====================================================
+   CREAR LABERINTO
+===================================================== */
+
+function crearLaberinto(){
+
+    mapa = [];
+
+    for(let y=0;y<SIZE;y++){
+
+        mapa[y] = [];
+
+        for(let x=0;x<SIZE;x++){
+
+            mapa[y][x] = 1;
+
+        }
+
+    }
+
+    function visitar(x,y){
+
+        mapa[y][x] = 0;
+
+        const direcciones = [
+            [2,0],
+            [-2,0],
+            [0,2],
+            [0,-2]
+        ];
+
+        direcciones.sort(function(){
+            return Math.random() - .5;
+        });
+
+        for(const dir of direcciones){
+
+            const nx = x + dir[0];
+            const ny = y + dir[1];
+
+            if(
+                nx > 0 &&
+                nx < SIZE-1 &&
+                ny > 0 &&
+                ny < SIZE-1 &&
+                mapa[ny][nx] === 1
+            ){
+
+                mapa[y + dir[1]/2][x + dir[0]/2] = 0;
+
+                visitar(nx,ny);
+
+            }
+
+        }
+
+    }
+
+    visitar(1,1);
+
+    /* Abrimos algunas zonas para hacerlo
+       difícil pero jugable */
+
+    for(let i=0;i<18;i++){
+
+        let x = Math.floor(Math.random()*(SIZE-2))+1;
+        let y = Math.floor(Math.random()*(SIZE-2))+1;
+
+        if(mapa[y][x] === 1){
+
+            let vecinos = 0;
+
+            if(mapa[y-1]?.[x] === 0) vecinos++;
+            if(mapa[y+1]?.[x] === 0) vecinos++;
+            if(mapa[y]?.[x-1] === 0) vecinos++;
+            if(mapa[y]?.[x+1] === 0) vecinos++;
+
+            if(vecinos >= 2){
+                mapa[y][x] = 0;
+            }
+
+        }
+
+    }
 
 }
 
 
-document
-  .getElementById("sobreWrap")
-  .addEventListener(
-    "click",
-    abrirCarta
-  );
+/* =====================================================
+   BUSCAR CELDA LIBRE LEJANA
+===================================================== */
+
+function encontrarLejano(desdeX,desdeY){
+
+    let candidatos = [];
+
+    for(let y=1;y<SIZE-1;y++){
+
+        for(let x=1;x<SIZE-1;x++){
+
+            if(mapa[y][x] === 0){
+
+                let distancia =
+                    Math.abs(x-desdeX) +
+                    Math.abs(y-desdeY);
+
+                if(distancia > 10){
+
+                    candidatos.push({
+                        x:x,
+                        y:y
+                    });
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if(candidatos.length === 0){
+
+        return {
+            x:SIZE-2,
+            y:SIZE-2
+        };
+
+    }
+
+    return candidatos[
+        Math.floor(Math.random()*candidatos.length)
+    ];
+
+}
 
 
-/* =================================================
-   NAVEGACIÓN BOTONES
-================================================= */
+/* =====================================================
+   GENERAR OBJETOS
+===================================================== */
 
-document
-  .querySelectorAll("[data-ir]")
-  .forEach(btn=>{
+function generarObjetos(){
 
-    btn.addEventListener(
-      "click",
-      ()=>{
-        mostrar(
-          btn.dataset.ir
-        );
-      }
+    jugador = {
+        x:1,
+        y:1
+    };
+
+    inicioJugador = {
+        x:1,
+        y:1
+    };
+
+    /* Karina lejos */
+
+    posicionKarina = encontrarLejano(
+        jugador.x,
+        jugador.y
     );
 
-  });
+    /* Llave */
+
+    let llave = encontrarLejano(
+        jugador.x,
+        jugador.y
+    );
+
+    posicionLlave = {
+        x:llave.x,
+        y:llave.y
+    };
+
+    /* Salida cerca de Karina */
+
+    salida = {
+        x:posicionKarina.x,
+        y:posicionKarina.y
+    };
+
+    /* Corazones */
+
+    corazones = [];
+
+    for(let i=0;i<12;i++){
+
+        let pos = encontrarPosicionLibre();
+
+        if(pos){
+            corazones.push(pos);
+        }
+
+    }
+
+    /* Trampas */
+
+    trampas = [];
+
+    const tipos = [
+        "fuego",
+        "agujero",
+        "cep"
+    ];
+
+    for(let i=0;i<20;i++){
+
+        let pos = encontrarPosicionLibre();
+
+        if(pos){
+
+            trampas.push({
+                x:pos.x,
+                y:pos.y,
+                tipo:tipos[
+                    Math.floor(Math.random()*tipos.length)
+                ]
+            });
+
+        }
+
+    }
+
+}
 
 
-/* =================================================
-   MIL CORAZONES
-================================================= */
+function encontrarPosicionLibre(){
 
-document
-  .getElementById("btnAmor")
-  .addEventListener(
-    "click",
-    lluviaDeAmor
-  );
+    for(let intentos=0;intentos<100;intentos++){
+
+        let x =
+            Math.floor(Math.random()*(SIZE-2))+1;
+
+        let y =
+            Math.floor(Math.random()*(SIZE-2))+1;
+
+        if(mapa[y][x] !== 0){
+            continue;
+        }
+
+        if(x === jugador.x && y === jugador.y){
+            continue;
+        }
+
+        if(x === posicionKarina.x && y === posicionKarina.y){
+            continue;
+        }
+
+        if(x === posicionLlave.x && y === posicionLlave.y){
+            continue;
+        }
+
+        if(x === salida.x && y === salida.y){
+            continue;
+        }
+
+        let ocupado =
+            corazones.some(function(c){
+                return c.x === x && c.y === y;
+            });
+
+        if(ocupado){
+            continue;
+        }
+
+        let trampa =
+            trampas.some(function(t){
+                return t.x === x && t.y === y;
+            });
+
+        if(trampa){
+            continue;
+        }
+
+        return {
+            x:x,
+            y:y
+        };
+
+    }
+
+    return null;
+}
 
 
-/* =================================================
-   RAZONES
-================================================= */
+/* =====================================================
+   DIBUJAR
+===================================================== */
 
-let razonIndex=0;
+function dibujarLab(){
 
-document
-  .getElementById("btnRazon")
-  .addEventListener(
-    "click",
-    ()=>{
+    const contenedor =
+        document.getElementById("laberinto");
 
-      const num=
-        document.getElementById(
-          "razonNum"
-        );
+    contenedor.innerHTML = "";
 
-      const txt=
-        document.getElementById(
-          "razonTexto"
-        );
+    for(let y=0;y<SIZE;y++){
 
-      const contador=
-        document.getElementById(
-          "razContador"
-        );
+        for(let x=0;x<SIZE;x++){
 
-      if(
-        razonIndex>=
-        razones.length
-      ){
+            const celda =
+                document.createElement("div");
 
-        num.textContent="❤️";
+            celda.className =
+                mapa[y][x] === 1
+                ? "celda pared"
+                : "celda camino";
 
-        txt.textContent=
-          "Y me faltan mil razones más... Te amo, Karina.";
+            /* Jugador */
 
-        contador.textContent=
-          "Esas son sólo unas pocas de infinitas razones 💗";
+            if(
+                jugador.x === x &&
+                jugador.y === y
+            ){
 
-        razonIndex=0;
+                const el =
+                    document.createElement("div");
 
-        lluviaDeAmor();
+                el.className = "jugador";
+                el.textContent = "🧑🏾‍🦱";
+
+                celda.appendChild(el);
+
+            }
+
+            /* Karina */
+
+            if(
+                posicionKarina.x === x &&
+                posicionKarina.y === y
+            ){
+
+                const el =
+                    document.createElement("div");
+
+                el.className = "karina";
+                el.textContent = "👩🏻‍🦰";
+
+                celda.appendChild(el);
+
+            }
+
+            /* Llave */
+
+            if(
+                !llaveConseguida &&
+                posicionLlave.x === x &&
+                posicionLlave.y === y
+            ){
+
+                const el =
+                    document.createElement("div");
+
+                el.className = "llave";
+                el.textContent = "🔑";
+
+                celda.appendChild(el);
+
+            }
+
+            /* Corazones */
+
+            const corazon =
+                corazones.find(function(c){
+                    return c.x === x && c.y === y;
+                });
+
+            if(corazon){
+
+                const el =
+                    document.createElement("div");
+
+                el.className = "corazon-item";
+                el.textContent = "💗";
+
+                celda.appendChild(el);
+
+            }
+
+            /* Trampas */
+
+            const trampa =
+                trampas.find(function(t){
+                    return t.x === x && t.y === y;
+                });
+
+            if(trampa){
+
+                const el =
+                    document.createElement("div");
+
+                el.className =
+                    "trampa " + trampa.tipo;
+
+                if(trampa.tipo === "fuego"){
+                    el.textContent = "🔥";
+                }
+
+                if(trampa.tipo === "agujero"){
+                    el.textContent = "🕳️";
+                }
+
+                if(trampa.tipo === "cep"){
+                    el.textContent = "🪤";
+                }
+
+                celda.appendChild(el);
+
+            }
+
+            /* Salida */
+
+            if(
+                llaveConseguida &&
+                salida.x === x &&
+                salida.y === y
+            ){
+
+                const el =
+                    document.createElement("div");
+
+                el.className = "salida";
+                el.textContent = "🚪";
+
+                celda.appendChild(el);
+
+            }
+
+            contenedor.appendChild(celda);
+
+        }
+
+    }
+
+    document.getElementById(
+        "contadorCorazones"
+    ).textContent =
+        corazonesRecolectados;
+
+    document.getElementById(
+        "estadoLlave"
+    ).textContent =
+        llaveConseguida ? "Sí 🔑" : "No";
+
+}
+
+
+/* =====================================================
+   CORAZONES
+===================================================== */
+
+let corazonesRecolectados = 0;
+
+
+/* =====================================================
+   MOVER
+===================================================== */
+
+function mover(direccion){
+
+    if(juegoTerminado){
+        return;
+    }
+
+    let nx = jugador.x;
+    let ny = jugador.y;
+
+    if(direccion === "arriba"){
+        ny--;
+    }
+
+    if(direccion === "abajo"){
+        ny++;
+    }
+
+    if(direccion === "izquierda"){
+        nx--;
+    }
+
+    if(direccion === "derecha"){
+        nx++;
+    }
+
+    /* No atravesar paredes */
+
+    if(
+        nx < 0 ||
+        nx >= SIZE ||
+        ny < 0 ||
+        ny >= SIZE ||
+        mapa[ny][nx] === 1
+    ){
 
         return;
 
-      }
-
-      num.textContent=
-        "Razón "+
-        (razonIndex+1)+
-        " de "+
-        razones.length;
-
-      txt.textContent=
-        razones[razonIndex];
-
-      contador.textContent=
-        "Sigue tocando para descubrir más 💗";
-
-      razonIndex++;
-
     }
-  );
 
+    jugador.x = nx;
+    jugador.y = ny;
 
-/* =================================================
-   CARRUSEL
-================================================= */
+    revisarCasilla();
 
-let fotoIndex=0;
-
-function construirFotos(){
-
-  const slides=
-    document.getElementById("slides");
-
-  const dots=
-    document.getElementById("dots");
-
-  fotos.forEach((foto,i)=>{
-
-    const slide=
-      document.createElement("div");
-
-    slide.className="slide";
-
-    const img=
-      document.createElement("img");
-
-    img.src=foto.src;
-
-    img.alt=foto.texto;
-
-    img.onerror=()=>{
-
-      slide.innerHTML=
-        `<div class="sin-foto">
-          Aquí irá tu foto 💕<br>
-          <strong>${foto.src}</strong>
-        </div>`;
-
-    };
-
-    slide.appendChild(img);
-
-    slides.appendChild(slide);
-
-
-    const dot=
-      document.createElement("span");
-
-    dot.className="dot";
-
-    dot.onclick=
-      ()=>irFoto(i);
-
-    dots.appendChild(dot);
-
-  });
-
-  irFoto(0);
+    dibujarLab();
 
 }
 
 
-function irFoto(i){
+/* =====================================================
+   REVISAR CASILLA
+===================================================== */
 
-  if(i<0)
-    i=fotos.length-1;
+function revisarCasilla(){
 
-  if(i>=fotos.length)
-    i=0;
-
-  fotoIndex=i;
-
-  document
-    .getElementById("slides")
-    .style.transform=
-      `translateX(-${i*100}%)`;
-
-  document
-    .getElementById("fotoCaption")
-    .textContent=
-      fotos[i].texto;
-
-  [...document
-    .getElementById("dots")
-    .children]
-    .forEach(
-      (dot,k)=>
-        dot.classList.toggle(
-          "activo",
-          k===i
-        )
-    );
-
-}
-
-
-document
-  .getElementById("cPrev")
-  .onclick=
-    ()=>irFoto(fotoIndex-1);
-
-document
-  .getElementById("cNext")
-  .onclick=
-    ()=>irFoto(fotoIndex+1);
-
-
-/* =================================================
-   ==================== JUEGO ======================
-================================================= */
-
-/*
-   El juego utiliza un laberinto
-   generado automáticamente.
-
-   21 x 21 = bastante más grande.
-*/
-
-const SIZE=21;
-
-let mapa=[];
-
-let jugador={
-  x:1,
-  y:1
-};
-
-let llave={
-  x:0,
-  y:0
-};
-
-let karina={
-  x:0,
-  y:0
-};
-
-let salida={
-  x:0,
-  y:0
-};
-
-let llaveConseguida=false;
-
-let juegoTerminado=false;
-
-let corazones=0;
-
-let tiempo=0;
-
-let timer=null;
-
-let trampas=[];
-
-let corazonesMapa=[];
-
-
-/* =================================================
-   GENERADOR DEL LABERINTO
-================================================= */
-
-function generarLaberinto(){
-
-  mapa=
-    Array.from(
-      {length:SIZE},
-      ()=>Array(SIZE).fill(1)
-    );
-
-
-  function cavar(x,y){
-
-    mapa[y][x]=0;
-
-    const dirs=[
-      [2,0],
-      [-2,0],
-      [0,2],
-      [0,-2]
-    ];
-
-    dirs.sort(
-      ()=>Math.random()-.5
-    );
-
-
-    for(
-      const [dx,dy]
-      of dirs
-    ){
-
-      const nx=x+dx;
-      const ny=y+dy;
-
-
-      if(
-        nx>0 &&
-        nx<SIZE-1 &&
-        ny>0 &&
-        ny<SIZE-1 &&
-        mapa[ny][nx]===1
-      ){
-
-        mapa[
-          y+dy/2
-        ][
-          x+dx/2
-        ]=0;
-
-        cavar(nx,ny);
-
-      }
-
-    }
-
-  }
-
-
-  cavar(1,1);
-
-
-  /*
-     Abrimos algunos caminos
-     extra para que el laberinto
-     no sea demasiado brutal.
-  */
-
-  for(let i=0;i<18;i++){
-
-    const x=
-      1+
-      Math.floor(
-        Math.random()*19
-      );
-
-    const y=
-      1+
-      Math.floor(
-        Math.random()*19
-      );
+    /* LLAVE */
 
     if(
-      mapa[y][x]===1
+        !llaveConseguida &&
+        jugador.x === posicionLlave.x &&
+        jugador.y === posicionLlave.y
     ){
 
-      let vecinos=0;
+        llaveConseguida = true;
 
-      if(
-        x>0 &&
-        mapa[y][x-1]===0
-      ) vecinos++;
-
-      if(
-        x<SIZE-1 &&
-        mapa[y][x+1]===0
-      ) vecinos++;
-
-      if(
-        y>0 &&
-        mapa[y-1][x]===0
-      ) vecinos++;
-
-      if(
-        y<SIZE-1 &&
-        mapa[y+1][x]===0
-      ) vecinos++;
-
-      if(vecinos>=2)
-        mapa[y][x]=0;
+        alert(
+            "🔑 ¡Encontraste la llave!\n\n" +
+            "Ahora busca a Karina 👩🏻‍🦰"
+        );
 
     }
 
-  }
 
-}
+    /* CORAZÓN */
 
+    const indiceCorazon =
+        corazones.findIndex(function(c){
 
-/* =================================================
-   BUSCAR CAMINO LEJANO
-================================================= */
+            return (
+                c.x === jugador.x &&
+                c.y === jugador.y
+            );
 
-function encontrarCeldaLejana(){
+        });
 
-  const visitado=
-    Array.from(
-      {length:SIZE},
-      ()=>Array(SIZE).fill(false)
-    );
+    if(indiceCorazon !== -1){
 
-  const cola=[
-    {
-      x:1,
-      y:1,
-      d:0
+        corazones.splice(indiceCorazon,1);
+
+        corazonesRecolectados++;
+
     }
-  ];
-
-  visitado[1][1]=true;
-
-  let mejor={
-    x:1,
-    y:1,
-    d:0
-  };
 
 
-  while(cola.length){
+    /* TRAMPA */
 
-    const actual=
-      cola.shift();
+    const trampa =
+        trampas.find(function(t){
 
+            return (
+                t.x === jugador.x &&
+                t.y === jugador.y
+            );
+
+        });
+
+    if(trampa){
+
+        activarTrampa(trampa);
+
+    }
+
+
+    /* KARINA */
 
     if(
-      actual.d>
-      mejor.d
+        jugador.x === posicionKarina.x &&
+        jugador.y === posicionKarina.y
     ){
 
-      mejor=actual;
+        if(llaveConseguida){
 
-    }
+            juegoTerminado = true;
 
+            clearInterval(intervaloTiempo);
 
-    const dirs=[
-      [1,0],
-      [-1,0],
-      [0,1],
-      [0,-1]
-    ];
+            setTimeout(function(){
 
+                document
+                    .getElementById("finalJuego")
+                    .classList.add("mostrar");
 
-    dirs.forEach(
-      ([dx,dy])=>{
+            },250);
 
-        const nx=
-          actual.x+dx;
+        }else{
 
-        const ny=
-          actual.y+dy;
-
-
-        if(
-          nx>=0 &&
-          nx<SIZE &&
-          ny>=0 &&
-          ny<SIZE &&
-          !visitado[ny][nx] &&
-          mapa[ny][nx]===0
-        ){
-
-          visitado[ny][nx]=true;
-
-          cola.push({
-            x:nx,
-            y:ny,
-            d:actual.d+1
-          });
+            alert(
+                "👩🏻‍🦰 Karina está aquí...\n\n" +
+                "Pero necesitas la 🔑 para poder salir juntos."
+            );
 
         }
 
-      }
-    );
-
-  }
-
-  return {
-    x:mejor.x,
-    y:mejor.y
-  };
-
-}
-
-
-/* =================================================
-   CREAR TRAMPAS
-================================================= */
-
-function crearTrampas(){
-
-  trampas=[];
-
-
-  /*
-     No ponemos trampas en:
-
-     inicio
-     llave
-     Karina
-     salida
-  */
-
-  for(
-    let y=1;
-    y<SIZE-1;
-    y++
-  ){
-
-    for(
-      let x=1;
-      x<SIZE-1;
-      x++
-    ){
-
-      if(
-        mapa[y][x]!==0
-      )
-        continue;
-
-
-      if(
-        (x===1 && y===1) ||
-        (x===llave.x && y===llave.y) ||
-        (x===karina.x && y===karina.y)
-      )
-        continue;
-
-
-      /*
-         Aproximadamente 9%
-         de los caminos tendrán
-         una trampa.
-      */
-
-      if(
-        Math.random()<.09
-      ){
-
-        const tipo=
-          Math.random();
-
-        trampas.push({
-          x,
-          y,
-          tipo:
-            tipo<.34
-              ?"fuego"
-              :tipo<.67
-                ?"agujero"
-                :"cep"
-        });
-
-      }
-
     }
 
-  }
-
-
-  /*
-     Limitar para que siga siendo
-     divertido.
-  */
-
-  trampas=
-    trampas.slice(0,24);
-
 }
 
 
-/* =================================================
-   CREAR CORAZONES
-================================================= */
-
-function crearCorazonesMapa(){
-
-  corazonesMapa=[];
-
-  for(
-    let y=1;
-    y<SIZE-1;
-    y++
-  ){
-
-    for(
-      let x=1;
-      x<SIZE-1;
-      x++
-    ){
-
-      if(
-        mapa[y][x]!==0
-      )
-        continue;
-
-
-      if(
-        Math.random()<.035 &&
-        !(x===1&&y===1) &&
-        !(x===llave.x&&y===llave.y) &&
-        !(x===karina.x&&y===karina.y)
-      ){
-
-        corazonesMapa.push({
-          x,
-          y
-        });
-
-      }
-
-    }
-
-  }
-
-}
-
-
-/* =================================================
-   DIBUJAR LABERINTO
-================================================= */
-
-function dibujarLaberinto(){
-
-  const board=
-    document.getElementById(
-      "laberinto"
-    );
-
-
-  /*
-     Limpiar todo excepto
-     personajes y objetos.
-  */
-
-  board
-    .querySelectorAll(
-      ".casilla,.muro,.trampa,.corazon-item"
-    )
-    .forEach(
-      el=>el.remove()
-    );
-
-
-  /*
-     Crear caminos y paredes.
-  */
-
-  for(
-    let y=0;
-    y<SIZE;
-    y++
-  ){
-
-    for(
-      let x=0;
-      x<SIZE;
-      x++
-    ){
-
-      const celda=
-        document.createElement("div");
-
-      celda.className=
-        mapa[y][x]===1
-          ?"muro"
-          :"casilla camino";
-
-      celda.style.left=
-        (x/SIZE*100)+"%";
-
-      celda.style.top=
-        (y/SIZE*100)+"%";
-
-      board.appendChild(celda);
-
-    }
-
-  }
-
-
-  /*
-     Trampas
-  */
-
-  trampas.forEach(
-    trampa=>{
-
-      const el=
-        document.createElement("div");
-
-      el.className=
-        "trampa "+
-        trampa.tipo;
-
-
-      if(
-        trampa.tipo==="fuego"
-      )
-        el.textContent="🔥";
-
-
-      if(
-        trampa.tipo==="agujero"
-      )
-        el.textContent="🕳️";
-
-
-      if(
-        trampa.tipo==="cep"
-      )
-        el.textContent="🪤";
-
-
-      colocar(
-        el,
-        trampa.x,
-        trampa.y
-      );
-
-
-      board.appendChild(el);
-
-    }
-  );
-
-
-  /*
-     Corazones
-  */
-
-  corazonesMapa.forEach(
-    corazon=>{
-
-      const el=
-        document.createElement("div");
-
-      el.className=
-        "corazon-item";
-
-      el.textContent="💗";
-
-      colocar(
-        el,
-        corazon.x,
-        corazon.y
-      );
-
-      board.appendChild(el);
-
-    }
-  );
-
-
-  /*
-     Volver a poner los objetos
-     encima de todo.
-  */
-
-  board.appendChild(
-    document.getElementById("jugador")
-  );
-
-  board.appendChild(
-    document.getElementById("llave")
-  );
-
-  board.appendChild(
-    document.getElementById("karina")
-  );
-
-  board.appendChild(
-    document.getElementById("salida")
-  );
-
-}
-
-
-/* =================================================
-   POSICIONAR
-================================================= */
-
-function colocar(elemento,x,y){
-
-  elemento.style.left=
-    (x/SIZE*100)+"%";
-
-  elemento.style.top=
-    (y/SIZE*100)+"%";
-
-}
-
-
-function actualizarPersonajes(){
-
-  colocar(
-    document.getElementById("jugador"),
-    jugador.x,
-    jugador.y
-  );
-
-  colocar(
-    document.getElementById("llave"),
-    llave.x,
-    llave.y
-  );
-
-  colocar(
-    document.getElementById("karina"),
-    karina.x,
-    karina.y
-  );
-
-  colocar(
-    document.getElementById("salida"),
-    salida.x,
-    salida.y
-  );
-
-}
-
-
-/* =================================================
-   INICIAR JUEGO
-================================================= */
-
-function iniciarJuego(){
-
-  clearInterval(timer);
-
-  tiempo=0;
-
-  corazones=0;
-
-  llaveConseguida=false;
-
-  juegoTerminado=false;
-
-
-  jugador={
-    x:1,
-    y:1
-  };
-
-
-  /*
-     Generamos primero.
-  */
-
-  generarLaberinto();
-
-
-  /*
-     Karina queda en el extremo
-     más lejano del inicio.
-  */
-
-  const lejos=
-    encontrarCeldaLejana();
-
-
-  karina={
-    x:lejos.x,
-    y:lejos.y
-  };
-
-
-  salida={
-    x:karina.x,
-    y:karina.y
-  };
-
-
-  /*
-     Buscamos otra celda lejana
-     para esconder la llave.
-  */
-
-  let posible=
-    encontrarCeldaLejana();
-
-
-  llave={
-    x:posible.x,
-    y:posible.y
-  };
-
-
-  /*
-     Si quedó igual a Karina,
-     buscamos otra.
-  */
-
-  if(
-    llave.x===karina.x &&
-    llave.y===karina.y
-  ){
-
-    for(
-      let y=SIZE-2;
-      y>=1;
-      y--
-    ){
-
-      for(
-        let x=SIZE-2;
-        x>=1;
-        x--
-      ){
-
-        if(
-          mapa[y][x]===0 &&
-          !(x===karina.x&&y===karina.y)
-        ){
-
-          llave={
-            x,
-            y
-          };
-
-          break;
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  crearTrampas();
-
-  crearCorazonesMapa();
-
-  dibujarLaberinto();
-
-  actualizarPersonajes();
-
-
-  /*
-     Mostrar llave.
-  */
-
-  document
-    .getElementById("llave")
-    .style.display="flex";
-
-
-  document
-    .getElementById("karina")
-    .style.display="flex";
-
-
-  document
-    .getElementById("salida")
-    .classList.remove("abierta");
-
-
-  actualizarHUD();
-
-
-  mensaje(
-    "Encuentra la llave 🔑... " +
-    "y cuidado con las trampas."
-  );
-
-
-  /*
-     Timer.
-  */
-
-  timer=setInterval(
-    ()=>{
-
-      if(
-        !juegoTerminado
-      ){
-
-        tiempo++;
-
-        actualizarHUD();
-
-      }
-
-    },
-    1000
-  );
-
-}
-
-
-/* =================================================
-   HUD
-================================================= */
-
-function actualizarHUD(){
-
-  document
-    .getElementById("hudCorazones")
-    .textContent=
-      corazones;
-
-  document
-    .getElementById("hudTiempo")
-    .textContent=
-      tiempo+"s";
-
-  document
-    .getElementById("hudLlave")
-    .textContent=
-      llaveConseguida
-        ?"✅"
-        :"❌";
-
-}
-
-
-/* =================================================
-   MENSAJE
-================================================= */
-
-function mensaje(texto){
-
-  document
-    .getElementById("mensajeJuego")
-    .textContent=
-      texto;
-
-}
-
-
-/* =================================================
-   MOVIMIENTO
-================================================= */
-
-function mover(dx,dy){
-
-  if(juegoTerminado)
-    return;
-
-
-  const nx=
-    jugador.x+dx;
-
-  const ny=
-    jugador.y+dy;
-
-
-  /*
-     Fuera.
-  */
-
-  if(
-    nx<0 ||
-    ny<0 ||
-    nx>=SIZE ||
-    ny>=SIZE
-  ){
-
-    mensaje(
-      "Por ahí no puedes pasar 🧱"
-    );
-
-    return;
-
-  }
-
-
-  /*
-     Pared.
-  */
-
-  if(
-    mapa[ny][nx]===1
-  ){
-
-    mensaje(
-      "¡Pared! 🧱 Busca otro camino."
-    );
-
-    return;
-
-  }
-
-
-  jugador.x=nx;
-  jugador.y=ny;
-
-
-  actualizarPersonajes();
-
-
-  comprobarCasilla();
-
-}
-
-
-/* =================================================
-   COMPROBAR CASILLA
-================================================= */
-
-function comprobarCasilla(){
-
-  /*
-     LLAVE
-  */
-
-  if(
-    !llaveConseguida &&
-    jugador.x===llave.x &&
-    jugador.y===llave.y
-  ){
-
-    llaveConseguida=true;
-
-
-    document
-      .getElementById("llave")
-      .style.display="none";
-
-
-    document
-      .getElementById("salida")
-      .classList.add("abierta");
-
-
-    actualizarHUD();
-
-
-    mensaje(
-      "🔑 ¡Encontraste la llave! " +
-      "Ahora encuentra a Karina ❤️"
-    );
-
-
-    lluviaDeAmor();
-
-  }
-
-
-  /*
-     CORAZONES
-  */
-
-  const indice=
-    corazonesMapa.findIndex(
-      c=>
-        c.x===jugador.x &&
-        c.y===jugador.y
-    );
-
-
-  if(indice!==-1){
-
-    corazones++;
-
-    corazonesMapa.splice(
-      indice,
-      1
-    );
-
-
-    const elemento=
-      [...document
-        .getElementById("laberinto")
-        .querySelectorAll(
-          ".corazon-item"
-        )]
-      .find(el=>
-        parseFloat(el.style.left)===
-        jugador.x/SIZE*100 &&
-        parseFloat(el.style.top)===
-        jugador.y/SIZE*100
-      );
-
-
-    if(elemento)
-      elemento.remove();
-
-
-    actualizarHUD();
-
-
-    mensaje(
-      "💗 ¡Corazón encontrado! " +
-      "Llevas "+corazones+"."
-    );
-
-  }
-
-
-  /*
-     TRAMPA
-  */
-
-  const trampa=
-    trampas.find(
-      t=>
-        t.x===jugador.x &&
-        t.y===jugador.y
-    );
-
-
-  if(trampa){
-
-    activarTrampa(
-      trampa
-    );
-
-    return;
-
-  }
-
-
-  /*
-     KARINA
-  */
-
-  if(
-    jugador.x===karina.x &&
-    jugador.y===karina.y
-  ){
-
-    if(
-      llaveConseguida
-    ){
-
-      terminarJuego();
-
-    }
-
-    else{
-
-      mensaje(
-        "👩🏻‍🦰 ¡Estoy aquí! " +
-        "Pero primero necesitas la llave 🔑"
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =================================================
+/* =====================================================
    TRAMPAS
-================================================= */
+===================================================== */
 
 function activarTrampa(trampa){
 
-  const board=
-    document.getElementById(
-      "laberinto"
-    );
+    const lab =
+        document.getElementById("laberinto");
+
+    lab.classList.add("danio");
+
+    setTimeout(function(){
+
+        lab.classList.remove("danio");
+
+    },350);
 
 
-  board.classList.remove(
-    "golpe"
-  );
+    if(trampa.tipo === "fuego"){
 
-  void board.offsetWidth;
+        alert(
+            "🔥 ¡PISASTE EL FUEGO!\n\n" +
+            "Retrocedes un poco."
+        );
 
-  board.classList.add(
-    "golpe"
-  );
-
-
-  /*
-     FUEGO
-  */
-
-  if(
-    trampa.tipo==="fuego"
-  ){
-
-    mensaje(
-      "🔥 ¡AUCH! Pisaste fuego. " +
-      "Retrocedes unas casillas."
-    );
-
-  }
-
-
-  /*
-     AGUJERO
-  */
-
-  if(
-    trampa.tipo==="agujero"
-  ){
-
-    mensaje(
-      "🕳️ ¡Caíste en un agujero! " +
-      "Regresas al inicio."
-    );
-
-
-    jugador={
-      x:1,
-      y:1
-    };
-
-  }
-
-
-  /*
-     TRAMPA
-  */
-
-  if(
-    trampa.tipo==="cep"
-  ){
-
-    mensaje(
-      "🪤 ¡Trampa! " +
-      "Te hizo retroceder."
-    );
-
-  }
-
-
-  /*
-     Fuego y cepa:
-     retrocedemos buscando
-     una posición válida.
-  */
-
-  if(
-    trampa.tipo==="fuego" ||
-    trampa.tipo==="cep"
-  ){
-
-    const opciones=[
-      [-1,0],
-      [1,0],
-      [0,-1],
-      [0,1]
-    ];
-
-
-    let movio=false;
-
-
-    for(
-      const [dx,dy]
-      of opciones
-    ){
-
-      const nx=
-        jugador.x-dx*2;
-
-      const ny=
-        jugador.y-dy*2;
-
-
-      if(
-        nx>=0 &&
-        nx<SIZE &&
-        ny>=0 &&
-        ny<SIZE &&
-        mapa[ny][nx]===0
-      ){
-
-        jugador.x=nx;
-        jugador.y=ny;
-
-        movio=true;
-
-        break;
-
-      }
+        jugador.x = inicioJugador.x;
+        jugador.y = inicioJugador.y;
 
     }
 
 
-    if(!movio){
+    if(trampa.tipo === "cep"){
 
-      jugador={
-        x:1,
-        y:1
-      };
+        alert(
+            "🪤 ¡TRAMPA!\n\n" +
+            "Te atrapó y te hizo retroceder."
+        );
+
+        jugador.x = Math.max(
+            1,
+            jugador.x - 1
+        );
 
     }
 
-  }
 
+    if(trampa.tipo === "agujero"){
 
-  actualizarPersonajes();
+        alert(
+            "🕳️ ¡CAÍSTE EN UN AGUJERO!\n\n" +
+            "Regresas al inicio."
+        );
 
-}
+        jugador.x = inicioJugador.x;
+        jugador.y = inicioJugador.y;
 
-
-/* =================================================
-   FINAL
-================================================= */
-
-function terminarJuego(){
-
-  juegoTerminado=true;
-
-  clearInterval(timer);
-
-
-  document
-    .getElementById("jugador")
-    .textContent="💑";
-
-
-  document
-    .getElementById("karina")
-    .style.display="none";
-
-
-  mensaje(
-    "❤️ ¡Misión completada!"
-  );
-
-
-  lluviaDeAmor();
-
-
-  /*
-     Simulación de que salen juntos.
-  */
-
-  setTimeout(()=>{
-
-    const jugadorEl=
-      document.getElementById(
-        "jugador"
-      );
-
-
-    jugadorEl.style.transition=
-      "left 1.8s ease";
-
-
-    jugadorEl.style.left=
-      "100%";
-
-
-  },500);
-
-
-  setTimeout(()=>{
-
-    document
-      .getElementById(
-        "finalJuego"
-      )
-      .style.display="block";
-
-
-    document
-      .getElementById(
-        "finalJuego"
-      )
-      .scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
-
-  },1900);
+    }
 
 }
 
 
-/* =================================================
-   CONTROLES CELULAR
-================================================= */
-
-document
-  .querySelectorAll(
-    "[data-mover]"
-  )
-  .forEach(btn=>{
-
-    btn.addEventListener(
-      "click",
-      ()=>{
-
-        const d=
-          btn.dataset.mover;
-
-        if(d==="arriba")
-          mover(0,-1);
-
-        if(d==="abajo")
-          mover(0,1);
-
-        if(d==="izquierda")
-          mover(-1,0);
-
-        if(d==="derecha")
-          mover(1,0);
-
-      }
-    );
-
-  });
-
-
-/* =================================================
+/* =====================================================
    TECLADO
-================================================= */
+===================================================== */
 
 document.addEventListener(
-  "keydown",
-  e=>{
+    "keydown",
+    function(e){
 
-    const juego=
-      document
-        .getElementById("juego");
+        if(
+            !document
+                .getElementById("juego")
+                .classList.contains("activa")
+        ){
+            return;
+        }
 
+        if(e.key === "ArrowUp" || e.key.toLowerCase() === "w"){
 
-    if(
-      !juego.classList.contains(
-        "activa"
-      )
-    )
-      return;
+            e.preventDefault();
 
+            mover("arriba");
 
-    if(
-      [
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight"
-      ].includes(e.key)
-    ){
+        }
 
-      e.preventDefault();
+        if(e.key === "ArrowDown" || e.key.toLowerCase() === "s"){
+
+            e.preventDefault();
+
+            mover("abajo");
+
+        }
+
+        if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
+
+            e.preventDefault();
+
+            mover("izquierda");
+
+        }
+
+        if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
+
+            e.preventDefault();
+
+            mover("derecha");
+
+        }
 
     }
-
-
-    if(
-      e.key==="ArrowUp" ||
-      e.key==="w" ||
-      e.key==="W"
-    )
-      mover(0,-1);
-
-
-    if(
-      e.key==="ArrowDown" ||
-      e.key==="s" ||
-      e.key==="S"
-    )
-      mover(0,1);
-
-
-    if(
-      e.key==="ArrowLeft" ||
-      e.key==="a" ||
-      e.key==="A"
-    )
-      mover(-1,0);
-
-
-    if(
-      e.key==="ArrowRight" ||
-      e.key==="d" ||
-      e.key==="D"
-    )
-      mover(1,0);
-
-  }
 );
 
 
-/* =================================================
-   REINICIAR
-================================================= */
+/* =====================================================
+   TIEMPO
+===================================================== */
 
-document
-  .getElementById(
-    "reiniciarJuego"
-  )
-  .addEventListener(
-    "click",
-    ()=>{
-      iniciarJuego();
+function iniciarTiempo(){
 
-      document
-        .getElementById(
-          "finalJuego"
-        )
-        .style.display="none";
-    }
-  );
+    clearInterval(intervaloTiempo);
+
+    segundos = 0;
+
+    document.getElementById(
+        "tiempo"
+    ).textContent = "0";
+
+    intervaloTiempo =
+        setInterval(function(){
+
+            if(!juegoTerminado){
+
+                segundos++;
+
+                document.getElementById(
+                    "tiempo"
+                ).textContent = segundos;
+
+            }
+
+        },1000);
+
+}
 
 
-/* =================================================
-   INICIO
-================================================= */
+/* =====================================================
+   REINICIAR JUEGO
+===================================================== */
 
-document.documentElement
-  .classList.add("js");
+function reiniciarJuego(){
 
-construirFotos();
+    juegoTerminado = false;
 
-iniciarJuego();
+    llaveConseguida = false;
+
+    corazonesRecolectados = 0;
+
+    crearLaberinto();
+
+    generarObjetos();
+
+    dibujarLab();
+
+    iniciarTiempo();
+
+}
+
+
+/* =====================================================
+   CERRAR FINAL
+===================================================== */
+
+function cerrarFinal(){
+
+    document
+        .getElementById("finalJuego")
+        .classList.remove("mostrar");
+
+    reiniciarJuego();
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+reiniciarJuego();
 
 </script>
 
