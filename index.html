@@ -27,7 +27,6 @@
       color: var(--vino);
     }
 
-    /* Corazones flotando de fondo */
     .fondo-corazones {
       position: fixed;
       inset: 0;
@@ -49,7 +48,6 @@
       100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
     }
 
-    /* La escena se centra pero NUNCA recorta el contenido en pantallas pequenas */
     .escena {
       position: relative;
       z-index: 2;
@@ -62,8 +60,6 @@
       gap: 22px;
     }
 
-    /* Sobre: solo se muestra si el JavaScript funciona.
-       Sin JS, se oculta y la carta queda visible directamente. */
     .sobre-wrap { display: none; }
 
     .js .sobre-wrap {
@@ -136,10 +132,8 @@
       opacity: 0;
     }
 
-    /* ===== Sistema de pantallas ===== */
     .pantalla { display: none; }
 
-    /* Fallback sin JS: la carta SIEMPRE se ve */
     .carta { display: block; }
 
     .js .carta { display: none; }
@@ -221,7 +215,6 @@
       animation: latido 1.4s ease-in-out infinite;
     }
 
-    /* Botones */
     .boton-amor {
       display: inline-block;
       background: var(--rosa);
@@ -275,7 +268,6 @@
       opacity: 1;
     }
 
-    /* ===== Razones ===== */
     .razones-txt {
       text-align: center;
       color: #7a3247;
@@ -321,7 +313,6 @@
       text-align: center;
     }
 
-    /* ===== Carrusel de fotos ===== */
     .carrusel {
       position: relative;
       width: 100%;
@@ -419,7 +410,6 @@
       transform: scale(1.3);
     }
 
-    /* Corazon dibujado con CSS */
     .heart {
       display: inline-block;
       position: relative;
@@ -453,9 +443,8 @@
       display: none !important;
     }
 
-
     /* =========================================================
-       ====== JUEGO / LABERINTO - NUEVO, SIN CAMBIAR LO DEMÁS
+       JUEGO / LABERINTO
        ========================================================= */
 
     .juego-pantalla {
@@ -498,9 +487,9 @@
 
     .laberinto-contenedor {
       width: 100%;
-      max-width: 560px;
+      max-width: 480px;
       margin: 0 auto;
-      padding: 8px;
+      padding: 7px;
       border-radius: 20px;
       background: linear-gradient(145deg, #b03a5b, #7d2943);
       box-shadow:
@@ -512,8 +501,8 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       display: grid;
-      grid-template-columns: repeat(21, 1fr);
-      grid-template-rows: repeat(21, 1fr);
+      grid-template-columns: repeat(15, 1fr);
+      grid-template-rows: repeat(15, 1fr);
       overflow: hidden;
       border-radius: 13px;
       background: #385d3c;
@@ -588,15 +577,32 @@
       }
     }
 
-    .llave-juego {
-      font-size: clamp(12px, 2.8vw, 25px);
-      animation: llaveBrilla 0.8s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 4px #ffd84d);
+    /* ❤️ OBJETIVO PRINCIPAL */
+    .objetivo-corazon-juego {
+      font-size: clamp(18px, 5vw, 38px);
+      animation: objetivoCorazon 0.75s ease-in-out infinite alternate;
+      filter:
+        drop-shadow(0 0 4px #fff)
+        drop-shadow(0 0 9px #ff4f86)
+        drop-shadow(0 0 16px #ff6b9d);
+      z-index: 7;
     }
 
-    @keyframes llaveBrilla {
-      from { transform: scale(1) rotate(-8deg); }
-      to { transform: scale(1.2) rotate(8deg); }
+    @keyframes objetivoCorazon {
+      from {
+        transform: scale(0.88);
+        filter:
+          drop-shadow(0 0 4px #fff)
+          drop-shadow(0 0 7px #ff4f86)
+          drop-shadow(0 0 12px #ff6b9d);
+      }
+      to {
+        transform: scale(1.25);
+        filter:
+          drop-shadow(0 0 7px #fff)
+          drop-shadow(0 0 15px #ff4f86)
+          drop-shadow(0 0 25px #ff6b9d);
+      }
     }
 
     .corazon-juego {
@@ -609,27 +615,52 @@
       to { transform: scale(1.18); }
     }
 
+    /* TRAMPAS NUEVAS */
     .trampa-juego {
-      font-size: clamp(11px, 2.5vw, 22px);
+      font-size: clamp(13px, 3vw, 25px);
       z-index: 4;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.45));
     }
 
-    .trampa-fuego {
-      animation: fuegoJuego 0.45s infinite alternate;
+    .trampa-bomba {
+      animation: bombaJuego 0.7s ease-in-out infinite alternate;
     }
 
-    @keyframes fuegoJuego {
-      from { transform: scale(0.85); }
-      to { transform: scale(1.18); }
+    @keyframes bombaJuego {
+      from {
+        transform: scale(0.88) rotate(-4deg);
+      }
+      to {
+        transform: scale(1.1) rotate(4deg);
+      }
     }
 
-    .trampa-cep {
-      animation: cepJuego 0.7s infinite alternate;
+    .trampa-dinamita {
+      animation: dinamitaJuego 0.55s ease-in-out infinite alternate;
     }
 
-    @keyframes cepJuego {
-      from { transform: rotate(-10deg); }
-      to { transform: rotate(10deg); }
+    @keyframes dinamitaJuego {
+      from {
+        transform: translateY(1px) rotate(-5deg);
+      }
+      to {
+        transform: translateY(-2px) rotate(5deg);
+      }
+    }
+
+    .trampa-calavera {
+      animation: calaveraJuego 0.9s ease-in-out infinite alternate;
+    }
+
+    @keyframes calaveraJuego {
+      from {
+        transform: scale(0.92);
+        opacity: 0.82;
+      }
+      to {
+        transform: scale(1.12);
+        opacity: 1;
+      }
     }
 
     .salida-juego {
@@ -707,7 +738,6 @@
       font-size: 14px;
     }
 
-    /* Pantalla final del juego */
     .final-juego {
       position: fixed;
       inset: 0;
@@ -842,7 +872,6 @@
 
   <div class="escena" id="escena">
 
-    <!-- Sobre (solo con JS) -->
     <div class="sobre-wrap" id="sobreWrap" role="button" tabindex="0">
 
       <div class="sobre" id="sobre">
@@ -859,11 +888,6 @@
       </p>
 
     </div>
-
-
-    <!-- =========================
-         PANTALLA: CARTA
-    ========================== -->
 
     <div class="carta pantalla tarjeta" id="carta">
 
@@ -924,7 +948,6 @@
           Nuestras fotos 📸
         </button>
 
-        <!-- NUEVO BOTÓN -->
         <button
           class="boton-amor suave"
           type="button"
@@ -935,11 +958,6 @@
       </div>
 
     </div>
-
-
-    <!-- =========================
-         PANTALLA: ALBUM DE FOTOS
-    ========================== -->
 
     <div class="pantalla tarjeta" id="album">
 
@@ -981,11 +999,6 @@
       <div class="dots" id="dots"></div>
 
     </div>
-
-
-    <!-- =========================
-         PANTALLA: RAZONES
-    ========================== -->
 
     <div class="pantalla tarjeta" id="razones">
 
@@ -1029,10 +1042,9 @@
 
     </div>
 
-
-    <!-- ==================================================
-         NUEVA PANTALLA: JUEGO
-    =================================================== -->
+    <!-- =========================
+         JUEGO
+    ========================== -->
 
     <div class="pantalla tarjeta juego-pantalla" id="juego">
 
@@ -1054,14 +1066,11 @@
         </p>
 
         <p>
-          Ayúdame a encontrar la llave 🔑,
-          llegar hasta Karina 👩🏻‍🦰 y salir juntos. 💕
+          Encuentra el ❤️, llega hasta Karina 👩🏻‍🦰
+          y después salgan juntos por la 🚪. 💕
         </p>
 
       </div>
-
-
-      <!-- HUD -->
 
       <div class="juego-hud">
 
@@ -1071,7 +1080,7 @@
         </div>
 
         <div class="juego-dato">
-          🔑 Llave:
+          ❤️ Objetivo:
           <span id="juegoLlave">No</span>
         </div>
 
@@ -1082,9 +1091,6 @@
 
       </div>
 
-
-      <!-- LABERINTO -->
-
       <div class="laberinto-contenedor">
 
         <div
@@ -1094,17 +1100,11 @@
 
       </div>
 
-
-      <!-- MENSAJE -->
-
       <div
         class="juego-mensaje"
         id="juegoMensaje">
-        Busca la 🔑 para comenzar...
+        Busca el ❤️ para comenzar...
       </div>
-
-
-      <!-- CONTROLES CELULAR -->
 
       <div class="juego-controles">
 
@@ -1138,13 +1138,11 @@
 
       </div>
 
-
       <p class="juego-ayuda">
         Usa las flechas del teclado, WASD o los botones.
         <br>
-        Cuidado con 🔥 🕳️ 🪤
+        Cuidado con 💣 🧨 ☠️
       </p>
-
 
       <div class="centro" style="margin-top:18px;">
 
@@ -1161,11 +1159,6 @@
 
   </div>
 
-
-  <!-- =========================
-       FINAL DEL JUEGO
-  ========================== -->
-
   <div
     class="final-juego"
     id="finalJuego">
@@ -1181,7 +1174,7 @@
       </h2>
 
       <p>
-        Encontraste la llave, encontraste a Karina
+        Encontraste el corazón, encontraste a Karina
         y lograron salir juntos del laberinto. 🥹❤️
       </p>
 
@@ -1202,12 +1195,10 @@
 
   </div>
 
-
   <script>
   (function () {
 
     "use strict";
-
 
     /* =====================================================
        CONTENIDO ORIGINAL
@@ -1361,7 +1352,7 @@
 
 
     /* =====================================================
-       NAVEGACIÓN ORIGINAL + JUEGO
+       NAVEGACIÓN
     ===================================================== */
 
     function mostrar(id) {
@@ -1405,7 +1396,7 @@
 
 
     /* =====================================================
-       SOBRE ORIGINAL
+       SOBRE
     ===================================================== */
 
     var cartaAbierta = false;
@@ -1444,7 +1435,7 @@
 
 
     /* =====================================================
-       RAZONES ORIGINAL
+       RAZONES
     ===================================================== */
 
     var razIdx = 0;
@@ -1527,7 +1518,7 @@
 
 
     /* =====================================================
-       CARRUSEL ORIGINAL
+       CARRUSEL
     ===================================================== */
 
     var fotoIdx = 0;
@@ -1648,7 +1639,7 @@
       slides.style.transform =
         'translateX(' +
         (-i * 100) +
-        '%)';
+        '%';
 
 
       cap.textContent =
@@ -1668,12 +1659,10 @@
 
 
     /* =====================================================
-       =====================================================
        JUEGO DEL LABERINTO
-       =====================================================
     ===================================================== */
 
-    var TAMANO_LABERINTO = 21;
+    var TAMANO_LABERINTO = 15;
 
     var mapaJuego = [];
 
@@ -1687,22 +1676,29 @@
       y: 1
     };
 
-    var karina = {
-      x: 19,
-      y: 19
-    };
-
-    var llave = {
-      x: 19,
+    var jugadorAnterior = {
+      x: 1,
       y: 1
     };
 
+    var karina = {
+      x: 13,
+      y: 13
+    };
+
+    var llave = {
+      x: 1,
+      y: 13
+    };
+
     var salida = {
-      x: 19,
-      y: 19
+      x: 13,
+      y: 11
     };
 
     var tieneLlave = false;
+
+    var encontroKarina = false;
 
     var corazonesJuego = [];
 
@@ -1717,6 +1713,50 @@
     var juegoActivo = false;
 
     var juegoTerminado = false;
+
+
+    /* =====================================================
+       UTILIDADES
+    ===================================================== */
+
+    function claveCelda(x, y) {
+      return x + ',' + y;
+    }
+
+
+    function barajar(array) {
+
+      for (var i = array.length - 1; i > 0; i--) {
+
+        var j =
+          Math.floor(
+            Math.random() * (i + 1)
+          );
+
+        var temporal =
+          array[i];
+
+        array[i] =
+          array[j];
+
+        array[j] =
+          temporal;
+
+      }
+
+      return array;
+
+    }
+
+
+    function distanciaEntre(x1, y1, x2, y2) {
+
+      return (
+        Math.abs(x1 - x2) +
+        Math.abs(y1 - y2)
+      );
+
+    }
 
 
     /* =====================================================
@@ -1759,11 +1799,7 @@
         ];
 
 
-        direcciones.sort(function () {
-
-          return Math.random() - 0.5;
-
-        });
+        barajar(direcciones);
 
 
         for (
@@ -1778,10 +1814,11 @@
           var dy =
             direcciones[i][1];
 
+          var nx =
+            x + dx;
 
-          var nx = x + dx;
-
-          var ny = y + dy;
+          var ny =
+            y + dy;
 
 
           if (
@@ -1810,206 +1847,157 @@
 
       recorrer(1, 1);
 
-
-      /*
-       * Abrimos algunos caminos extra.
-       * Así queda más grande y difícil,
-       * pero no imposible.
-       */
-
-      for (var j = 0; j < 14; j++) {
-
-        var rx =
-          Math.floor(
-            Math.random() *
-            (TAMANO_LABERINTO - 2)
-          ) + 1;
-
-        var ry =
-          Math.floor(
-            Math.random() *
-            (TAMANO_LABERINTO - 2)
-          ) + 1;
-
-
-        if (mapaJuego[ry][rx] === 1) {
-
-          var vecinos = 0;
-
-
-          if (
-            mapaJuego[ry - 1] &&
-            mapaJuego[ry - 1][rx] === 0
-          ) {
-            vecinos++;
-          }
-
-
-          if (
-            mapaJuego[ry + 1] &&
-            mapaJuego[ry + 1][rx] === 0
-          ) {
-            vecinos++;
-          }
-
-
-          if (
-            mapaJuego[ry][rx - 1] === 0
-          ) {
-            vecinos++;
-          }
-
-
-          if (
-            mapaJuego[ry][rx + 1] === 0
-          ) {
-            vecinos++;
-          }
-
-
-          if (vecinos >= 2) {
-
-            mapaJuego[ry][rx] = 0;
-
-          }
-
-        }
-
-      }
-
     }
 
 
     /* =====================================================
-       DISTANCIA
+       BFS — ENCONTRAR CAMINO REAL
     ===================================================== */
 
-    function distanciaEntre(x1, y1, x2, y2) {
+    function encontrarCamino(inicio, fin) {
 
-      return (
-        Math.abs(x1 - x2) +
-        Math.abs(y1 - y2)
-      );
+      var cola = [];
 
-    }
+      var visitado = {};
 
+      var padres = {};
 
-    /* =====================================================
-       POSICIÓN LIBRE
-    ===================================================== */
-
-    function posicionLibre(minDistancia) {
-
-      for (var intentos = 0; intentos < 300; intentos++) {
-
-        var x =
-          Math.floor(
-            Math.random() *
-            (TAMANO_LABERINTO - 2)
-          ) + 1;
+      var inicioClave =
+        claveCelda(
+          inicio.x,
+          inicio.y
+        );
 
 
-        var y =
-          Math.floor(
-            Math.random() *
-            (TAMANO_LABERINTO - 2)
-          ) + 1;
+      cola.push({
+        x: inicio.x,
+        y: inicio.y
+      });
+
+      visitado[inicioClave] = true;
 
 
-        if (mapaJuego[y][x] !== 0) {
-          continue;
-        }
+      var direcciones = [
+
+        [1, 0],
+
+        [-1, 0],
+
+        [0, 1],
+
+        [0, -1]
+
+      ];
 
 
-        if (
-          distanciaEntre(
-            x,
-            y,
-            jugador.x,
-            jugador.y
-          ) < minDistancia
-        ) {
-          continue;
-        }
+      while (cola.length > 0) {
 
+        var actual =
+          cola.shift();
 
-        if (
-          x === jugador.x &&
-          y === jugador.y
-        ) {
-          continue;
-        }
+        var actualClave =
+          claveCelda(
+            actual.x,
+            actual.y
+          );
 
 
         if (
-          x === karina.x &&
-          y === karina.y
+          actual.x === fin.x &&
+          actual.y === fin.y
         ) {
-          continue;
+
+          var camino = [];
+
+          var cursor =
+            actualClave;
+
+
+          while (cursor) {
+
+            var partes =
+              cursor.split(',');
+
+            camino.push({
+
+              x: parseInt(partes[0], 10),
+
+              y: parseInt(partes[1], 10)
+
+            });
+
+            cursor =
+              padres[cursor];
+
+          }
+
+
+          return camino.reverse();
+
         }
-
-
-        if (
-          x === llave.x &&
-          y === llave.y
-        ) {
-          continue;
-        }
-
-
-        var usado = false;
 
 
         for (
           var i = 0;
-          i < corazonesJuego.length;
+          i < direcciones.length;
           i++
         ) {
 
+          var nx =
+            actual.x +
+            direcciones[i][0];
+
+          var ny =
+            actual.y +
+            direcciones[i][1];
+
+
           if (
-            corazonesJuego[i].x === x &&
-            corazonesJuego[i].y === y
+            nx < 0 ||
+            nx >= TAMANO_LABERINTO ||
+            ny < 0 ||
+            ny >= TAMANO_LABERINTO
           ) {
 
-            usado = true;
-
-            break;
+            continue;
 
           }
 
-        }
-
-
-        if (usado) continue;
-
-
-        for (
-          var t = 0;
-          t < trampasJuego.length;
-          t++
-        ) {
 
           if (
-            trampasJuego[t].x === x &&
-            trampasJuego[t].y === y
+            mapaJuego[ny][nx] !== 0
           ) {
 
-            usado = true;
-
-            break;
+            continue;
 
           }
 
+
+          var nuevaClave =
+            claveCelda(nx, ny);
+
+
+          if (
+            visitado[nuevaClave]
+          ) {
+
+            continue;
+
+          }
+
+
+          visitado[nuevaClave] = true;
+
+          padres[nuevaClave] =
+            actualClave;
+
+
+          cola.push({
+            x: nx,
+            y: ny
+          });
+
         }
-
-
-        if (usado) continue;
-
-
-        return {
-          x: x,
-          y: y
-        };
 
       }
 
@@ -2020,7 +2008,130 @@
 
 
     /* =====================================================
-       GENERAR OBJETOS
+       OBTENER CELDAS ALCANZABLES
+    ===================================================== */
+
+    function obtenerCeldasAlcanzables(origen) {
+
+      var cola = [];
+
+      var visitado = {};
+
+      var resultado = [];
+
+      var origenClave =
+        claveCelda(
+          origen.x,
+          origen.y
+        );
+
+
+      cola.push({
+        x: origen.x,
+        y: origen.y,
+        distancia: 0
+      });
+
+      visitado[origenClave] = true;
+
+
+      var direcciones = [
+
+        [1, 0],
+
+        [-1, 0],
+
+        [0, 1],
+
+        [0, -1]
+
+      ];
+
+
+      while (cola.length > 0) {
+
+        var actual =
+          cola.shift();
+
+
+        resultado.push(actual);
+
+
+        for (
+          var i = 0;
+          i < direcciones.length;
+          i++
+        ) {
+
+          var nx =
+            actual.x +
+            direcciones[i][0];
+
+          var ny =
+            actual.y +
+            direcciones[i][1];
+
+
+          if (
+            nx < 0 ||
+            nx >= TAMANO_LABERINTO ||
+            ny < 0 ||
+            ny >= TAMANO_LABERINTO
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            mapaJuego[ny][nx] !== 0
+          ) {
+
+            continue;
+
+          }
+
+
+          var clave =
+            claveCelda(nx, ny);
+
+
+          if (
+            visitado[clave]
+          ) {
+
+            continue;
+
+          }
+
+
+          visitado[clave] = true;
+
+
+          cola.push({
+
+            x: nx,
+
+            y: ny,
+
+            distancia:
+              actual.distancia + 1
+
+          });
+
+        }
+
+      }
+
+
+      return resultado;
+
+    }
+
+
+    /* =====================================================
+       GENERAR OBJETOS CON RUTA SEGURA
     ===================================================== */
 
     function generarObjetosJuego() {
@@ -2037,35 +2148,601 @@
       };
 
 
+      jugadorAnterior = {
+        x: 1,
+        y: 1
+      };
+
+
+      tieneLlave = false;
+
+      encontroKarina = false;
+
       corazonesJuego = [];
 
       trampasJuego = [];
 
 
       /*
-       * Karina aparece lejos.
+       * Buscamos las zonas más lejanas
+       * del inicio para colocar a Karina.
        */
+
+      var alcanzablesInicio =
+        obtenerCeldasAlcanzables(
+          inicioJugador
+        );
+
+
+      var maxDistancia = 0;
+
+
+      for (
+        var i = 0;
+        i < alcanzablesInicio.length;
+        i++
+      ) {
+
+        if (
+          alcanzablesInicio[i].distancia >
+          maxDistancia
+        ) {
+
+          maxDistancia =
+            alcanzablesInicio[i].distancia;
+
+        }
+
+      }
+
 
       var candidatosKarina = [];
 
 
-      for (var y = 1; y < TAMANO_LABERINTO - 1; y++) {
+      for (
+        var k = 0;
+        k < alcanzablesInicio.length;
+        k++
+      ) {
 
-        for (var x = 1; x < TAMANO_LABERINTO - 1; x++) {
+        var celda =
+          alcanzablesInicio[k];
+
+
+        if (
+          celda.distancia >=
+          maxDistancia * 0.55
+        ) {
+
+          candidatosKarina.push(celda);
+
+        }
+
+      }
+
+
+      /*
+       * Preferimos una posición
+       * relativamente cercana al centro.
+       */
+
+      var centro =
+        Math.floor(
+          TAMANO_LABERINTO / 2
+        );
+
+
+      candidatosKarina.sort(function (a, b) {
+
+        var da =
+          distanciaEntre(
+            a.x,
+            a.y,
+            centro,
+            centro
+          );
+
+        var db =
+          distanciaEntre(
+            b.x,
+            b.y,
+            centro,
+            centro
+          );
+
+        return da - db;
+
+      });
+
+
+      var cantidadOpcionesKarina =
+        Math.min(
+          6,
+          candidatosKarina.length
+        );
+
+
+      karina =
+        candidatosKarina[
+          Math.floor(
+            Math.random() *
+            cantidadOpcionesKarina
+          )
+        ];
+
+
+      /*
+       * Camino real hasta Karina.
+       */
+
+      var caminoInicioKarina =
+        encontrarCamino(
+          inicioJugador,
+          karina
+        );
+
+
+      /*
+       * ❤️ El corazón se coloca
+       * directamente en el camino
+       * hacia Karina.
+       */
+
+      var minimoIndice =
+        Math.max(
+          2,
+          Math.floor(
+            caminoInicioKarina.length * 0.25
+          )
+        );
+
+
+      var maximoIndice =
+        Math.max(
+          minimoIndice,
+          Math.floor(
+            caminoInicioKarina.length * 0.62
+          )
+        );
+
+
+      var indiceCorazon =
+        minimoIndice +
+        Math.floor(
+          Math.random() *
+          (maximoIndice - minimoIndice + 1)
+        );
+
+
+      llave =
+        caminoInicioKarina[
+          indiceCorazon
+        ];
+
+
+      /*
+       * La salida se busca desde Karina,
+       * preferiblemente lejos de ella.
+       */
+
+      var alcanzablesKarina =
+        obtenerCeldasAlcanzables(
+          karina
+        );
+
+
+      var candidatosSalida = [];
+
+
+      for (
+        var s = 0;
+        s < alcanzablesKarina.length;
+        s++
+      ) {
+
+        var posible =
+          alcanzablesKarina[s];
+
+
+        if (
+          posible.distancia >=
+          Math.min(
+            7,
+            Math.max(
+              4,
+              Math.floor(
+                maxDistancia * 0.18
+              )
+            )
+          )
+        ) {
 
           if (
-            mapaJuego[y][x] === 0 &&
-            distanciaEntre(
-              x,
-              y,
-              1,
-              1
-            ) >= 20
+            !(posible.x === llave.x &&
+              posible.y === llave.y)
           ) {
 
-            candidatosKarina.push({
-              x: x,
-              y: y
+            candidatosSalida.push(posible);
+
+          }
+
+        }
+
+      }
+
+
+      if (
+        candidatosSalida.length === 0
+      ) {
+
+        candidatosSalida =
+          alcanzablesKarina.filter(
+            function (p) {
+
+              return !(
+                p.x === llave.x &&
+                p.y === llave.y
+              );
+
+            }
+          );
+
+      }
+
+
+      /*
+       * Preferimos una salida
+       * cercana a los bordes.
+       */
+
+      candidatosSalida.sort(function (a, b) {
+
+        var bordeA =
+          Math.min(
+            a.x,
+            a.y,
+            TAMANO_LABERINTO - 1 - a.x,
+            TAMANO_LABERINTO - 1 - a.y
+          );
+
+        var bordeB =
+          Math.min(
+            b.x,
+            b.y,
+            TAMANO_LABERINTO - 1 - b.x,
+            TAMANO_LABERINTO - 1 - b.y
+          );
+
+        return bordeA - bordeB;
+
+      });
+
+
+      salida =
+        candidatosSalida[
+          Math.floor(
+            Math.random() *
+            Math.min(
+              5,
+              candidatosSalida.length
+            )
+          )
+        ];
+
+
+      /*
+       * Rutas protegidas.
+       *
+       * Todo lo que esté en estas rutas
+       * queda libre de trampas.
+       */
+
+      var caminoCorazon =
+        encontrarCamino(
+          inicioJugador,
+          llave
+        );
+
+
+      var caminoKarina =
+        encontrarCamino(
+          llave,
+          karina
+        );
+
+
+      var caminoSalida =
+        encontrarCamino(
+          karina,
+          salida
+        );
+
+
+      var rutaSegura = {};
+
+
+      function protegerCamino(camino) {
+
+        for (
+          var i = 0;
+          i < camino.length;
+          i++
+        ) {
+
+          rutaSegura[
+            claveCelda(
+              camino[i].x,
+              camino[i].y
+            )
+          ] = true;
+
+        }
+
+      }
+
+
+      protegerCamino(caminoCorazon);
+
+      protegerCamino(caminoKarina);
+
+      protegerCamino(caminoSalida);
+
+
+      /*
+       * Generamos posiciones posibles
+       * para trampas.
+       */
+
+      var candidatosTrampas = [];
+
+
+      for (
+        var ty = 1;
+        ty < TAMANO_LABERINTO - 1;
+        ty++
+      ) {
+
+        for (
+          var tx = 1;
+          tx < TAMANO_LABERINTO - 1;
+          tx++
+        ) {
+
+          if (
+            mapaJuego[ty][tx] !== 0
+          ) {
+
+            continue;
+
+          }
+
+
+          var clave =
+            claveCelda(tx, ty);
+
+
+          /*
+           * Nunca ponemos una trampa
+           * sobre el camino obligatorio.
+           */
+
+          if (
+            rutaSegura[clave]
+          ) {
+
+            continue;
+
+          }
+
+
+          /*
+           * Tampoco encima de objetos.
+           */
+
+          if (
+            (tx === jugador.x &&
+             ty === jugador.y) ||
+            (tx === llave.x &&
+             ty === llave.y) ||
+            (tx === karina.x &&
+             ty === karina.y) ||
+            (tx === salida.x &&
+             ty === salida.y)
+          ) {
+
+            continue;
+
+          }
+
+
+          candidatosTrampas.push({
+            x: tx,
+            y: ty
+          });
+
+        }
+
+      }
+
+
+      barajar(candidatosTrampas);
+
+
+      var tiposTrampa = [
+
+        'bomba',
+
+        'dinamita',
+
+        'calavera'
+
+      ];
+
+
+      /*
+       * Menos trampas porque el laberinto
+       * ahora es 15x15.
+       */
+
+      var cantidadTrampas =
+        Math.min(
+          10,
+          candidatosTrampas.length
+        );
+
+
+      for (
+        var tr = 0;
+        tr < cantidadTrampas;
+        tr++
+      ) {
+
+        trampasJuego.push({
+
+          x:
+            candidatosTrampas[tr].x,
+
+          y:
+            candidatosTrampas[tr].y,
+
+          tipo:
+            tiposTrampa[
+              Math.floor(
+                Math.random() *
+                tiposTrampa.length
+              )
+            ]
+
+        });
+
+      }
+
+
+      /*
+       * Corazones pequeños adicionales.
+       */
+
+      var candidatosCorazones = [];
+
+
+      for (
+        var cy = 1;
+        cy < TAMANO_LABERINTO - 1;
+        cy++
+      ) {
+
+        for (
+          var cx = 1;
+          cx < TAMANO_LABERINTO - 1;
+          cx++
+        ) {
+
+          if (
+            mapaJuego[cy][cx] !== 0
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            rutaSegura[
+              claveCelda(cx, cy)
+            ]
+          ) {
+
+            /*
+             * Dejamos libre la ruta principal
+             * salvo el corazón objetivo.
+             */
+
+            if (
+              !(cx === llave.x &&
+                cy === llave.y)
+            ) {
+
+              continue;
+
+            }
+
+          }
+
+
+          if (
+            cx === jugador.x &&
+            cy === jugador.y
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            cx === llave.x &&
+            cy === llave.y
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            cx === karina.x &&
+            cy === karina.y
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            cx === salida.x &&
+            cy === salida.y
+          ) {
+
+            continue;
+
+          }
+
+
+          var ocupadoPorTrampa =
+            false;
+
+
+          for (
+            var tt = 0;
+            tt < trampasJuego.length;
+            tt++
+          ) {
+
+            if (
+              trampasJuego[tt].x === cx &&
+              trampasJuego[tt].y === cy
+            ) {
+
+              ocupadoPorTrampa = true;
+
+              break;
+
+            }
+
+          }
+
+
+          if (
+            !ocupadoPorTrampa
+          ) {
+
+            candidatosCorazones.push({
+
+              x: cx,
+
+              y: cy
+
             });
 
           }
@@ -2075,107 +2752,18 @@
       }
 
 
-      if (candidatosKarina.length > 0) {
-
-        karina =
-          candidatosKarina[
-            Math.floor(
-              Math.random() *
-              candidatosKarina.length
-            )
-          ];
-
-      } else {
-
-        karina = {
-          x: 19,
-          y: 19
-        };
-
-      }
+      barajar(candidatosCorazones);
 
 
-      salida = {
-        x: karina.x,
-        y: karina.y
-      };
+      for (
+        var co = 0;
+        co < Math.min(8, candidatosCorazones.length);
+        co++
+      ) {
 
-
-      /*
-       * Llave.
-       */
-
-      var llavePos = posicionLibre(12);
-
-
-      if (llavePos) {
-
-        llave = llavePos;
-
-      } else {
-
-        llave = {
-          x: 19,
-          y: 1
-        };
-
-      }
-
-
-      /*
-       * Corazones.
-       */
-
-      for (var c = 0; c < 12; c++) {
-
-        var corazon =
-          posicionLibre(3);
-
-        if (corazon) {
-
-          corazonesJuego.push(corazon);
-
-        }
-
-      }
-
-
-      /*
-       * Trampas.
-       */
-
-      var tiposTrampa = [
-        'fuego',
-        'agujero',
-        'cep'
-      ];
-
-
-      for (var tr = 0; tr < 20; tr++) {
-
-        var posTrampa =
-          posicionLibre(4);
-
-
-        if (posTrampa) {
-
-          trampasJuego.push({
-
-            x: posTrampa.x,
-
-            y: posTrampa.y,
-
-            tipo:
-              tiposTrampa[
-                Math.floor(
-                  Math.random() *
-                  tiposTrampa.length
-                )
-              ]
-
-          });
-
-        }
+        corazonesJuego.push(
+          candidatosCorazones[co]
+        );
 
       }
 
@@ -2264,53 +2852,55 @@
             trampaEl.className =
               'objeto-juego trampa-juego ' +
               (
-                trampaEncontrada.tipo === 'fuego'
-                ? 'trampa-fuego'
+                trampaEncontrada.tipo === 'bomba'
+                ? 'trampa-bomba'
                 : (
-                  trampaEncontrada.tipo === 'cep'
-                  ? 'trampa-cep'
-                  : ''
+                  trampaEncontrada.tipo === 'dinamita'
+                  ? 'trampa-dinamita'
+                  : 'trampa-calavera'
                 )
               );
 
 
             if (
               trampaEncontrada.tipo ===
-              'fuego'
+              'bomba'
             ) {
 
-              trampaEl.textContent = '🔥';
+              trampaEl.textContent = '💣';
 
             }
 
 
             if (
               trampaEncontrada.tipo ===
-              'agujero'
+              'dinamita'
             ) {
 
-              trampaEl.textContent = '🕳️';
+              trampaEl.textContent = '🧨';
 
             }
 
 
             if (
               trampaEncontrada.tipo ===
-              'cep'
+              'calavera'
             ) {
 
-              trampaEl.textContent = '🪤';
+              trampaEl.textContent = '☠️';
 
             }
 
 
-            celda.appendChild(trampaEl);
+            celda.appendChild(
+              trampaEl
+            );
 
           }
 
 
           /*
-           * CORAZONES
+           * CORAZONES PEQUEÑOS
            */
 
           for (
@@ -2332,7 +2922,9 @@
 
               corazonEl.textContent = '💗';
 
-              celda.appendChild(corazonEl);
+              celda.appendChild(
+                corazonEl
+              );
 
               break;
 
@@ -2342,7 +2934,7 @@
 
 
           /*
-           * LLAVE
+           * ❤️ CORAZÓN OBJETIVO
            */
 
           if (
@@ -2351,15 +2943,17 @@
             llave.y === y
           ) {
 
-            var llaveEl =
+            var objetivoEl =
               document.createElement('span');
 
-            llaveEl.className =
-              'objeto-juego llave-juego';
+            objetivoEl.className =
+              'objeto-juego objetivo-corazon-juego';
 
-            llaveEl.textContent = '🔑';
+            objetivoEl.textContent = '❤️';
 
-            celda.appendChild(llaveEl);
+            celda.appendChild(
+              objetivoEl
+            );
 
           }
 
@@ -2381,7 +2975,9 @@
 
             karinaEl.textContent = '👩🏻‍🦰';
 
-            celda.appendChild(karinaEl);
+            celda.appendChild(
+              karinaEl
+            );
 
           }
 
@@ -2404,7 +3000,9 @@
 
             salidaEl.textContent = '🚪';
 
-            celda.appendChild(salidaEl);
+            celda.appendChild(
+              salidaEl
+            );
 
           }
 
@@ -2425,14 +3023,20 @@
               'objeto-juego jugador-juego';
 
             jugadorEl.textContent =
-              '🧑🏾‍🦱';
+              encontroKarina
+              ? '🧑🏾‍🦱❤️'
+              : '🧑🏾‍🦱';
 
-            celda.appendChild(jugadorEl);
+            celda.appendChild(
+              jugadorEl
+            );
 
           }
 
 
-          lab.appendChild(celda);
+          lab.appendChild(
+            celda
+          );
 
         }
 
@@ -2449,7 +3053,7 @@
         'juegoLlave'
       ).textContent =
         tieneLlave
-        ? 'Sí 🔑'
+        ? 'Sí ❤️'
         : 'No';
 
     }
@@ -2476,14 +3080,40 @@
 
 
     /* =====================================================
+       QUITAR TRAMPA
+    ===================================================== */
+
+    function eliminarTrampa(trampa) {
+
+      for (
+        var i = 0;
+        i < trampasJuego.length;
+        i++
+      ) {
+
+        if (
+          trampasJuego[i] === trampa
+        ) {
+
+          trampasJuego.splice(i, 1);
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    /* =====================================================
        REVISAR CASILLA
     ===================================================== */
 
     function revisarCasillaJuego() {
 
-
       /*
-       * LLAVE
+       * ❤️ CORAZÓN OBJETIVO
        */
 
       if (
@@ -2495,14 +3125,14 @@
         tieneLlave = true;
 
         mensajeJuego(
-          '🔑 ¡Encontraste la llave! Ahora busca a Karina 👩🏻‍🦰'
+          '❤️ ¡Encontraste el corazón! Ahora ve hasta Karina 👩🏻‍🦰'
         );
 
       }
 
 
       /*
-       * CORAZÓN
+       * CORAZONES EXTRA
        */
 
       for (
@@ -2554,7 +3184,7 @@
             trampa
           );
 
-          break;
+          return;
 
         }
 
@@ -2570,17 +3200,45 @@
         jugador.y === karina.y
       ) {
 
-        if (tieneLlave) {
+        if (
+          tieneLlave
+        ) {
 
-          terminarJuego();
+          if (
+            !encontroKarina
+          ) {
+
+            encontroKarina = true;
+
+            mensajeJuego(
+              '🥹❤️ ¡Encontraste a Karina! Ahora salgan juntos por la 🚪'
+            );
+
+          }
 
         } else {
 
           mensajeJuego(
-            '👩🏻‍🦰 ¡Llegaste hasta Karina! Pero todavía necesitas la 🔑'
+            '👩🏻‍🦰 ¡Llegaste hasta Karina! Pero primero necesitas el ❤️'
           );
 
         }
+
+      }
+
+
+      /*
+       * SALIDA
+       */
+
+      if (
+        tieneLlave &&
+        encontroKarina &&
+        jugador.x === salida.x &&
+        jugador.y === salida.y
+      ) {
+
+        terminarJuego();
 
       }
 
@@ -2599,20 +3257,38 @@
         );
 
 
-      lab.classList.remove('golpe');
+      if (lab) {
 
-      void lab.offsetWidth;
+        lab.classList.remove(
+          'golpe'
+        );
 
-      lab.classList.add('golpe');
+        void lab.offsetWidth;
+
+        lab.classList.add(
+          'golpe'
+        );
+
+      }
+
+
+      /*
+       * La trampa desaparece después
+       * de activarse.
+       */
+
+      eliminarTrampa(
+        trampa
+      );
 
 
       if (
         trampa.tipo ===
-        'fuego'
+        'bomba'
       ) {
 
         mensajeJuego(
-          '🔥 ¡Ay! Pisaste el fuego. Volviste al inicio.'
+          '💣 ¡BOOM! Pisaste una bomba. Regresas al inicio.'
         );
 
         jugador.x =
@@ -2626,11 +3302,11 @@
 
       if (
         trampa.tipo ===
-        'agujero'
+        'dinamita'
       ) {
 
         mensajeJuego(
-          '🕳️ ¡Caíste en un agujero! Regresas al inicio.'
+          '🧨 ¡Cuidado! La dinamita explotó. Regresas al inicio.'
         );
 
         jugador.x =
@@ -2644,64 +3320,25 @@
 
       if (
         trampa.tipo ===
-        'cep'
+        'calavera'
       ) {
 
         mensajeJuego(
-          '🪤 ¡La trampa te atrapó! Retrocedes.'
+          '☠️ ¡Caíste en la trampa! Retrocedes un paso.'
         );
 
 
         /*
-         * Intentamos retroceder hacia
-         * una casilla libre.
+         * Ahora sí retrocede a la posición
+         * anterior real, en lugar de escoger
+         * una dirección al azar.
          */
 
-        var movimientos = [
+        jugador.x =
+          jugadorAnterior.x;
 
-          [-1, 0],
-
-          [1, 0],
-
-          [0, -1],
-
-          [0, 1]
-
-        ];
-
-
-        for (
-          var i = 0;
-          i < movimientos.length;
-          i++
-        ) {
-
-          var nx =
-            jugador.x +
-            movimientos[i][0];
-
-          var ny =
-            jugador.y +
-            movimientos[i][1];
-
-
-          if (
-            nx > 0 &&
-            nx < TAMANO_LABERINTO - 1 &&
-            ny > 0 &&
-            ny < TAMANO_LABERINTO - 1 &&
-            mapaJuego[ny][nx] === 0
-          ) {
-
-            jugador.x = nx;
-
-            jugador.y = ny;
-
-            break;
-
-          }
-
-        }
+        jugador.y =
+          jugadorAnterior.y;
 
       }
 
@@ -2718,7 +3355,9 @@
         !juegoActivo ||
         juegoTerminado
       ) {
+
         return;
+
       }
 
 
@@ -2788,6 +3427,16 @@
         return;
 
       }
+
+
+      /*
+       * Guardamos posición anterior.
+       */
+
+      jugadorAnterior = {
+        x: jugador.x,
+        y: jugador.y
+      };
 
 
       jugador.x = nx;
@@ -2936,9 +3585,20 @@
 
       tieneLlave = false;
 
+      encontroKarina = false;
+
       corazonesConseguidos = 0;
 
       tiempoJuego = 0;
+
+
+      document
+        .getElementById(
+          'finalJuego'
+        )
+        .classList.remove(
+          'visible'
+        );
 
 
       crearMapaJuego();
@@ -2951,7 +3611,7 @@
 
 
       mensajeJuego(
-        'Busca la 🔑 y luego encuentra a Karina 👩🏻‍🦰'
+        'Busca el ❤️ y después encuentra a Karina 👩🏻‍🦰'
       );
 
     }
@@ -2973,7 +3633,7 @@
 
 
       mensajeJuego(
-        '❤️ ¡Lo lograste!'
+        '❤️ ¡Lo lograste! ¡Salieron juntos!'
       );
 
 
@@ -3016,7 +3676,7 @@
 
 
     /* =====================================================
-       INICIO ORIGINAL
+       INICIO
     ===================================================== */
 
     function iniciar() {
@@ -3044,10 +3704,6 @@
 
       }
 
-
-      /*
-       * Activamos JS.
-       */
 
       document.documentElement.className +=
         ' js';
@@ -3184,11 +3840,6 @@
 
               mostrar(destino);
 
-
-              /*
-               * Si entra al juego,
-               * generamos un laberinto nuevo.
-               */
 
               if (
                 destino === 'juego'
@@ -3429,11 +4080,6 @@
       }
 
     } catch (err) {
-
-      /*
-       * Si ocurre algún error,
-       * la carta queda visible.
-       */
 
       document.documentElement.className =
         document.documentElement.className
