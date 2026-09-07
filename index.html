@@ -1,721 +1,3472 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Para Karina 💗</title>
-  <style>
-    :root {
-      --rosa: #ff6b9d;
-      --rosa-suave: #ffd1dc;
-      --vino: #b03a5b;
-      --crema: #fff5f7;
-      --dorado: #f6c453;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<title>Para Karina 💗</title>
 
-    html { height: 100%; }
+<style>
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #ffe1ec 0%, #ffd1dc 40%, #ffc4d6 100%);
-      min-height: 100vh;
-      display: flex;
-      overflow-x: hidden;
-      padding: 20px 14px;
-      color: var(--vino);
-    }
+:root {
+  --rosa: #ff6b9d;
+  --rosa-suave: #ffd1dc;
+  --vino: #b03a5b;
+  --crema: #fff5f7;
+  --dorado: #f6c453;
+}
 
-    /* Corazones flotando de fondo */
-    .fondo-corazones {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .fondo-corazones span {
-      position: absolute;
-      bottom: -60px;
-      animation: subir linear infinite;
-    }
-    @keyframes subir {
-      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.8; }
-      90%  { opacity: 0.7; }
-      100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* La escena se centra pero NUNCA recorta el contenido en pantallas pequenas */
-    .escena {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 22px;
-    }
+html {
+  height: 100%;
+}
 
-    /* Sobre: solo se muestra si el JavaScript funciona.
-       Sin JS, se oculta y la carta queda visible directamente. */
-    .sobre-wrap { display: none; }
-    .js .sobre-wrap {
-      display: block;
-      perspective: 1200px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .pista {
-      font-size: 15px;
-      color: var(--vino);
-      margin-top: 14px;
-      animation: latido 1.6s ease-in-out infinite;
-    }
-    @keyframes latido {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50%      { transform: scale(1.08); opacity: 1; }
-    }
-    .sobre {
-      position: relative;
-      width: 240px;
-      height: 164px;
-      max-width: 80vw;
-      margin: 0 auto;
-      filter: drop-shadow(0 18px 30px rgba(176,58,91,0.35));
-      transition: transform 0.5s ease;
-    }
-    .sobre .cuerpo {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(160deg, #ff8fb3, #ff6b9d);
-      border-radius: 12px;
-    }
-    .sobre .solapa {
-      position: absolute;
-      top: 0; left: 0;
-      width: 0; height: 0;
-      border-left: 120px solid transparent;
-      border-right: 120px solid transparent;
-      border-top: 84px solid #ff7aa7;
-      transform-origin: top;
-      transition: transform 0.6s ease;
-      z-index: 3;
-    }
-    .sobre .sello {
-      position: absolute;
-      top: 58px; left: 50%;
-      transform: translateX(-50%);
-      width: 46px; height: 46px;
-      background: var(--vino);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 4;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: opacity 0.3s ease;
-    }
-    .abierto .solapa { transform: rotateX(180deg); z-index: 1; }
-    .abierto .sello { opacity: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #ffe1ec 0%,
+    #ffd1dc 40%,
+    #ffc4d6 100%
+  );
 
-    /* ===== Sistema de pantallas ===== */
-    .pantalla { display: none; }
-    /* Fallback sin JS: la carta SIEMPRE se ve */
-    .carta { display: block; }
-    .js .carta { display: none; }
-    .js .pantalla.activa {
-      display: block;
-      animation: aparecer 0.7s ease;
-    }
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(26px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+  padding: 20px 14px;
+  color: var(--vino);
+}
 
-    .tarjeta {
-      background: var(--crema);
-      border-radius: 22px;
-      padding: 34px 26px 40px;
-      box-shadow: 0 22px 55px rgba(176,58,91,0.28);
-      width: 100%;
-      position: relative;
-      border: 1px solid #ffe0e8;
-      scroll-margin-top: 14px;
-    }
-    .tarjeta::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1.5px dashed #ffc0d0;
-      border-radius: 16px;
-      pointer-events: none;
-    }
+/* ================================
+   CORAZONES DEL FONDO
+================================ */
 
-    .titulo {
-      text-align: center;
-      font-size: 27px;
-      color: var(--rosa);
-      margin-bottom: 6px;
-      letter-spacing: 0.4px;
-    }
-    .subtitulo {
-      text-align: center;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--dorado);
-      margin-bottom: 22px;
-    }
-    .carta p.parrafo {
-      font-size: 16px;
-      line-height: 1.75;
-      margin-bottom: 16px;
-      color: #7a3247;
-    }
-    .parrafo .destacar {
-      color: var(--rosa);
-      font-weight: 700;
-    }
-    .firma {
-      text-align: right;
-      margin-top: 24px;
-      font-size: 18px;
-      color: var(--vino);
-    }
-    .firma .osito { font-size: 24px; }
+.fondo-corazones {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
 
-    .corazon-grande {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      animation: latido 1.4s ease-in-out infinite;
-    }
+.fondo-corazones span {
+  position: absolute;
+  bottom: -60px;
+  animation: subir linear infinite;
+}
 
-    /* Botones */
-    .boton-amor {
-      display: inline-block;
-      background: var(--rosa);
-      color: #fff;
-      border: none;
-      padding: 13px 24px;
-      border-radius: 30px;
-      font-size: 15px;
-      font-family: inherit;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(255,107,157,0.45);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .boton-amor:hover { transform: translateY(-2px) scale(1.03); }
-    .boton-amor:active { transform: scale(0.97); }
-    .boton-amor.suave {
-      background: #fff;
-      color: var(--rosa);
-      border: 2px solid var(--rosa);
-      box-shadow: 0 6px 14px rgba(255,107,157,0.25);
-    }
+@keyframes subir {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
 
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 26px;
-    }
+  10% {
+    opacity: 0.8;
+  }
 
-    .volver {
-      background: none;
-      border: none;
-      color: var(--vino);
-      font-size: 15px;
-      font-family: inherit;
-      cursor: pointer;
-      margin-bottom: 14px;
-      padding: 4px 2px;
-      opacity: 0.8;
-    }
-    .volver:hover { opacity: 1; }
+  90% {
+    opacity: 0.7;
+  }
 
-    /* ===== Razones ===== */
-    .razones-txt {
-      text-align: center;
-      color: #7a3247;
-      font-size: 15px;
-      margin-bottom: 18px;
-    }
-    .razon-card {
-      min-height: 150px;
-      background: linear-gradient(160deg, #fff, #fff0f5);
-      border: 1.5px solid #ffd1dc;
-      border-radius: 18px;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .razon-num {
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--dorado);
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-    .razon-texto {
-      font-size: 19px;
-      line-height: 1.6;
-      color: var(--vino);
-      font-weight: 600;
-    }
-    .razon-card.animar { animation: aparecer 0.5s ease; }
-    .centro { text-align: center; }
+  100% {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
 
-    /* ===== Carrusel de fotos ===== */
-    .carrusel {
-      position: relative;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #ffe6ee;
-      box-shadow: inset 0 0 0 1px #ffd1dc;
-    }
-    .slides {
-      display: flex;
-      transition: transform 0.4s ease;
-      touch-action: pan-y;
-    }
-    .slide {
-      min-width: 100%;
-      height: min(72vw, 360px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(160deg, #ffd1dc, #ffc4d6);
-    }
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .slide .sin-foto {
-      color: var(--vino);
-      font-size: 14px;
-      text-align: center;
-      padding: 20px;
-      opacity: 0.8;
-    }
-    .flecha-c {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px; height: 40px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.85);
-      color: var(--rosa);
-      font-size: 24px;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 3px 10px rgba(176,58,91,0.3);
-      z-index: 3;
-    }
-    .flecha-c.prev { left: 10px; }
-    .flecha-c.next { right: 10px; }
-    .flecha-c:active { transform: translateY(-50%) scale(0.9); }
+/* ================================
+   ESCENA
+================================ */
 
-    .foto-caption {
-      text-align: center;
-      color: var(--vino);
-      font-size: 16px;
-      font-weight: 600;
-      margin-top: 16px;
-      min-height: 22px;
-    }
-    .dots {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-    .dots .dot {
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      background: #ffc0d0;
-      cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-    .dots .dot.activo {
-      background: var(--rosa);
-      transform: scale(1.3);
-    }
+.escena {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
 
-    /* Corazon dibujado con CSS (se ve en cualquier pantalla) */
-    .heart {
-      display: inline-block;
-      position: relative;
-      transform: rotate(-45deg);
-      background: var(--rosa);
-    }
-    .heart::before, .heart::after {
-      content: "";
-      position: absolute;
-      background: var(--c, var(--rosa));
-      border-radius: 50%;
-    }
-    .heart::before { top: -50%; left: 0; width: 100%; height: 100%; }
-    .heart::after  { top: 0; left: 50%; width: 100%; height: 100%; }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
 
-    .oculto { display: none !important; }
+/* ================================
+   SOBRE
+================================ */
 
-    @media (max-width: 420px) {
-      .titulo { font-size: 23px; }
-      .tarjeta { padding: 28px 18px 32px; }
-      .carta p.parrafo { font-size: 15px; line-height: 1.7; }
-      .razon-texto { font-size: 17px; }
-      .boton-amor { padding: 12px 18px; font-size: 14px; }
-    }
-  </style>
+.sobre-wrap {
+  display: none;
+}
+
+.js .sobre-wrap {
+  display: block;
+  perspective: 1200px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.pista {
+  font-size: 15px;
+  color: var(--vino);
+  margin-top: 14px;
+  animation: latido 1.6s ease-in-out infinite;
+}
+
+@keyframes latido {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.sobre {
+  position: relative;
+  width: 240px;
+  height: 164px;
+  max-width: 80vw;
+  margin: 0 auto;
+
+  filter: drop-shadow(
+    0 18px 30px rgba(176,58,91,0.35)
+  );
+
+  transition: transform 0.5s ease;
+}
+
+.sobre .cuerpo {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    160deg,
+    #ff8fb3,
+    #ff6b9d
+  );
+
+  border-radius: 12px;
+}
+
+.sobre .solapa {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+
+  border-left: 120px solid transparent;
+  border-right: 120px solid transparent;
+  border-top: 84px solid #ff7aa7;
+
+  transform-origin: top;
+  transition: transform 0.6s ease;
+
+  z-index: 3;
+}
+
+.sobre .sello {
+  position: absolute;
+
+  top: 58px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 46px;
+  height: 46px;
+
+  background: var(--vino);
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 4;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+  transition: opacity 0.3s ease;
+}
+
+.abierto .solapa {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.abierto .sello {
+  opacity: 0;
+}
+
+/* ================================
+   PANTALLAS
+================================ */
+
+.pantalla {
+  display: none;
+}
+
+.carta {
+  display: block;
+}
+
+.js .carta {
+  display: none;
+}
+
+.js .pantalla.activa {
+  display: block;
+  animation: aparecer 0.7s ease;
+}
+
+@keyframes aparecer {
+
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/* ================================
+   TARJETAS
+================================ */
+
+.tarjeta {
+  background: var(--crema);
+
+  border-radius: 22px;
+
+  padding: 34px 26px 40px;
+
+  box-shadow:
+    0 22px 55px rgba(176,58,91,0.28);
+
+  width: 100%;
+
+  position: relative;
+
+  border: 1px solid #ffe0e8;
+
+  scroll-margin-top: 14px;
+}
+
+.tarjeta::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 12px;
+
+  border:
+    1.5px dashed #ffc0d0;
+
+  border-radius: 16px;
+
+  pointer-events: none;
+}
+
+.titulo {
+  text-align: center;
+
+  font-size: 27px;
+
+  color: var(--rosa);
+
+  margin-bottom: 6px;
+
+  letter-spacing: 0.4px;
+}
+
+.subtitulo {
+  text-align: center;
+
+  font-size: 13px;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  color: var(--dorado);
+
+  margin-bottom: 22px;
+}
+
+.carta p.parrafo {
+  font-size: 16px;
+
+  line-height: 1.75;
+
+  margin-bottom: 16px;
+
+  color: #7a3247;
+}
+
+.parrafo .destacar {
+  color: var(--rosa);
+  font-weight: 700;
+}
+
+.firma {
+  text-align: right;
+
+  margin-top: 24px;
+
+  font-size: 18px;
+
+  color: var(--vino);
+}
+
+.firma .osito {
+  font-size: 24px;
+}
+
+.corazon-grande {
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 10px;
+
+  animation:
+    latido 1.4s ease-in-out infinite;
+}
+
+/* ================================
+   BOTONES
+================================ */
+
+.boton-amor {
+  display: inline-block;
+
+  background: var(--rosa);
+
+  color: #fff;
+
+  border: none;
+
+  padding: 13px 24px;
+
+  border-radius: 30px;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px rgba(255,107,157,0.45);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.boton-amor:hover {
+  transform:
+    translateY(-2px)
+    scale(1.03);
+}
+
+.boton-amor:active {
+  transform: scale(0.97);
+}
+
+.boton-amor.suave {
+  background: #fff;
+
+  color: var(--rosa);
+
+  border:
+    2px solid var(--rosa);
+
+  box-shadow:
+    0 6px 14px rgba(255,107,157,0.25);
+}
+
+.menu {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  justify-content: center;
+
+  margin-top: 26px;
+}
+
+.volver {
+  background: none;
+
+  border: none;
+
+  color: var(--vino);
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  margin-bottom: 14px;
+
+  padding: 4px 2px;
+
+  opacity: 0.8;
+}
+
+.volver:hover {
+  opacity: 1;
+}
+
+/* ================================
+   RAZONES
+================================ */
+
+.razones-txt {
+  text-align: center;
+
+  color: #7a3247;
+
+  font-size: 15px;
+
+  margin-bottom: 18px;
+}
+
+.razon-card {
+  min-height: 150px;
+
+  background:
+    linear-gradient(
+      160deg,
+      #fff,
+      #fff0f5
+    );
+
+  border:
+    1.5px solid #ffd1dc;
+
+  border-radius: 18px;
+
+  padding: 24px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  margin-bottom: 20px;
+}
+
+.razon-num {
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: var(--dorado);
+
+  margin-bottom: 10px;
+
+  font-weight: 700;
+}
+
+.razon-texto {
+  font-size: 19px;
+
+  line-height: 1.6;
+
+  color: var(--vino);
+
+  font-weight: 600;
+}
+
+.razon-card.animar {
+  animation: aparecer 0.5s ease;
+}
+
+.centro {
+  text-align: center;
+}
+
+/* ================================
+   CARRUSEL
+================================ */
+
+.carrusel {
+  position: relative;
+
+  width: 100%;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  background: #ffe6ee;
+
+  box-shadow:
+    inset 0 0 0 1px #ffd1dc;
+}
+
+.slides {
+  display: flex;
+
+  transition:
+    transform 0.4s ease;
+
+  touch-action: pan-y;
+}
+
+.slide {
+  min-width: 100%;
+
+  height:
+    min(72vw, 360px);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      160deg,
+      #ffd1dc,
+      #ffc4d6
+    );
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.slide .sin-foto {
+  color: var(--vino);
+
+  font-size: 14px;
+
+  text-align: center;
+
+  padding: 20px;
+
+  opacity: 0.8;
+}
+
+.flecha-c {
+  position: absolute;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 40px;
+  height: 40px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.85);
+
+  color: var(--rosa);
+
+  font-size: 24px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 3px 10px
+    rgba(176,58,91,0.3);
+
+  z-index: 3;
+}
+
+.flecha-c.prev {
+  left: 10px;
+}
+
+.flecha-c.next {
+  right: 10px;
+}
+
+.flecha-c:active {
+  transform:
+    translateY(-50%)
+    scale(0.9);
+}
+
+.foto-caption {
+  text-align: center;
+
+  color: var(--vino);
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  margin-top: 16px;
+
+  min-height: 22px;
+}
+
+.dots {
+  display: flex;
+
+  gap: 8px;
+
+  justify-content: center;
+
+  margin-top: 14px;
+
+  flex-wrap: wrap;
+}
+
+.dots .dot {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #ffc0d0;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.dots .dot.activo {
+  background: var(--rosa);
+
+  transform:
+    scale(1.3);
+}
+
+/* ================================
+   CORAZÓN
+================================ */
+
+.heart {
+  display: inline-block;
+
+  position: relative;
+
+  transform: rotate(-45deg);
+
+  background: var(--rosa);
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+
+  position: absolute;
+
+  background:
+    var(--c, var(--rosa));
+
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -50%;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.heart::after {
+  top: 0;
+  left: 50%;
+
+  width: 100%;
+  height: 100%;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* =====================================================
+   ===================== JUEGO =========================
+===================================================== */
+
+#juego {
+  overflow: hidden;
+}
+
+/* Texto del juego */
+
+.instruccion-juego {
+  text-align: center;
+
+  color: #7a3247;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  margin-bottom: 15px;
+}
+
+/* Tablero */
+
+#laberinto {
+  position: relative;
+
+  width: min(100%, 420px);
+
+  aspect-ratio: 1 / 1;
+
+  margin:
+    0 auto 15px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background:
+    #fff0f5;
+
+  border:
+    4px solid #ff8fb3;
+
+  box-shadow:
+    0 12px 30px
+    rgba(176,58,91,0.20);
+
+  user-select: none;
+
+  touch-action: none;
+}
+
+/*
+   El mapa utiliza una cuadrícula de
+   12 x 12.
+*/
+
+.casilla {
+  position: absolute;
+
+  width: 8.3333%;
+  height: 8.3333%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: clamp(18px, 6vw, 27px);
+
+  z-index: 2;
+
+  transition:
+    left 0.12s ease,
+    top 0.12s ease;
+}
+
+/* Paredes */
+
+.pared {
+  position: absolute;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b03a5b,
+      #8e2948
+    );
+
+  border-radius: 5px;
+
+  box-shadow:
+    inset 0 2px 2px
+    rgba(255,255,255,0.18),
+
+    0 2px 4px
+    rgba(100,30,50,0.25);
+
+  z-index: 3;
+}
+
+/* Personajes */
+
+#jugador {
+  position: absolute;
+
+  width: 8.3333%;
+  height: 8.3333%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: clamp(
+    22px,
+    7vw,
+    31px
+  );
+
+  z-index: 10;
+
+  transition:
+    left 0.13s ease,
+    top 0.13s ease;
+
+  filter:
+    drop-shadow(
+      0 3px 3px
+      rgba(0,0,0,0.2)
+    );
+}
+
+#llave {
+  position: absolute;
+
+  width: 8.3333%;
+  height: 8.3333%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: clamp(
+    20px,
+    6vw,
+    29px
+  );
+
+  z-index: 8;
+
+  animation:
+    llaveBrillar 1s
+    ease-in-out infinite;
+}
+
+@keyframes llaveBrillar {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25)
+      rotate(8deg);
+  }
+
+}
+
+#karina {
+  position: absolute;
+
+  width: 8.3333%;
+  height: 8.3333%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: clamp(
+    22px,
+    7vw,
+    31px
+  );
+
+  z-index: 8;
+
+  filter:
+    drop-shadow(
+      0 3px 3px
+      rgba(0,0,0,0.2)
+    );
+}
+
+/* Salida */
+
+#salida {
+  position: absolute;
+
+  width: 8.3333%;
+  height: 8.3333%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: clamp(
+    18px,
+    6vw,
+    28px
+  );
+
+  z-index: 4;
+
+  opacity: 0.35;
+}
+
+#salida.abierta {
+  opacity: 1;
+
+  animation:
+    salidaBrilla 0.8s
+    ease-in-out infinite;
+}
+
+@keyframes salidaBrilla {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+}
+
+/* Mensaje */
+
+#mensajeJuego {
+  text-align: center;
+
+  color: var(--vino);
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  min-height: 48px;
+
+  margin:
+    8px auto 12px;
+
+  max-width: 420px;
+}
+
+/* Controles */
+
+.controles-juego {
+  text-align: center;
+
+  margin-top: 8px;
+}
+
+.controles-juego button {
+  width: 52px;
+  height: 45px;
+
+  margin: 3px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: var(--rosa);
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 12px
+    rgba(255,107,157,0.35);
+
+  touch-action: manipulation;
+}
+
+.controles-juego button:active {
+  transform: scale(0.90);
+}
+
+/* Indicador de llave */
+
+.estado-llave {
+  text-align: center;
+
+  font-size: 14px;
+
+  color: #7a3247;
+
+  margin-top: 8px;
+}
+
+.estado-llave fuerte {
+  color: var(--rosa);
+}
+
+/* Pantalla final */
+
+.final-juego {
+  text-align: center;
+
+  padding:
+    18px 10px 5px;
+
+  animation:
+    aparecer 0.8s ease;
+}
+
+.final-juego .pareja {
+  font-size: 48px;
+
+  margin-bottom: 12px;
+
+  animation:
+    latido 1.2s
+    ease-in-out infinite;
+}
+
+.final-juego h2 {
+  color: var(--rosa);
+
+  font-size: 24px;
+
+  margin-bottom: 10px;
+}
+
+.final-juego p {
+  color: #7a3247;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .titulo {
+    font-size: 23px;
+  }
+
+  .tarjeta {
+    padding:
+      28px 18px 32px;
+  }
+
+  .carta p.parrafo {
+    font-size: 15px;
+
+    line-height: 1.7;
+  }
+
+  .razon-texto {
+    font-size: 17px;
+  }
+
+  .boton-amor {
+    padding:
+      12px 18px;
+
+    font-size: 14px;
+  }
+
+  #laberinto {
+    border-width: 3px;
+  }
+
+}
+
+</style>
 </head>
+
+
 <body>
-  <div class="fondo-corazones" id="fondo"></div>
 
-  <div class="escena" id="escena">
-    <!-- Sobre (solo con JS) -->
-    <div class="sobre-wrap" id="sobreWrap" role="button" tabindex="0">
-      <div class="sobre" id="sobre">
-        <div class="cuerpo"></div>
-        <div class="solapa"></div>
-        <div class="sello"><span class="heart" style="width:16px;height:16px;background:#fff;"></span></div>
-      </div>
-      <p class="pista" id="pista">Toca el sobre para abrir tu sorpresa 💌</p>
+<!-- =============================================
+     FONDO
+============================================= -->
+
+<div
+  class="fondo-corazones"
+  id="fondo">
+</div>
+
+
+<div
+  class="escena"
+  id="escena">
+
+
+<!-- =============================================
+     SOBRE
+============================================= -->
+
+<div
+  class="sobre-wrap"
+  id="sobreWrap"
+  role="button"
+  tabindex="0">
+
+  <div
+    class="sobre"
+    id="sobre">
+
+    <div class="cuerpo"></div>
+
+    <div class="solapa"></div>
+
+    <div class="sello">
+
+      <span
+        class="heart"
+        style="
+          width:16px;
+          height:16px;
+          background:#fff;
+        ">
+      </span>
+
     </div>
 
-    <!-- PANTALLA: CARTA -->
-    <div class="carta pantalla tarjeta" id="carta">
-      <h1 class="titulo">Para mi Osita 💕</h1>
-      <p class="subtitulo">De tu osito</p>
-
-      <p class="parrafo">Hola amorcitooo actualicé la página y quiero decirte que te quiero mucho <span class="destacar"> 💕</span>. </p>
-      
-      <p class="parrafo">Osita amo los momentos compartidos contigo, te quiero mucho y por eso hice esta página que es tuya y mía, es una pequeña muestra de decirte que pienso en ti y me gusta sorprenderte con cosas bonitas...</p>
-
-      
-      <p class="parrafo">Gracias por ser tan linda conmigo, por tu ternura y por dejarme ser tu compañía. Prometo cuidar tu sonrisa como un tesoro y llenarte de detalles lindos y de amor del bueno.</p>
-
-      <p class="parrafo">Te amo, Karina. Hoy, mañana y siempre. 💗</p>
-
-      <div class="corazon-grande"><span class="heart" style="width:40px;height:40px;"></span></div>
-
-      <div class="firma">
-        Con todo mi amor,<br />
-        <strong>José Manuel</strong> — <span class="osito">tu osito 🐻</span>
-      </div>
-      <div class="menu">
-    <button class="boton-amor" id="btnAmor" type="button">Mil corazones 💞</button>
-    <button class="boton-amor suave" type="button" data-ir="razones">Razones por las que te amo 💘</button>
-    <button class="boton-amor suave" type="button" data-ir="album">Nuestras fotos 📸</button>
-      </div>
-    </div>
-
-    <!-- PANTALLA: ALBUM DE FOTOS -->
-    <div class="pantalla tarjeta" id="album">
-      <button class="volver" type="button" data-ir="carta">‹ Volver</button>
-      <h1 class="titulo">Nuestras fotos</h1>
-      <p class="subtitulo">Nuestros recuerdos</p>
-
-      <div class="carrusel" id="carrusel">
-        <div class="slides" id="slides"></div>
-        <button class="flecha-c prev" id="cPrev" type="button" aria-label="Foto anterior">‹</button>
-        <button class="flecha-c next" id="cNext" type="button" aria-label="Foto siguiente">›</button>
-      </div>
-      <p class="foto-caption" id="fotoCaption"></p>
-      <div class="dots" id="dots"></div>
-    </div>
-
-    <!-- PANTALLA: RAZONES -->
-    <div class="pantalla tarjeta" id="razones">
-      <button class="volver" type="button" data-ir="carta">‹ Volver</button>
-      <h1 class="titulo">Razones por las que te amo</h1>
-      <p class="subtitulo">Una por una</p>
-      <p class="razones-txt" id="razContador">Toca el botón y ve descubriéndolas 💗</p>
-
-      <div class="razon-card" id="razonCard">
-        <span class="razon-num" id="razonNum">¿Lista?</span>
-        <p class="razon-texto" id="razonTexto">Toca "Descubre una razón"</p>
-      </div>
-
-      <div class="centro">
-        <button class="boton-amor" id="btnRazon" type="button">Descubre una razón 💗</button>
-      </div>
-    </div>
   </div>
 
-  <script>
-  (function () {
-    "use strict";
+  <p
+    class="pista"
+    id="pista">
 
-    /* ====== CONTENIDO QUE PUEDES EDITAR ====== */
+    Toca el sobre para abrir
+    tu sorpresa 💌
 
-    // Razones por las que la amas (edita, agrega o quita las que quieras)
-    var razones = [
-      "Por tu sonrisa, que me alegra hasta el peor de mis días.",
-      "Por la forma en que me miras, como si yo fuera tu lugar favorito.",
-      "Porque me haces querer ser mejor persona.",
-      "Por tu paciencia, incluso cuando meto la pata.",
-      "Porque contigo hasta lo más simple se vuelve especial.",
-      "Por tus abrazos, que se siente como estar en casa.",
-      "Por cómo cuidas de mí sin siquiera darte cuenta.",
-      "Porque eres mi primer pensamiento al despertar y el último antes de dormir.",
-      "Por tu manera de amar, tan sincera y tan tuya.",
-      "Porque me elegiste a mí para ser tu osito.",
-      "Por cada risa que compartimos y las que nos faltan.",
-      "Y porque cada día encuentro una razón nueva para amarte."
-    ];
+  </p>
 
-    // Fotos del carrusel. Sube a tu repositorio archivos llamados
-    // foto1.jpg, foto2.jpg, foto3.jpg... y edita el texto de cada una.
-    // Puedes agregar o quitar cuantas quieras.
-  var fotos = [
-  { 
-    src: "foto1.jpg", 
-    texto: "Un recuerdo muy lindo.. y todavía me encanta verte así 💕" 
-  },
-  { 
-    src: "foto2.jpg", 
-    texto: "Ese día en que hablamos y nos reímos mucho 😂" 
-  },
-  { 
-    src: "foto3.jpg", 
-    texto: "Mi lugar favorito siempre va a ser donde estés tú 🐻❤️" 
-  },
-   { 
-    src: "foto4.jpg", 
-    texto: "Que foto tan bonita" 
-  },
-    {  
-    src: "foto5.jpg", 
-    texto: "Jajajaj coleccionando momentos juntos❤️" 
-  }
+</div>
+
+
+<!-- =============================================
+     CARTA
+============================================= -->
+
+<div
+  class="carta pantalla tarjeta"
+  id="carta">
+
+  <h1 class="titulo">
+    Para mi Karina 💕
+  </h1>
+
+  <p class="subtitulo">
+    De tu osito
+  </p>
+
+
+  <p class="parrafo">
+
+    Hola amorcitooo, actualicé la página
+    y quiero decirte que te quiero mucho
+    <span class="destacar">
+      corazón
+    </span>.
+
+  </p>
+
+
+  <p class="parrafo">
+
+    Osita amo los momentos compartidos
+    contigo, te quiero mucho amorcito y
+    por eso hice esta página que es tuya
+    y mía...
+
+  </p>
+
+
+  <p class="parrafo">
+
+    Gracias por tu paciencia conmigo,
+    por tu ternura y por dejarme ser
+    tu compañía.
+
+    Prometo cuidar tu sonrisa como
+    el tesoro que es y llenarte de
+    detalles y de amor del bueno.
+
+  </p>
+
+
+  <p class="parrafo">
+
+    Te amo, Karina.
+    Hoy, mañana y siempre. 💗
+
+  </p>
+
+
+  <div class="corazon-grande">
+
+    <span
+      class="heart"
+      style="
+        width:40px;
+        height:40px;
+      ">
+    </span>
+
+  </div>
+
+
+  <div class="firma">
+
+    Con todo mi amor,<br />
+
+    <strong>
+      José Manuel
+    </strong>
+
+    —
+    <span class="osito">
+      tu osito 🐻
+    </span>
+
+  </div>
+
+
+  <div class="menu">
+
+    <button
+      class="boton-amor"
+      id="btnAmor"
+      type="button">
+
+      Mil corazones 💞
+
+    </button>
+
+
+    <button
+      class="boton-amor suave"
+      type="button"
+      data-ir="razones">
+
+      Razones por las que
+      te amo 💘
+
+    </button>
+
+
+    <button
+      class="boton-amor suave"
+      type="button"
+      data-ir="album">
+
+      Nuestras fotos 📸
+
+    </button>
+
+
+    <button
+      class="boton-amor suave"
+      type="button"
+      data-ir="juego">
+
+      🎮 Una misión
+      para mi osita
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =============================================
+     ALBUM
+============================================= -->
+
+<div
+  class="pantalla tarjeta"
+  id="album">
+
+  <button
+    class="volver"
+    type="button"
+    data-ir="carta">
+
+    ‹ Volver
+
+  </button>
+
+
+  <h1 class="titulo">
+    Nuestras fotos
+  </h1>
+
+  <p class="subtitulo">
+    Nuestros recuerdos
+  </p>
+
+
+  <div
+    class="carrusel"
+    id="carrusel">
+
+    <div
+      class="slides"
+      id="slides">
+    </div>
+
+
+    <button
+      class="flecha-c prev"
+      id="cPrev"
+      type="button"
+      aria-label="Foto anterior">
+
+      ‹
+
+    </button>
+
+
+    <button
+      class="flecha-c next"
+      id="cNext"
+      type="button"
+      aria-label="Foto siguiente">
+
+      ›
+
+    </button>
+
+  </div>
+
+
+  <p
+    class="foto-caption"
+    id="fotoCaption">
+  </p>
+
+
+  <div
+    class="dots"
+    id="dots">
+  </div>
+
+</div>
+
+
+<!-- =============================================
+     JUEGO
+============================================= -->
+
+<div
+  class="pantalla tarjeta"
+  id="juego">
+
+  <button
+    class="volver"
+    type="button"
+    data-ir="carta">
+
+    ‹ Volver
+
+  </button>
+
+
+  <h1 class="titulo">
+    Nuestra misión ❤️
+  </h1>
+
+
+  <p class="subtitulo">
+    Encuentra la llave
+  </p>
+
+
+  <p class="instruccion-juego">
+
+    Hay algo que tienes que encontrar
+    antes de llegar hasta mí...
+
+    <br>
+
+    <strong>
+      Encuentra la llave 🔑
+      y ven por tu osita 👩🏻‍🦰
+    </strong>
+
+  </p>
+
+
+  <!-- TABLERO -->
+
+  <div
+    id="laberinto">
+
+    <!-- Las paredes se crean
+         automáticamente -->
+
+    <div id="jugador">
+      🧑🏾‍🦱
+    </div>
+
+
+    <div id="llave">
+      🔑
+    </div>
+
+
+    <div id="karina">
+      👩🏻‍🦰
+    </div>
+
+
+    <div id="salida">
+      🚪
+    </div>
+
+  </div>
+
+
+  <p
+    class="estado-llave"
+    id="estadoLlave">
+
+    🔑 Todavía no tienes la llave
+
+  </p>
+
+
+  <p
+    id="mensajeJuego">
+
+    Usa las flechas
+    ⬆️⬇️⬅️➡️
+    para moverte.
+
+  </p>
+
+
+  <!-- CONTROLES CELULAR -->
+
+  <div
+    class="controles-juego">
+
+    <button
+      type="button"
+      data-mover="arriba">
+
+      ⬆️
+
+    </button>
+
+
+    <br>
+
+
+    <button
+      type="button"
+      data-mover="izquierda">
+
+      ⬅️
+
+    </button>
+
+
+    <button
+      type="button"
+      data-mover="abajo">
+
+      ⬇️
+
+    </button>
+
+
+    <button
+      type="button"
+      data-mover="derecha">
+
+      ➡️
+
+    </button>
+
+  </div>
+
+
+  <!-- FINAL -->
+
+  <div
+    id="finalJuego"
+    class="final-juego"
+    style="display:none;">
+
+    <div class="pareja">
+      🧑🏾‍🦱❤️👩🏻‍🦰
+    </div>
+
+
+    <h2>
+      ¡Lo lograste, osita! 💕
+    </h2>
+
+
+    <p>
+
+      Encontraste la llave,
+      encontraste a tu osito...
+
+      <br><br>
+
+      Ahora sí,
+
+      <strong>
+        vámonos juntos. 🐻❤️
+      </strong>
+
+      <br><br>
+
+      Porque al final del laberinto,
+      siempre quiero encontrarte a ti.
+
+    </p>
+
+
+    <br>
+
+
+    <button
+      class="boton-amor"
+      id="reiniciarJuego"
+      type="button">
+
+      Volver a jugar 🔄
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =============================================
+     RAZONES
+============================================= -->
+
+<div
+  class="pantalla tarjeta"
+  id="razones">
+
+  <button
+    class="volver"
+    type="button"
+    data-ir="carta">
+
+    ‹ Volver
+
+  </button>
+
+
+  <h1 class="titulo">
+    Razones por las que te amo
+  </h1>
+
+
+  <p class="subtitulo">
+    Una por una
+  </p>
+
+
+  <p
+    class="razones-txt"
+    id="razContador">
+
+    Toca el botón y ve
+    descubriéndolas 💗
+
+  </p>
+
+
+  <div
+    class="razon-card"
+    id="razonCard">
+
+    <span
+      class="razon-num"
+      id="razonNum">
+
+      ¿Lista?
+
+    </span>
+
+
+    <p
+      class="razon-texto"
+      id="razonTexto">
+
+      Toca "Descubre una razón"
+
+    </p>
+
+  </div>
+
+
+  <div class="centro">
+
+    <button
+      class="boton-amor"
+      id="btnRazon"
+      type="button">
+
+      Descubre una razón 💗
+
+    </button>
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+(function () {
+
+"use strict";
+
+
+/* =============================================
+   RAZONES
+============================================= */
+
+var razones = [
+
+  "Por tu sonrisa, que me alegra hasta el peor de mis días.",
+
+  "Por la forma en que me miras, como si yo fuera tu lugar favorito.",
+
+  "Porque me haces querer ser mejor persona.",
+
+  "Por tu paciencia, incluso cuando meto la pata.",
+
+  "Porque contigo hasta lo más simple se vuelve especial.",
+
+  "Por tus abrazos, que se sienten como estar en casa.",
+
+  "Por cómo cuidas de mí sin siquiera darte cuenta.",
+
+  "Porque eres mi primer pensamiento al despertar y el último antes de dormir.",
+
+  "Por tu manera de amar, tan sincera y tan tuya.",
+
+  "Porque me elegiste a mí para ser tu osito.",
+
+  "Por cada risa que compartimos y las que nos faltan.",
+
+  "Y porque cada día encuentro una razón nueva para amarte."
+
 ];
 
-    /* ========================================= */
 
-    var tonos = ['#ff6b9d', '#ff8fb3', '#ffa5c3', '#f6c453', '#ff4f86'];
+/* =============================================
+   FOTOS
+============================================= */
 
-    function nuevoCorazon(tam) {
-      var s = document.createElement('span');
-      s.className = 'heart';
-      s.style.width = tam + 'px';
-      s.style.height = tam + 'px';
-      var color = tonos[Math.floor(Math.random() * tonos.length)];
-      s.style.background = color;
-      s.style.setProperty('--c', color);
-      return s;
-    }
+var fotos = [
 
-    function lluviaDeAmor() {
-      for (var i = 0; i < 28; i++) {
-        (function (n) {
-          setTimeout(function () {
-            var s = nuevoCorazon(16 + Math.random() * 22);
-            s.style.position = 'fixed';
-            s.style.left = Math.random() * 100 + 'vw';
-            s.style.top = '-40px';
-            s.style.zIndex = 999;
-            s.style.pointerEvents = 'none';
-            s.style.transition = 'transform 3s linear, opacity 3s linear';
-            document.body.appendChild(s);
-            requestAnimationFrame(function () {
-              s.style.transform = 'translateY(110vh) rotate(' + (Math.random() * 360) + 'deg)';
-              s.style.opacity = '0';
-            });
-            setTimeout(function () { s.remove(); }, 3200);
-          }, n * 80);
-        })(i);
-      }
-    }
+  {
+    src: "foto1.jpg",
+    texto: "Una foto muy linda juntos 💕"
+  },
 
-    // ===== Navegacion entre pantallas =====
-    function mostrar(id) {
-      var ids = ['carta', 'razones', 'album'];
-      for (var i = 0; i < ids.length; i++) {
-        var el = document.getElementById(ids[i]);
-        if (el) el.classList.toggle('activa', ids[i] === id);
-      }
-      var destino = document.getElementById(id);
-      if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  {
+    src: "foto2.jpg",
+    texto: "Ese día que no paramos de reír 😄"
+  },
 
-    // ===== Abrir sobre =====
-    var cartaAbierta = false;
-    function abrirCarta() {
-      if (cartaAbierta) return;
-      cartaAbierta = true;
-      var sobre = document.getElementById('sobre');
-      var pista = document.getElementById('pista');
-      var wrap = document.getElementById('sobreWrap');
-      sobre.classList.add('abierto');
-      pista.textContent = '\u2764';
+  {
+    src: "foto3.jpg",
+    texto: "Mi lugar favorito: a tu lado 🐻"
+  }
+
+];
+
+
+/* =============================================
+   CORAZONES
+============================================= */
+
+var tonos = [
+
+  "#ff6b9d",
+  "#ff8fb3",
+  "#ffa5c3",
+  "#f6c453",
+  "#ff4f86"
+
+];
+
+
+function nuevoCorazon(tam) {
+
+  var s =
+    document.createElement("span");
+
+  s.className = "heart";
+
+  s.style.width =
+    tam + "px";
+
+  s.style.height =
+    tam + "px";
+
+  var color =
+    tonos[
+      Math.floor(
+        Math.random() *
+        tonos.length
+      )
+    ];
+
+  s.style.background = color;
+
+  s.style.setProperty(
+    "--c",
+    color
+  );
+
+  return s;
+}
+
+
+function lluviaDeAmor() {
+
+  for (
+    var i = 0;
+    i < 28;
+    i++
+  ) {
+
+    (function (n) {
+
       setTimeout(function () {
-        wrap.classList.add('oculto');
-        mostrar('carta');
-        lluviaDeAmor();
-      }, 650);
+
+        var s =
+          nuevoCorazon(
+            16 +
+            Math.random() * 22
+          );
+
+
+        s.style.position =
+          "fixed";
+
+        s.style.left =
+          Math.random() *
+          100 +
+          "vw";
+
+        s.style.top =
+          "-40px";
+
+        s.style.zIndex =
+          999;
+
+        s.style.pointerEvents =
+          "none";
+
+        s.style.transition =
+          "transform 3s linear, opacity 3s linear";
+
+
+        document.body
+          .appendChild(s);
+
+
+        requestAnimationFrame(
+          function () {
+
+            s.style.transform =
+              "translateY(110vh) rotate(" +
+              (
+                Math.random() *
+                360
+              ) +
+              "deg)";
+
+            s.style.opacity = "0";
+
+          }
+        );
+
+
+        setTimeout(
+          function () {
+            s.remove();
+          },
+          3200
+        );
+
+      }, n * 80);
+
+    })(i);
+
+  }
+
+}
+
+
+/* =============================================
+   NAVEGACIÓN
+============================================= */
+
+function mostrar(id) {
+
+  var ids = [
+
+    "carta",
+    "razones",
+    "album",
+    "juego"
+
+  ];
+
+
+  for (
+    var i = 0;
+    i < ids.length;
+    i++
+  ) {
+
+    var el =
+      document.getElementById(
+        ids[i]
+      );
+
+
+    if (el) {
+
+      el.classList.toggle(
+        "activa",
+        ids[i] === id
+      );
+
     }
 
-    // ===== Razones =====
-    var razIdx = 0;
-    function siguienteRazon() {
-      var card = document.getElementById('razonCard');
-      var num = document.getElementById('razonNum');
-      var txt = document.getElementById('razonTexto');
-      var cont = document.getElementById('razContador');
-      var btn = document.getElementById('btnRazon');
+  }
 
-      if (razIdx >= razones.length) {
-        // Ya se mostraron todas: mensaje final y reinicio
-        num.textContent = '\u2764';
-        txt.textContent = 'Y me faltan mil más... Te amo, Karina.';
-        cont.textContent = 'Esas son ' + razones.length + ' de infinitas razones 💗';
-        btn.textContent = 'Verlas otra vez';
-        razIdx = 0;
-        card.classList.remove('animar'); void card.offsetWidth; card.classList.add('animar');
-        lluviaDeAmor();
-        return;
+
+  var destino =
+    document.getElementById(id);
+
+
+  if (destino) {
+
+    destino.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+
+
+  if (id === "juego") {
+
+    iniciarJuego();
+
+  }
+
+}
+
+
+/* =============================================
+   SOBRE
+============================================= */
+
+var cartaAbierta = false;
+
+
+function abrirCarta() {
+
+  if (cartaAbierta)
+    return;
+
+
+  cartaAbierta = true;
+
+
+  var sobre =
+    document.getElementById(
+      "sobre"
+    );
+
+  var pista =
+    document.getElementById(
+      "pista"
+    );
+
+  var wrap =
+    document.getElementById(
+      "sobreWrap"
+    );
+
+
+  sobre.classList.add(
+    "abierto"
+  );
+
+
+  pista.textContent = "❤️";
+
+
+  setTimeout(function () {
+
+    wrap.classList.add(
+      "oculto"
+    );
+
+    mostrar("carta");
+
+    lluviaDeAmor();
+
+  }, 650);
+
+}
+
+
+/* =============================================
+   RAZONES
+============================================= */
+
+var razIdx = 0;
+
+
+function siguienteRazon() {
+
+  var card =
+    document.getElementById(
+      "razonCard"
+    );
+
+  var num =
+    document.getElementById(
+      "razonNum"
+    );
+
+  var txt =
+    document.getElementById(
+      "razonTexto"
+    );
+
+  var cont =
+    document.getElementById(
+      "razContador"
+    );
+
+  var btn =
+    document.getElementById(
+      "btnRazon"
+    );
+
+
+  if (
+    razIdx >=
+    razones.length
+  ) {
+
+    num.textContent = "❤️";
+
+    txt.textContent =
+      "Y me faltan mil más... Te amo, Karina.";
+
+    cont.textContent =
+      "Esas son " +
+      razones.length +
+      " de infinitas razones 💗";
+
+    btn.textContent =
+      "Verlas otra vez";
+
+    razIdx = 0;
+
+    card.classList.remove(
+      "animar"
+    );
+
+    void card.offsetWidth;
+
+    card.classList.add(
+      "animar"
+    );
+
+    lluviaDeAmor();
+
+    return;
+
+  }
+
+
+  num.textContent =
+    "Razón " +
+    (razIdx + 1) +
+    " de " +
+    razones.length;
+
+
+  txt.textContent =
+    razones[razIdx];
+
+
+  cont.textContent =
+    "Sigue tocando para descubrir más 💗";
+
+
+  btn.textContent =
+    (
+      razIdx + 1 ===
+      razones.length
+    )
+      ? "Ver el final 💗"
+      : "Descubre otra razón 💗";
+
+
+  card.classList.remove(
+    "animar"
+  );
+
+  void card.offsetWidth;
+
+  card.classList.add(
+    "animar"
+  );
+
+
+  razIdx++;
+
+}
+
+
+/* =============================================
+   CARRUSEL
+============================================= */
+
+var fotoIdx = 0;
+
+
+function construirCarrusel() {
+
+  var slides =
+    document.getElementById(
+      "slides"
+    );
+
+  var dots =
+    document.getElementById(
+      "dots"
+    );
+
+
+  if (
+    !slides ||
+    !dots
+  )
+    return;
+
+
+  slides.innerHTML = "";
+
+  dots.innerHTML = "";
+
+
+  for (
+    var i = 0;
+    i < fotos.length;
+    i++
+  ) {
+
+    (function (i) {
+
+      var slide =
+        document.createElement(
+          "div"
+        );
+
+      slide.className =
+        "slide";
+
+
+      var img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        fotos[i].src;
+
+
+      img.alt =
+        fotos[i].texto ||
+        "Foto";
+
+
+      img.addEventListener(
+        "error",
+        function () {
+
+          slide.innerHTML =
+            '<div class="sin-foto">' +
+            "Aquí irá tu foto<br>" +
+            "<strong>" +
+            fotos[i].src +
+            "</strong>" +
+            "</div>";
+
+        }
+      );
+
+
+      slide.appendChild(img);
+
+      slides.appendChild(
+        slide
+      );
+
+
+      var d =
+        document.createElement(
+          "span"
+        );
+
+      d.className =
+        "dot";
+
+
+      d.addEventListener(
+        "click",
+        function () {
+
+          irFoto(i);
+
+        }
+      );
+
+
+      dots.appendChild(d);
+
+    })(i);
+
+  }
+
+
+  irFoto(0);
+
+}
+
+
+function irFoto(i) {
+
+  if (
+    fotos.length === 0
+  )
+    return;
+
+
+  if (i < 0)
+    i = fotos.length - 1;
+
+
+  if (
+    i >= fotos.length
+  )
+    i = 0;
+
+
+  fotoIdx = i;
+
+
+  var slides =
+    document.getElementById(
+      "slides"
+    );
+
+  var cap =
+    document.getElementById(
+      "fotoCaption"
+    );
+
+  var dots =
+    document.getElementById(
+      "dots"
+    ).children;
+
+
+  slides.style.transform =
+    "translateX(" +
+    (-i * 100) +
+    "%)";
+
+
+  cap.textContent =
+    fotos[i].texto ||
+    "";
+
+
+  for (
+    var k = 0;
+    k < dots.length;
+    k++
+  ) {
+
+    dots[k].classList.toggle(
+      "activo",
+      k === i
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   ===================== LABERINTO =====================
+===================================================== */
+
+/*
+   Mapa:
+
+   0 = camino
+   1 = pared
+
+   12 columnas x 12 filas.
+*/
+
+var mapa = [
+
+  [0,0,1,1,1,1,1,1,1,1,1,1],
+
+  [1,0,0,0,0,0,1,0,0,0,0,1],
+
+  [1,1,1,1,1,0,1,0,1,1,0,1],
+
+  [1,0,0,0,1,0,0,0,1,0,0,1],
+
+  [1,0,1,0,1,1,1,1,1,0,1,1],
+
+  [1,0,1,0,0,0,0,0,0,0,0,1],
+
+  [1,0,1,1,1,1,1,1,1,1,0,1],
+
+  [1,0,0,0,0,0,0,0,0,1,0,1],
+
+  [1,1,1,1,1,1,1,1,0,1,0,1],
+
+  [1,0,0,0,0,0,0,1,0,1,0,1],
+
+  [1,0,1,1,1,1,0,0,0,0,0,1],
+
+  [1,1,1,1,1,1,1,1,1,1,0,0]
+
+];
+
+
+/*
+   Posiciones:
+
+   Tú:
+   columna 0
+   fila 0
+
+   Llave:
+   columna 6
+   fila 10
+
+   Karina:
+   columna 11
+   fila 11
+
+   Salida:
+   columna 11
+   fila 11
+*/
+
+
+var jugadorX = 0;
+var jugadorY = 0;
+
+var llaveX = 6;
+var llaveY = 10;
+
+var karinaX = 11;
+var karinaY = 11;
+
+var llaveConseguida = false;
+
+var juegoTerminado = false;
+
+
+/* Crear paredes */
+
+function construirLaberinto() {
+
+  var tablero =
+    document.getElementById(
+      "laberinto"
+    );
+
+
+  if (!tablero)
+    return;
+
+
+  var paredes =
+    tablero.querySelectorAll(
+      ".pared"
+    );
+
+
+  for (
+    var i = 0;
+    i < paredes.length;
+    i++
+  ) {
+
+    paredes[i].remove();
+
+  }
+
+
+  for (
+    var y = 0;
+    y < mapa.length;
+    y++
+  ) {
+
+    for (
+      var x = 0;
+      x < mapa[y].length;
+      x++
+    ) {
+
+      if (
+        mapa[y][x] === 1
+      ) {
+
+        var pared =
+          document.createElement(
+            "div"
+          );
+
+
+        pared.className =
+          "pared";
+
+
+        pared.style.left =
+          (
+            x * 8.3333
+          ) +
+          "%";
+
+
+        pared.style.top =
+          (
+            y * 8.3333
+          ) +
+          "%";
+
+
+        pared.style.width =
+          "8.3333%";
+
+
+        pared.style.height =
+          "8.3333%";
+
+
+        tablero.appendChild(
+          pared
+        );
+
       }
 
-      num.textContent = 'Razón ' + (razIdx + 1) + ' de ' + razones.length;
-      txt.textContent = razones[razIdx];
-      cont.textContent = 'Sigue tocando para descubrir más 💗';
-      btn.textContent = (razIdx + 1 === razones.length) ? 'Ver el final 💗' : 'Descubre otra razón 💗';
-      card.classList.remove('animar'); void card.offsetWidth; card.classList.add('animar');
-      razIdx++;
     }
 
-    // ===== Carrusel de fotos =====
-    var fotoIdx = 0;
-    function construirCarrusel() {
-      var slides = document.getElementById('slides');
-      var dots = document.getElementById('dots');
-      if (!slides || !dots) return;
-      slides.innerHTML = '';
-      dots.innerHTML = '';
+  }
 
-      for (var i = 0; i < fotos.length; i++) {
-        (function (i) {
-          var slide = document.createElement('div');
-          slide.className = 'slide';
-          var img = document.createElement('img');
-          img.src = fotos[i].src;
-          img.alt = fotos[i].texto || 'Foto';
-          img.addEventListener('error', function () {
-            // Si la foto aun no se ha subido, mostramos un aviso amable
-            slide.innerHTML = '<div class="sin-foto">Aquí irá tu foto<br><strong>' + fotos[i].src + '</strong></div>';
-          });
-          slide.appendChild(img);
-          slides.appendChild(slide);
 
-          var d = document.createElement('span');
-          d.className = 'dot';
-          d.addEventListener('click', function () { irFoto(i); });
-          dots.appendChild(d);
-        })(i);
-      }
-      irFoto(0);
-    }
+  /*
+     Volvemos a poner los personajes
+     encima de las paredes.
+  */
 
-    function irFoto(i) {
-      if (fotos.length === 0) return;
-      if (i < 0) i = fotos.length - 1;
-      if (i >= fotos.length) i = 0;
-      fotoIdx = i;
-      var slides = document.getElementById('slides');
-      var cap = document.getElementById('fotoCaption');
-      var dots = document.getElementById('dots').children;
-      slides.style.transform = 'translateX(' + (-i * 100) + '%)';
-      cap.textContent = fotos[i].texto || '';
-      for (var k = 0; k < dots.length; k++) {
-        dots[k].classList.toggle('activo', k === i);
-      }
-    }
+  tablero.appendChild(
+    document.getElementById(
+      "jugador"
+    )
+  );
 
-    // ===== Inicio =====
-    function iniciar() {
-      var wrapEl = document.getElementById('sobreWrap');
-      var fondo = document.getElementById('fondo');
-      if (!wrapEl || !fondo || !document.getElementById('carta')) return;
+  tablero.appendChild(
+    document.getElementById(
+      "llave"
+    )
+  );
 
-      // Activamos el modo interactivo (oculta la carta hasta abrir el sobre).
-      document.documentElement.className += ' js';
+  tablero.appendChild(
+    document.getElementById(
+      "karina"
+    )
+  );
 
-      // Corazones de fondo
-      function crearCorazonFondo() {
-        var s = nuevoCorazon(12 + Math.random() * 18);
-        s.style.left = Math.random() * 100 + 'vw';
-        s.style.animationDuration = (7 + Math.random() * 7) + 's';
-        fondo.appendChild(s);
-        setTimeout(function () { s.remove(); }, 14000);
-      }
-      setInterval(crearCorazonFondo, 550);
-      for (var i = 0; i < 10; i++) setTimeout(crearCorazonFondo, i * 220);
+  tablero.appendChild(
+    document.getElementById(
+      "salida"
+    )
+  );
 
-      // Abrir sobre
-      wrapEl.addEventListener('click', abrirCarta);
-      wrapEl.addEventListener('touchend', function (e) { e.preventDefault(); abrirCarta(); }, { passive: false });
-      wrapEl.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirCarta(); }
+}
+
+
+/* Posicionar personaje */
+
+function actualizarJugador() {
+
+  var jugador =
+    document.getElementById(
+      "jugador"
+    );
+
+
+  jugador.style.left =
+    (
+      jugadorX *
+      8.3333
+    ) +
+    "%";
+
+
+  jugador.style.top =
+    (
+      jugadorY *
+      8.3333
+    ) +
+    "%";
+
+}
+
+
+/* Posicionar llave */
+
+function actualizarLlave() {
+
+  var llave =
+    document.getElementById(
+      "llave"
+    );
+
+
+  llave.style.left =
+    (
+      llaveX *
+      8.3333
+    ) +
+    "%";
+
+
+  llave.style.top =
+    (
+      llaveY *
+      8.3333
+    ) +
+    "%";
+
+}
+
+
+/* Posicionar Karina */
+
+function actualizarKarina() {
+
+  var karina =
+    document.getElementById(
+      "karina"
+    );
+
+
+  karina.style.left =
+    (
+      karinaX *
+      8.3333
+    ) +
+    "%";
+
+
+  karina.style.top =
+    (
+      karinaY *
+      8.3333
+    ) +
+    "%";
+
+}
+
+
+/* Posicionar salida */
+
+function actualizarSalida() {
+
+  var salida =
+    document.getElementById(
+      "salida"
+    );
+
+
+  salida.style.left =
+    (
+      karinaX *
+      8.3333
+    ) +
+    "%";
+
+
+  salida.style.top =
+    (
+      karinaY *
+      8.3333
+    ) +
+    "%";
+
+}
+
+
+/* Iniciar juego */
+
+function iniciarJuego() {
+
+  jugadorX = 0;
+  jugadorY = 0;
+
+  llaveConseguida = false;
+
+  juegoTerminado = false;
+
+
+  construirLaberinto();
+
+
+  actualizarJugador();
+
+  actualizarLlave();
+
+  actualizarKarina();
+
+  actualizarSalida();
+
+
+  var llave =
+    document.getElementById(
+      "llave"
+    );
+
+  llave.style.display =
+    "flex";
+
+
+  var karina =
+    document.getElementById(
+      "karina"
+    );
+
+  karina.style.display =
+    "flex";
+
+  karina.textContent =
+    "👩🏻‍🦰";
+
+
+  var salida =
+    document.getElementById(
+      "salida"
+    );
+
+  salida.classList.remove(
+    "abierta"
+  );
+
+
+  var mensaje =
+    document.getElementById(
+      "mensajeJuego"
+    );
+
+  mensaje.textContent =
+    "Encuentra la llave 🔑 y después ve por Karina ❤️";
+
+
+  var estado =
+    document.getElementById(
+      "estadoLlave"
+    );
+
+  estado.textContent =
+    "🔑 Todavía no tienes la llave";
+
+
+  var final =
+    document.getElementById(
+      "finalJuego"
+    );
+
+  final.style.display =
+    "none";
+
+}
+
+
+/* Comprobar si una casilla es pared */
+
+function esPared(x, y) {
+
+  if (
+    y < 0 ||
+    y >= mapa.length ||
+    x < 0 ||
+    x >= mapa[0].length
+  ) {
+
+    return true;
+
+  }
+
+
+  return mapa[y][x] === 1;
+
+}
+
+
+/* Mover personaje */
+
+function moverJugador(dx, dy) {
+
+  if (juegoTerminado)
+    return;
+
+
+  var nuevoX =
+    jugadorX + dx;
+
+  var nuevoY =
+    jugadorY + dy;
+
+
+  /*
+     Si hay una pared,
+     no se mueve.
+  */
+
+  if (
+    esPared(
+      nuevoX,
+      nuevoY
+    )
+  ) {
+
+    var mensaje =
+      document.getElementById(
+        "mensajeJuego"
+      );
+
+    mensaje.textContent =
+      "¡Por ahí no! Hay una pared 🧱❤️";
+
+    return;
+
+  }
+
+
+  jugadorX =
+    nuevoX;
+
+  jugadorY =
+    nuevoY;
+
+
+  actualizarJugador();
+
+
+  comprobarObjetivos();
+
+}
+
+
+/* Comprobar llave y Karina */
+
+function comprobarObjetivos() {
+
+  var mensaje =
+    document.getElementById(
+      "mensajeJuego"
+    );
+
+  var llave =
+    document.getElementById(
+      "llave"
+    );
+
+  var estado =
+    document.getElementById(
+      "estadoLlave"
+    );
+
+  var salida =
+    document.getElementById(
+      "salida"
+    );
+
+
+  /*
+     Conseguir llave
+  */
+
+  if (
+    !llaveConseguida &&
+    jugadorX === llaveX &&
+    jugadorY === llaveY
+  ) {
+
+    llaveConseguida =
+      true;
+
+
+    llave.style.display =
+      "none";
+
+
+    estado.textContent =
+      "🔑 ¡Llave conseguida!";
+
+
+    mensaje.textContent =
+      "¡Encontraste la llave! 🔑 Ahora ve por Karina ❤️";
+
+
+    salida.classList.add(
+      "abierta"
+    );
+
+
+    lluviaDeAmor();
+
+  }
+
+
+  /*
+     Llegar hasta Karina
+  */
+
+  if (
+    llaveConseguida &&
+    jugadorX === karinaX &&
+    jugadorY === karinaY
+  ) {
+
+    terminarJuego();
+
+  }
+
+}
+
+
+/* Final */
+
+function terminarJuego() {
+
+  juegoTerminado =
+    true;
+
+
+  var jugador =
+    document.getElementById(
+      "jugador"
+    );
+
+  var karina =
+    document.getElementById(
+      "karina"
+    );
+
+  var mensaje =
+    document.getElementById(
+      "mensajeJuego"
+    );
+
+  var estado =
+    document.getElementById(
+      "estadoLlave"
+    );
+
+
+  jugador.textContent =
+    "💑";
+
+
+  karina.textContent =
+    "";
+
+
+  mensaje.textContent =
+    "¡La encontraste! ❤️";
+
+
+  estado.textContent =
+    "🔑 Misión completada";
+
+
+  lluviaDeAmor();
+
+
+  setTimeout(
+    function () {
+
+      var final =
+        document.getElementById(
+          "finalJuego"
+        );
+
+      final.style.display =
+        "block";
+
+
+      final.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
       });
 
-      // Navegacion (botones con data-ir)
-      var navs = document.querySelectorAll('[data-ir]');
-      for (var k = 0; k < navs.length; k++) {
-        (function (b) {
-          b.addEventListener('click', function () { mostrar(b.getAttribute('data-ir')); });
-        })(navs[k]);
+
+    },
+    900
+  );
+
+}
+
+
+/* =============================================
+   INICIO
+============================================= */
+
+function iniciar() {
+
+  var wrapEl =
+    document.getElementById(
+      "sobreWrap"
+    );
+
+  var fondo =
+    document.getElementById(
+      "fondo"
+    );
+
+
+  if (
+    !wrapEl ||
+    !fondo ||
+    !document.getElementById(
+      "carta"
+    )
+  )
+    return;
+
+
+  /*
+     Activamos JS.
+  */
+
+  document.documentElement
+    .className += " js";
+
+
+  /*
+     Corazones de fondo.
+  */
+
+  function crearCorazonFondo() {
+
+    var s =
+      nuevoCorazon(
+        12 +
+        Math.random() * 18
+      );
+
+
+    s.style.left =
+      Math.random() *
+      100 +
+      "vw";
+
+
+    s.style.animationDuration =
+      (
+        7 +
+        Math.random() * 7
+      ) +
+      "s";
+
+
+    fondo.appendChild(s);
+
+
+    setTimeout(
+      function () {
+
+        s.remove();
+
+      },
+      14000
+    );
+
+  }
+
+
+  setInterval(
+    crearCorazonFondo,
+    550
+  );
+
+
+  for (
+    var i = 0;
+    i < 10;
+    i++
+  ) {
+
+    setTimeout(
+      crearCorazonFondo,
+      i * 220
+    );
+
+  }
+
+
+  /*
+     Sobre.
+  */
+
+  wrapEl.addEventListener(
+    "click",
+    abrirCarta
+  );
+
+
+  wrapEl.addEventListener(
+    "touchend",
+    function (e) {
+
+      e.preventDefault();
+
+      abrirCarta();
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  wrapEl.addEventListener(
+    "keydown",
+    function (e) {
+
+      if (
+        e.key === "Enter" ||
+        e.key === " "
+      ) {
+
+        e.preventDefault();
+
+        abrirCarta();
+
       }
 
-      // Botones
-      document.getElementById('btnAmor').addEventListener('click', lluviaDeAmor);
-      document.getElementById('btnRazon').addEventListener('click', siguienteRazon);
-
-      // Carrusel
-      construirCarrusel();
-      document.getElementById('cPrev').addEventListener('click', function () { irFoto(fotoIdx - 1); });
-      document.getElementById('cNext').addEventListener('click', function () { irFoto(fotoIdx + 1); });
-
-      // Deslizar con el dedo (swipe)
-      var slides = document.getElementById('slides');
-      var x0 = null;
-      slides.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-      slides.addEventListener('touchend', function (e) {
-        if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0;
-        if (dx > 40) irFoto(fotoIdx - 1);
-        else if (dx < -40) irFoto(fotoIdx + 1);
-        x0 = null;
-      }, { passive: true });
     }
+  );
 
-    try {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', iniciar);
-      } else {
-        iniciar();
+
+  /*
+     Navegación.
+  */
+
+  var navs =
+    document.querySelectorAll(
+      "[data-ir]"
+    );
+
+
+  for (
+    var k = 0;
+    k < navs.length;
+    k++
+  ) {
+
+    (function (b) {
+
+      b.addEventListener(
+        "click",
+        function () {
+
+          mostrar(
+            b.getAttribute(
+              "data-ir"
+            )
+          );
+
+        }
+      );
+
+    })(navs[k]);
+
+  }
+
+
+  /*
+     Botones.
+  */
+
+  document
+    .getElementById(
+      "btnAmor"
+    )
+    .addEventListener(
+      "click",
+      lluviaDeAmor
+    );
+
+
+  document
+    .getElementById(
+      "btnRazon"
+    )
+    .addEventListener(
+      "click",
+      siguienteRazon
+    );
+
+
+  /*
+     Carrusel.
+  */
+
+  construirCarrusel();
+
+
+  document
+    .getElementById(
+      "cPrev"
+    )
+    .addEventListener(
+      "click",
+      function () {
+
+        irFoto(
+          fotoIdx - 1
+        );
+
       }
-    } catch (err) {
-      // Ante cualquier error, la carta queda visible (modo a prueba de fallos)
-      document.documentElement.className = document.documentElement.className.replace(' js', '');
+    );
+
+
+  document
+    .getElementById(
+      "cNext"
+    )
+    .addEventListener(
+      "click",
+      function () {
+
+        irFoto(
+          fotoIdx + 1
+        );
+
+      }
+    );
+
+
+  /*
+     Swipe.
+  */
+
+  var slides =
+    document.getElementById(
+      "slides"
+    );
+
+
+  var x0 = null;
+
+
+  slides.addEventListener(
+    "touchstart",
+    function (e) {
+
+      x0 =
+        e.touches[0].clientX;
+
+    },
+    {
+      passive: true
     }
-  })();
-  </script>
+  );
+
+
+  slides.addEventListener(
+    "touchend",
+    function (e) {
+
+      if (
+        x0 === null
+      )
+        return;
+
+
+      var dx =
+        e.changedTouches[0]
+          .clientX -
+        x0;
+
+
+      if (dx > 40) {
+
+        irFoto(
+          fotoIdx - 1
+        );
+
+      }
+
+      else if (dx < -40) {
+
+        irFoto(
+          fotoIdx + 1
+        );
+
+      }
+
+
+      x0 = null;
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  /*
+     Controles táctiles.
+  */
+
+  var controles =
+    document.querySelectorAll(
+      "[data-mover]"
+    );
+
+
+  for (
+    var j = 0;
+    j < controles.length;
+    j++
+  ) {
+
+    controles[j]
+      .addEventListener(
+        "click",
+        function () {
+
+          var direccion =
+            this.getAttribute(
+              "data-mover"
+            );
+
+
+          if (
+            direccion ===
+            "arriba"
+          ) {
+
+            moverJugador(
+              0,
+              -1
+            );
+
+          }
+
+
+          if (
+            direccion ===
+            "abajo"
+          ) {
+
+            moverJugador(
+              0,
+              1
+            );
+
+          }
+
+
+          if (
+            direccion ===
+            "izquierda"
+          ) {
+
+            moverJugador(
+              -1,
+              0
+            );
+
+          }
+
+
+          if (
+            direccion ===
+            "derecha"
+          ) {
+
+            moverJugador(
+              1,
+              0
+            );
+
+          }
+
+        }
+      );
+
+  }
+
+
+  /*
+     Reiniciar juego.
+  */
+
+  document
+    .getElementById(
+      "reiniciarJuego"
+    )
+    .addEventListener(
+      "click",
+      function () {
+
+        iniciarJuego();
+
+      }
+    );
+
+
+  /*
+     Primera construcción.
+  */
+
+  iniciarJuego();
+
+
+  /*
+     Teclado PC.
+  */
+
+  document.addEventListener(
+    "keydown",
+    function (e) {
+
+      var juego =
+        document.getElementById(
+          "juego"
+        );
+
+
+      if (
+        !juego ||
+        !juego.classList.contains(
+          "activa"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        e.key === "ArrowUp" ||
+        e.key === "w" ||
+        e.key === "W"
+      ) {
+
+        e.preventDefault();
+
+        moverJugador(
+          0,
+          -1
+        );
+
+      }
+
+
+      if (
+        e.key === "ArrowDown" ||
+        e.key === "s" ||
+        e.key === "S"
+      ) {
+
+        e.preventDefault();
+
+        moverJugador(
+          0,
+          1
+        );
+
+      }
+
+
+      if (
+        e.key === "ArrowLeft" ||
+        e.key === "a" ||
+        e.key === "A"
+      ) {
+
+        e.preventDefault();
+
+        moverJugador(
+          -1,
+          0
+        );
+
+      }
+
+
+      if (
+        e.key === "ArrowRight" ||
+        e.key === "d" ||
+        e.key === "D"
+      ) {
+
+        e.preventDefault();
+
+        moverJugador(
+          1,
+          0
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =============================================
+   ARRANQUE SEGURO
+============================================= */
+
+try {
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciar
+    );
+
+  }
+
+  else {
+
+    iniciar();
+
+  }
+
+}
+
+catch (err) {
+
+  /*
+     Si ocurre algún error,
+     quitamos el modo JS para
+     que la carta siga visible.
+  */
+
+  document.documentElement
+    .className =
+    document.documentElement
+      .className
+      .replace(
+        " js",
+        ""
+      );
+
+}
+
+})();
+
+</script>
+
 </body>
 </html>
+```
